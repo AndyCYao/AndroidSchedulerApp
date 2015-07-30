@@ -1,0 +1,9 @@
+Notes from Andy
+Jul 27th 2015:
+
+-learnt about unit task framework from 
+https://msdn.microsoft.com/en-us/library/ms243176.aspx
+
+-for auto incrementor id to work for all the tasks, it looks like i need to create 
+a static incrementor object in the Task class. good article is here.
+http://stackoverflow.com/questions/9262221/c-sharp-class-auto-increment-id
