@@ -1,0 +1,22 @@
+﻿<Properties StartupItem="SchedulerTask/SchedulerTask.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="nUnitTestSchedulerApp/TestSchedule.cs">
+    <Files>
+      <File FileName="nUnitTestSchedulerApp/TestSchedule.cs" Line="5" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="SchedulerTask" expanded="True">
+            <Node name="nUnitTestSchedulerApp.test" expanded="True" />
+            <Node name="SchedulerTask" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
