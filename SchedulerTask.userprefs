@@ -2,14 +2,22 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="nUnitTestSchedulerApp/TestSchedule.cs">
     <Files>
-      <File FileName="nUnitTestSchedulerApp/TestSchedule.cs" Line="5" Column="1" />
+      <File FileName="nUnitTestSchedulerApp/TestSchedule.cs" Line="10" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="SchedulerTask" expanded="True">
-            <Node name="nUnitTestSchedulerApp.test" expanded="True" />
-            <Node name="SchedulerTask" selected="True" />
+            <Node name="nUnitTestSchedulerApp.test" expanded="True">
+              <Node name="TestSchedule.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.NUnit.TestPad">
+        <State name="__root__">
+          <Node name="SchedulerTask" expanded="True">
+            <Node name="nUnitTestSchedulerApp.test" selected="True" />
           </Node>
         </State>
       </Pad>

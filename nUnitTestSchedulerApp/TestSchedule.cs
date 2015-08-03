@@ -17,6 +17,16 @@ namespace nUnitTestSchedulerApp
 				Assert.AreEqual (TestTaskNote, GetBooks.TaskNotes);
 				Assert.AreEqual (TestTaskName, GetBooks.TaskName);
 		}
+
+		[Test]
+		public void TestTestTaskNameLength ()
+		{
+			string TestTaskName = "PickUpBooks";
+			string TestTaskNote = "BooksAtLibrary";
+			double NameLength = TestTaskName.Length;
+			Task GetBooks = new Task (TestTaskName,TestTaskNote);
+			Assert.AreEqual (NameLength, GetBooks.TaskName.Length);
+		}
 	}
 }
 
