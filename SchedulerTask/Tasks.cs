@@ -14,10 +14,17 @@ namespace SchedulerTask
         private string m_task_name;
         private string m_task_notes;
 
-        public Task(string taskName, string taskNotes)
+        public Task(string argTaskName, string argTaskNotes)
         {
-            m_task_name = taskName;
-            m_task_notes = taskNotes;
+            if (argTaskName.Length > 40)
+            {
+                m_task_name = argTaskName.Substring(0, 40);
+            }
+            else
+            {
+                m_task_name = argTaskName;
+            }
+            m_task_notes = argTaskNotes;
             m_id = numOfTasks;
             numOfTasks++;
             //m_id would need to be incremented from existing log of tasks. 
