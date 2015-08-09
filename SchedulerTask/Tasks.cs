@@ -8,55 +8,65 @@ namespace SchedulerTask
 {
     public class Task
     {
-        static int numOfTasks = 0;            // should be automatically generated?
-                                              // should also figure out how many existing tasks are there. 
+        // static int numOfTasks = 0; the scheduler will handle assigning primary keys, not the Tasks' role now. 
         private int m_id;
         private string m_task_name;
         private string m_task_notes;
+		private bool m_done;
 
-<<<<<<< HEAD
-        public Task(string fTaskName, string fTaskNotes)
-        {
-			/* Maybe there isn't a need to check string length. 
-			if (fTaskName.Length () > 40) 
-			{
-				m_task_name = fTaskName.Substring (0, 40);
-			} 
-			else 
-			{
-				m_task_name = fTaskName;
-			}
-			*/
+		private DateTime m_reminder_end_date;
+		private string m_ringtone_name;
 
+		//Aug 8th - ID will now be assigned by the Scheduler.
+		public Task(string fTaskName, string fTaskNotes, int fID)
+		{
 			m_task_name = fTaskName.Substring (0, 40);
-
 			m_task_notes = fTaskNotes;
-=======
-        public Task(string argTaskName, string argTaskNotes)
-        {
-            if (argTaskName.Length > 40)
-            {
-                m_task_name = argTaskName.Substring(0, 40);
-            }
-            else
-            {
-                m_task_name = argTaskName;
-            }
-            m_task_notes = argTaskNotes;
->>>>>>> 11932698512b568279aa607656c1f2628d709a41
-            m_id = numOfTasks;
-            numOfTasks++;
-            //m_id would need to be incremented from existing log of tasks. 
-        }
+			m_id = fID;
+		}
 
+		//Declare a Done boolean property for each task
+		public bool Done
+		{
+			get{  return m_done; }
+			set{ 
+				m_done = value; 
+				}
+		}
+
+		//Both Task Name and Task Notes needs to be able to get modified
+		//directly, not just from at the time of creating the object. 
+		//therefore, i need to create a set for them two as well. 
         public string TaskName
         {
             get { return m_task_name; }
+			set{ 
+				m_task_name = value; 
+			}
         }
         public string TaskNotes
         {
             get { return m_task_notes; }
+			set{ 
+				m_task_notes= value; 
+			}
         }
+		//Notification Details below..
+		public DateTime ReminderEndDate
+		{
+			get { return m_reminder_end_date; }
+			set {
+				m_reminder_end_date = value;
+			}
+		}
+		public string RingTone
+		{
+			get { return m_ringtone_name; }
+			set {
+				m_ringtone_name = value;
+			}
+		}
+
         public int TaskID
         {
             get { return m_id; }
