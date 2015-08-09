@@ -14,6 +14,7 @@ namespace SchedulerTask
         private string m_task_name;
         private string m_task_notes;
 
+<<<<<<< HEAD
         public Task(string fTaskName, string fTaskNotes)
         {
 			/* Maybe there isn't a need to check string length. 
@@ -30,6 +31,19 @@ namespace SchedulerTask
 			m_task_name = fTaskName.Substring (0, 40);
 
 			m_task_notes = fTaskNotes;
+=======
+        public Task(string argTaskName, string argTaskNotes)
+        {
+            if (argTaskName.Length > 40)
+            {
+                m_task_name = argTaskName.Substring(0, 40);
+            }
+            else
+            {
+                m_task_name = argTaskName;
+            }
+            m_task_notes = argTaskNotes;
+>>>>>>> 11932698512b568279aa607656c1f2628d709a41
             m_id = numOfTasks;
             numOfTasks++;
             //m_id would need to be incremented from existing log of tasks. 

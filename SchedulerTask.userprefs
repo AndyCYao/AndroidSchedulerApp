@@ -1,9 +1,6 @@
 ﻿<Properties StartupItem="SchedulerTask/SchedulerTask.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="nUnitTestSchedulerApp/TestSchedule.cs">
-    <Files>
-      <File FileName="nUnitTestSchedulerApp/TestSchedule.cs" Line="10" Column="2" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
@@ -11,6 +8,7 @@
             <Node name="nUnitTestSchedulerApp.test" expanded="True">
               <Node name="TestSchedule.cs" selected="True" />
             </Node>
+            <Node name="SchedulerTask" expanded="True" />
           </Node>
         </State>
       </Pad>
