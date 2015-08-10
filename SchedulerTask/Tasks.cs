@@ -16,6 +16,7 @@ namespace SchedulerTask
 
 		private DateTime m_reminder_end_date;
 		private string m_ringtone_name;
+		private DateTime m_start_date;
 
 		//Aug 8th - ID will now be assigned by the Scheduler.
 		public Task(string fTaskName, string fTaskNotes, int fID)
@@ -64,6 +65,15 @@ namespace SchedulerTask
 			get { return m_ringtone_name; }
 			set {
 				m_ringtone_name = value;
+			}
+		}
+		//this start date has to toggle between 
+		//next week, next day, etc. 
+		public DateTime StartDate
+		{
+			get { return m_start_date; }
+			set {
+				m_start_date = value;
 			}
 		}
 
