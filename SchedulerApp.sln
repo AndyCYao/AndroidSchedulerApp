@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-VisualStudioVersion = 14.0.22823.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchedulerTask", "SchedulerTask\SchedulerTask.csproj", "{CBC671AE-E6CF-44D9-9CA9-45E2579CD8C8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clsTaskUnitTest", "clsTaskUnitTest\clsTaskUnitTest.csproj", "{1E2A5B4F-4FD6-446B-A8BA-C0FF5DE9847E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nUnitTestSchedulerApp.test", "nUnitTestSchedulerApp\nUnitTestSchedulerApp.test.csproj", "{FE300E4D-6A43-4E74-B4D2-62BCDB869D2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchedulerApp", "SchedulerApp\SchedulerApp.csproj", "{CBC671AE-E6CF-44D9-9CA9-45E2579CD8C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{1E2A5B4F-4FD6-446B-A8BA-C0FF5DE9847E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E2A5B4F-4FD6-446B-A8BA-C0FF5DE9847E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E2A5B4F-4FD6-446B-A8BA-C0FF5DE9847E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CBC671AE-E6CF-44D9-9CA9-45E2579CD8C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CBC671AE-E6CF-44D9-9CA9-45E2579CD8C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CBC671AE-E6CF-44D9-9CA9-45E2579CD8C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CBC671AE-E6CF-44D9-9CA9-45E2579CD8C8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FE300E4D-6A43-4E74-B4D2-62BCDB869D2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FE300E4D-6A43-4E74-B4D2-62BCDB869D2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE300E4D-6A43-4E74-B4D2-62BCDB869D2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE300E4D-6A43-4E74-B4D2-62BCDB869D2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBC671AE-E6CF-44D9-9CA9-45E2579CD8C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBC671AE-E6CF-44D9-9CA9-45E2579CD8C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBC671AE-E6CF-44D9-9CA9-45E2579CD8C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBC671AE-E6CF-44D9-9CA9-45E2579CD8C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
