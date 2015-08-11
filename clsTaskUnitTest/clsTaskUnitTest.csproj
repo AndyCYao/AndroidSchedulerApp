@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -54,9 +55,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SchedulerTask\SchedulerTask.csproj">
+    <ProjectReference Include="..\SchedulerApp\SchedulerApp.csproj">
       <Project>{cbc671ae-e6cf-44d9-9ca9-45e2579cd8c8}</Project>
-      <Name>SchedulerTask</Name>
+      <Name>SchedulerApp</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

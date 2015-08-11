@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SchedulerTask")]
+[assembly: AssemblyTitle("SchedulerApp")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("AMEC")]
-[assembly: AssemblyProduct("SchedulerTask")]
-[assembly: AssemblyCopyright("Copyright © AMEC 2015")]
+[assembly: AssemblyCompany("AnYoPo")]
+[assembly: AssemblyProduct("SchedulerApp")]
+[assembly: AssemblyCopyright("Copyright © AnYoPo 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

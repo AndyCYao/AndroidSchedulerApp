@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
-using SchedulerTask;
+using SchedulerApp;
 
 namespace nUnitTestSchedulerApp
 {
@@ -12,10 +12,10 @@ namespace nUnitTestSchedulerApp
 		{
 				string TestTaskName = "PickUpBooks";
 				string TestTaskNote = "BooksAtLibrary";
-				Task GetBooks = new Task (TestTaskName,TestTaskNote);
-				Console.WriteLine (GetBooks.TaskNotes);
-				Assert.AreEqual (TestTaskNote, GetBooks.TaskNotes);
-				Assert.AreEqual (TestTaskName, GetBooks.TaskName);
+				Task GetBooks = new Task(TestTaskName,TestTaskNote, 0);
+				Console.WriteLine(GetBooks.TaskNotes);
+				Assert.AreEqual(TestTaskNote, GetBooks.TaskNotes);
+				Assert.AreEqual(TestTaskName, GetBooks.TaskName);
 		}
 
 		[Test]
@@ -24,8 +24,8 @@ namespace nUnitTestSchedulerApp
 			string TestTaskName = "PickUpBooks";
 			string TestTaskNote = "BooksAtLibrary";
 			double NameLength = TestTaskName.Length;
-			Task GetBooks = new Task (TestTaskName,TestTaskNote);
-			Assert.AreEqual (NameLength, GetBooks.TaskName.Length);
+			Task GetBooks = new Task(TestTaskName,TestTaskNote, 0);
+			Assert.AreEqual(NameLength, GetBooks.TaskName.Length);
 		}
 	}
 }

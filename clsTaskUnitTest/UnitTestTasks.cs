@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SchedulerTask;
+using SchedulerApp;
 
 namespace clsTaskUnitTest
 {
@@ -12,7 +12,7 @@ namespace clsTaskUnitTest
         {
             string TestTaskName = "PickUpBook-HarryPotter";
             string TestTaskNote = "BooksAtLibrary";
-            Task GetBooks = new Task(TestTaskName, TestTaskNote);
+            Task GetBooks = new Task(TestTaskName, TestTaskNote, 0);
             //Console.WriteLine(GetBooks.TaskNotes);
             Assert.AreEqual(TestTaskNote, GetBooks.TaskNotes);
             Assert.AreEqual(TestTaskName, GetBooks.TaskName);
@@ -22,7 +22,7 @@ namespace clsTaskUnitTest
         {
             string TestTaskName = "PickUpBook-HarryPotterAndTheChamberOfSecrets";
             string TestTaskNote = "BooksAtLibrary";
-            Task GetBooks = new Task(TestTaskName, TestTaskNote);
+            Task GetBooks = new Task(TestTaskName, TestTaskNote, 0);
             //Console.WriteLine(GetBooks.TaskNotes);
             Assert.AreEqual(TestTaskNote, GetBooks.TaskNotes);
             Assert.AreEqual(TestTaskName.Substring(0,40), GetBooks.TaskName);

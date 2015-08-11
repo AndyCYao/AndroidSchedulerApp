@@ -7,8 +7,8 @@
     <ProjectGuid>{CBC671AE-E6CF-44D9-9CA9-45E2579CD8C8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SchedulerTask</RootNamespace>
-    <AssemblyName>SchedulerTask</AssemblyName>
+    <RootNamespace>SchedulerApp</RootNamespace>
+    <AssemblyName>SchedulerApp</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
