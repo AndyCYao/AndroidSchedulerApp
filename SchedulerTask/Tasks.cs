@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;	// added August 10th
 
 namespace SchedulerTask
 {
@@ -18,10 +19,16 @@ namespace SchedulerTask
 		private string m_ringtone_name;
 		private DateTime m_start_date;
 
+		private int m_freq_numerator;
+		private int m_freq_denominator;
+		//unclear what do we set 
+
+
+
 		//Aug 8th - ID will now be assigned by the Scheduler.
 		public Task(string fTaskName, string fTaskNotes, int fID)
 		{
-			m_task_name = fTaskName.Substring (0, 40);
+			m_task_name = fTaskName.Substring (0, 1000);
 			m_task_notes = fTaskNotes;
 			m_id = fID;
 		}
@@ -77,9 +84,39 @@ namespace SchedulerTask
 			}
 		}
 
+		//Frequencies
+		public int NumOfTimes
+		{
+			get { return m_freq_numerator; }
+			set {
+				m_freq_numerator = value;
+			}
+		}
+		public int PerDenominator
+		{
+			get { return m_freq_denominator; }
+			set {
+				m_freq_denominator = value;
+			}
+		}
+
+		//Output an XML file
+		//with reference in this https://support.microsoft.com/en-us/kb/815813
+		//as well as https://msdn.microsoft.com/en-us/library/58a18dwa(v=vs.110).aspx
+		public void OutputXML
+		{
+			get{
+				XmlSerializer serializer = new XmlSerializer(typeof(Task));
+				serializer.Serialize(Console.Out,self);
+			}	
+		}
+
+
         public int TaskID
         {
             get { return m_id; }
         }
+
+
     }
 }
