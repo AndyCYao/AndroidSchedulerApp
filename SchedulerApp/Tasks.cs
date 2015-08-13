@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace SchedulerApp
 {
@@ -62,6 +64,19 @@ namespace SchedulerApp
 				m_ringtone_name = value;
 			}
 		}
+
+        //XML Serializer. Aug 13th 
+        public XmlSerializer ParseXML
+        {
+            get
+            {
+                TextWriter writer = new StreamWriter(this.TaskName);
+                XmlSerializer ser = new XmlSerializer(typeof(Task));
+                ser.Serialize(writer,this);               
+                writer.Close();
+                return ser;
+            }
+        }
 
         public int TaskID
         {
