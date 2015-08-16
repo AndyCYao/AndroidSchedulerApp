@@ -10,7 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-namespace HelloWorld
+namespace ScheduleApp.Droid
 {
     class Notifications
     {
@@ -31,7 +31,7 @@ namespace HelloWorld
             builder = new Notification.Builder(context)
                         .SetContentTitle(title)
                         .SetContentText(content)
-                        .SetSmallIcon(Resource.Drawable.Icon);
+                        .SetSmallIcon(Resource.Drawable.icon);
 
             //var uiIntent = new Intent(context, typeof(MainActivity));
             //notification.Flags = NotificationFlags.AutoCancel;
