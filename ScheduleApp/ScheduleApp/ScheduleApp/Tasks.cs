@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Xml.Serialization;
+using PCLStorage;
 
-namespace SchedulerApp
+namespace ScheduleApp
 {
     public class Task
     {
@@ -65,17 +66,11 @@ namespace SchedulerApp
 			}
 		}
 
-        //XML Serializer. Aug 13th 
-        public XmlSerializer ParseXML
+        public async void CreateSerializer(XmlSerializer ser)
         {
-            get
-            {
-                TextWriter writer = new StreamWriter(this.TaskName);
-                XmlSerializer ser = new XmlSerializer(typeof(Task));
-                ser.Serialize(writer,this);               
-                writer.Close();
-                return ser;
-            }
+            IFile stream = await FileSystem.Current.LocalStorage.CreateFileAsync(TaskName, CreationCollisionOption.OpenIfExists);
+            ser = new XmlSerializer(typeof(Task));
+            ser.Serialize(await stream.OpenAsync(FileAccess.ReadAndWrite), this);               
         }
 
         public int TaskID
@@ -84,3 +79,4 @@ namespace SchedulerApp
         }
     }
 }
+

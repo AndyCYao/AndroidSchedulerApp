@@ -1,7 +1,8 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using System.Xml;
+using PCLStorage;
 
-namespace SchedulerApp
+namespace ScheduleApp
 {
     class Phrase
     {
@@ -30,11 +31,11 @@ namespace SchedulerApp
 
     class PhraseManager
     {
-        private ArrayList phrases; //a dictionary might make more sense
+        private List<Phrase> phrases; //a dictionary might make more sense
 
         public PhraseManager(string filePath = "")
         {
-            phrases = new ArrayList();
+            phrases = new List<Phrase>();
 
             if (filePath.Length > 0)
             {
@@ -101,18 +102,17 @@ namespace SchedulerApp
             return 0;
         }
 
-        public int Save(string path)
+        public async void Save(string path)
         {
             //save phrases into some base storage format
-            XmlDocument phraseFile = new XmlDocument();
-            XmlElement root = phraseFile.CreateElement("Phrases");
-
-            phraseFile.DocumentElement.AppendChild(root);
-
+            IFile phraseFile = await FileSystem.Current.LocalStorage.CreateFileAsync(path, CreationCollisionOption.OpenIfExists);
+            string content = "";
+            
             for (int i = 0; i < PhraseCount(); i++)
             {
-                /*Phrase currentPhrase = PhraseAt(i);
-                XmlElement child = phraseFile.CreateElement("Phrase");
+                Phrase currentPhrase = PhraseAt(i);
+
+                /*XmlElement child = phraseFile.CreateElement("Phrase");
                 child.InnerText = currentPhrase.Text;
                 XmlAttribute attribute = phraseFile.CreateAttribute("NounPosition");
                 attribute.Value = currentPhrase.NounPosition.ToString();
@@ -121,7 +121,7 @@ namespace SchedulerApp
                 phraseFile.DocumentElement.AppendChild(child);*/
             }
 
-            return 0;
+            await phraseFile.WriteAllTextAsync(content);
         }
     }
 }

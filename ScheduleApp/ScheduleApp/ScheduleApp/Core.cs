@@ -1,4 +1,4 @@
-﻿namespace SchedulerApp
+﻿namespace ScheduleApp
 {
     class Core
     {
