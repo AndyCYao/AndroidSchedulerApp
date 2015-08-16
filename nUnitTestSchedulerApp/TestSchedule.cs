@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
-using SchedulerApp;
+using ScheduleApp;
 
 namespace nUnitTestSchedulerApp
 {

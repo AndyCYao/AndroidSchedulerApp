@@ -55,9 +55,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SchedulerApp\SchedulerApp.csproj">
-      <Project>{cbc671ae-e6cf-44d9-9ca9-45e2579cd8c8}</Project>
-      <Name>SchedulerApp</Name>
+    <ProjectReference Include="..\ScheduleApp\ScheduleApp\ScheduleApp\ScheduleApp.csproj">
+      <Project>{ecd9fd22-6892-41d9-ac21-81022bf7cd60}</Project>
+      <Name>ScheduleApp</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
