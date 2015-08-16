@@ -1,4 +1,14 @@
 Notes from Andy
 Jul 27th 2015:
-learnt about unit task framework from 
+
+-learnt about unit task framework from 
 https://msdn.microsoft.com/en-us/library/ms243176.aspx
+
+-for auto incrementor id to work for all the tasks, it looks like i need to create 
+a static incrementor object in the Task class. good article is here.
+http://stackoverflow.com/questions/9262221/c-sharp-class-auto-increment-id
+
+Aug 4th 2015: 
+- Check on special characters see if any needs to be omit to handle string. 
+- do a cap limit for Task Name and task notes. say, 1000, and 10,000 char limit. 
+- when the app starts, it needs to find the number of tasks currently exists so that when theres a new task, we can assign a new id to it. So this component will be moved to the Notification Class.
