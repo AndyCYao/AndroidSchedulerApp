@@ -6,8 +6,8 @@
     <ProjectGuid>{1E2A5B4F-4FD6-446B-A8BA-C0FF5DE9847E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>clsTaskUnitTest</RootNamespace>
-    <AssemblyName>clsTaskUnitTest</AssemblyName>
+    <RootNamespace>clsUnitTests</RootNamespace>
+    <AssemblyName>clsUnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -51,6 +51,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="UnitTestPhrases.cs" />
     <Compile Include="UnitTestTasks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ScheduleApp;
 
-namespace clsTaskUnitTest
+namespace clsUnitTests
 {
     [TestClass]
     public class UnitTestTasks

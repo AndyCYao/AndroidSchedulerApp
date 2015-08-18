@@ -1,35 +1,76 @@
 ﻿using System.Collections.Generic;
-using System.Xml;
+using System.Xml.Linq;
 using PCLStorage;
+using System.Threading.Tasks;
 
 namespace ScheduleApp
 {
-    class Phrase
+    public class Phrase
     {
-        private int nounPosition; //-1 if none
-        private int verbPosition; //-1 if none
-        private string phrase;
-        private bool isNamePresent;
-        private int namePosition;
+        private int m_nounPosition; //-1 if none
+        private int m_verbPosition; //-1 if none
+        private int m_namePosition; //-1 if none
+        private string m_phrase;
 
-        public Phrase(string inPhrase, int inNounPosition = -1, int inVerbPosition = -1, 
-                        bool inIsNamePresent = false, int inNamePosition = -1)
+        public Phrase(string inPhrase, int inNounPosition = -1, 
+                    int inVerbPosition = -1, int inNamePosition = -1)
         {
-            phrase = inPhrase;
-            nounPosition = inNounPosition;
-            verbPosition = inVerbPosition;
-            isNamePresent = inIsNamePresent;
-            namePosition = inNamePosition;
+            m_phrase = inPhrase;
+            m_nounPosition = inNounPosition;
+            m_verbPosition = inVerbPosition;
+            m_namePosition = inNamePosition;
         }
 
-        public string Text { get; set; }
-        public int NounPosition { get; set; }
-        public int VerbPosition { get; set; }
-        public bool IsNamePresent { get; set; }
-        public int NamePosition { get; set; }
+        public string Text
+        {
+            get {
+                return m_phrase;
+            }
+
+            set {
+                m_phrase = value;
+            }
+        }
+
+        public int NounPosition
+        {
+            get {
+                return m_nounPosition;
+            }
+
+            set {
+                m_nounPosition = value;
+            }
+        }
+
+        public int VerbPosition
+        {
+            get
+            {
+                return m_verbPosition;
+            }
+
+            set
+            {
+                m_verbPosition = value;
+            }
+        }
+
+        public int NamePosition
+        {
+            get
+            {
+                return m_namePosition;
+            }
+
+            set
+            {
+                m_namePosition = value;
+            }
+        }
     }
 
-    class PhraseManager
+    public class PhraseManager
     {
         private List<Phrase> phrases; //a dictionary might make more sense
 
@@ -39,7 +80,7 @@ namespace ScheduleApp
 
             if (filePath.Length > 0)
             {
-                Load(filePath);
+                System.Threading.Tasks.Task.Run(() => Load(filePath)).Wait();
             }
         }
 
@@ -93,11 +134,31 @@ namespace ScheduleApp
             return phrases.Count;
         }
 
-        public int Load(string path)
+        public async Task<int> Load(string path)
         {
-            //load phrases into container if path is valid
-            //get root element
-                //parse each phrase and call AddPhrase
+            IFile file = await FileSystem.Current.GetFileFromPathAsync(path);
+
+            if (file != null)
+            {
+                XDocument document = XDocument.Load(await file.OpenAsync(FileAccess.Read));
+
+                if (document.Root.Value == "Phrases")
+                {
+                    foreach (XElement child in document.Root.Descendants())
+                    {
+                        Phrase currentPhrase = new Phrase(child.Value, 
+                                                    int.Parse(child.Attribute("nounPos").Value),
+                                                    int.Parse(child.Attribute("verbPos").Value),
+                                                    int.Parse(child.Attribute("namePos").Value));
+
+                        AddPhrase(currentPhrase);
+                    }
+                }
+            }
+            else
+            {
+                throw new System.IO.InvalidDataException("Error: Could not load phrases.");
+            }
 
             return 0;
         }
@@ -106,22 +167,24 @@ namespace ScheduleApp
         {
             //save phrases into some base storage format
             IFile phraseFile = await FileSystem.Current.LocalStorage.CreateFileAsync(path, CreationCollisionOption.OpenIfExists);
-            string content = "";
-            
+
+            XDocument document = new XDocument();
+            document.Root.Name = "Phrases";
+
             for (int i = 0; i < PhraseCount(); i++)
             {
                 Phrase currentPhrase = PhraseAt(i);
 
-                /*XmlElement child = phraseFile.CreateElement("Phrase");
-                child.InnerText = currentPhrase.Text;
-                XmlAttribute attribute = phraseFile.CreateAttribute("NounPosition");
-                attribute.Value = currentPhrase.NounPosition.ToString();
-                
-                
-                phraseFile.DocumentElement.AppendChild(child);*/
+                XElement phraseElement = new XElement("Phrase");
+                phraseElement.Value = currentPhrase.Text;
+                phraseElement.SetAttributeValue("nounPos", currentPhrase.NounPosition);
+                phraseElement.SetAttributeValue("verbPos", currentPhrase.VerbPosition);
+                phraseElement.SetAttributeValue("namePos", currentPhrase.NamePosition);
+                document.Root.Add(phraseElement);
             }
 
-            await phraseFile.WriteAllTextAsync(content);
+            await phraseFile.WriteAllTextAsync(document.ToString());
         }
     }
 }
+

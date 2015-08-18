@@ -27,6 +27,6 @@ namespace nUnitTestSchedulerApp
 			Task GetBooks = new Task(TestTaskName,TestTaskNote, 0);
 			Assert.AreEqual(NameLength, GetBooks.TaskName.Length);
 		}
-	}
+    }
 }
 
