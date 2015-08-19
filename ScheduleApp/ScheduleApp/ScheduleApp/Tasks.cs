@@ -5,7 +5,19 @@ using PCLStorage;
 
 namespace ScheduleApp
 {
-    public class Task
+	//needs to be declared in the namespace, but not in the Task class itself
+	public struct TaskInfo
+	{
+		public int id;
+		public string TaskName;
+		public string TaskNotes;
+		public bool Done;
+		public DateTime ReminderEndDate;
+		public string RingToneName;                
+
+	}
+
+	public class Task
     {
         // static int numOfTasks = 0; the scheduler will handle assigning primary keys, not the Tasks' role now. 
         private int m_id;
@@ -29,18 +41,8 @@ namespace ScheduleApp
         // ********************
         // do i need to define what the struct should look like here?
         // referencing https://msdn.microsoft.com/en-us/library/awbckfbz(v=vs.110).aspx
-        public struct structInfo
-        {
-            public int id;
-            public string TaskName;
-            public string TaskNotes;
-            public bool Done;
-            public DateTime ReminderEndDate;
-            public string RingToneName;                
 
-        }
-
-        public Task(ref structInfo f){
+        public Task(ref TaskInfo f){
             m_id = f.id;
             m_task_name = f.TaskName;
             m_task_notes = f.TaskNotes;
@@ -93,8 +95,11 @@ namespace ScheduleApp
             }
         }
 
+
+		//Actually needs to return an XML file. -> change this method to WriteXML
         public async void CreateSerializer(XmlSerializer ser)
-        {
+        	//currently takes the serializer, attempt to open 
+		{
             IFile stream = await FileSystem.Current.LocalStorage.CreateFileAsync(TaskName, CreationCollisionOption.OpenIfExists);
             ser = new XmlSerializer(typeof(Task));
             ser.Serialize(await stream.OpenAsync(FileAccess.ReadAndWrite), this);               

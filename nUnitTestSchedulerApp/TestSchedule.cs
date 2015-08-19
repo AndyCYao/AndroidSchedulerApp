@@ -32,23 +32,14 @@ namespace nUnitTestSchedulerApp
         // does the struct have to be defined in the Scheduler class? 
         // it looks like i can't create a struct here and pass it to the Task class.
         // not like python where it can be a little vague. 
-        struct TestStruct
-        {
-            public int id;
-            public string TaskName;
-            public string TaskNotes;
-            //public bool Done;
-            //public DateTime ReminderEndDate;
-            //public string RingToneName;
-        }
 
         [Test]
         public void TestStructConstructor()
         {
-            TestStruct test = new TestStruct;
-
-            Task x = new Task(ref test);
-            
+			Tasks x = new Task();
+			x.TaskInfo.id = 1;
+			x.TaskInfo.TaskName = "foo";
+			x.TaskInfo.TaskNote = "bar";
         }
     }
 }
