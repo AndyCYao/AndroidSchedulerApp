@@ -24,6 +24,33 @@ namespace ScheduleApp
             m_id = fID;
         }
 
+        //Aug 18th Working on a constructor that takes a struct instead of individual 
+        //parameters, and from this struct we update the info.
+        // ********************
+        // do i need to define what the struct should look like here?
+        // referencing https://msdn.microsoft.com/en-us/library/awbckfbz(v=vs.110).aspx
+        public struct structInfo
+        {
+            public int id;
+            public string TaskName;
+            public string TaskNotes;
+            public bool Done;
+            public DateTime ReminderEndDate;
+            public string RingToneName;                
+
+        }
+
+        public Task(ref structInfo f){
+            m_id = f.id;
+            m_task_name = f.TaskName;
+            m_task_notes = f.TaskNotes;
+            m_done = f.Done;
+            m_reminder_end_date = f.ReminderEndDate;
+            m_ringtone_name = f.RingToneName;
+        }
+
+        //********************
+
         //Declare a Done boolean property for each task
         public bool Done
         {
