@@ -27,20 +27,34 @@ namespace nUnitTestSchedulerApp
             Task GetBooks = new Task(TestTaskName, TestTaskNote, 0);
             Assert.AreEqual(NameLength, GetBooks.TaskName.Length);
         }
-
+        
         //Testing the alternate struct constructor
         // does the struct have to be defined in the Scheduler class? 
         // it looks like i can't create a struct here and pass it to the Task class.
         // not like python where it can be a little vague. 
-
         [Test]
         public void TestStructConstructor()
         {
-			Tasks x = new Task();
-			x.TaskInfo.id = 1;
-			x.TaskInfo.TaskName = "foo";
-			x.TaskInfo.TaskNote = "bar";
+            TaskInfo testS;
+            testS.TaskID = 1;
+            testS.TaskName = "Create Struct";
+            testS.TaskNotes = "update it, then test it";
+            testS.Done = false;
+            testS.ReminderEndDate = new DateTime(2015, 8, 20);
+            testS.RingToneName = "Crazy Frog";
+
+            Task x = new Task(ref testS);
+            Assert.AreEqual(testS.TaskNotes, x.TaskNotes);
+            Assert.AreEqual(testS.TaskName, x.TaskName);
+            Assert.AreEqual(testS.Done, x.Done);
+            Assert.AreEqual(testS.ReminderEndDate, x.ReminderEndDate);
+            Assert.AreEqual(testS.RingToneName, x.RingTone);
+            Assert.AreEqual(testS.TaskID, x.TaskID);
+
+            //Just to see if there were any false positives. 
+            //Assert.AreEqual(2, x.TaskID);
         }
+
     }
 }
 

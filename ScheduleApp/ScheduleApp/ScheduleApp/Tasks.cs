@@ -5,10 +5,11 @@ using PCLStorage;
 
 namespace ScheduleApp
 {
-	//needs to be declared in the namespace, but not in the Task class itself
-	public struct TaskInfo
+    //needs to be declared in the namespace, but not in the Task class itself
+    //This will be used to simplify the data needed in a task upon creating it. 
+    public struct TaskInfo
 	{
-		public int id;
+		public int TaskID;
 		public string TaskName;
 		public string TaskNotes;
 		public bool Done;
@@ -43,7 +44,7 @@ namespace ScheduleApp
         // referencing https://msdn.microsoft.com/en-us/library/awbckfbz(v=vs.110).aspx
 
         public Task(ref TaskInfo f){
-            m_id = f.id;
+            m_id = f.TaskID;
             m_task_name = f.TaskName;
             m_task_notes = f.TaskNotes;
             m_done = f.Done;
