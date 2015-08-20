@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using ScheduleApp;
+using System.Xml;
 
 namespace nUnitTestSchedulerApp
 {
@@ -54,6 +55,31 @@ namespace nUnitTestSchedulerApp
             //Just to see if there were any false positives. 
             //Assert.AreEqual(2, x.TaskID);
         }
+
+        //Testing the XML writer, see if it outputs what we want to see. 
+        [Test]
+        public void TestXMLOutput()
+        {
+            TaskInfo testS;
+            testS.TaskID = 1;
+            testS.TaskName = "Create Struct";
+            testS.TaskNotes = "update it, then test it";
+            testS.Done = false;
+            testS.ReminderEndDate = new DateTime(2015, 8, 20);
+            testS.RingToneName = "Crazy Frog";
+
+            Task x = new Task(ref testS);
+            //string result;
+            //result= x.WriteXML();
+            Console.WriteLine(x.WriteXML());
+            /*
+            using(XmlReader reader = XmlReader.Create(result))
+            {
+
+            }
+            */
+        }
+
 
     }
 }

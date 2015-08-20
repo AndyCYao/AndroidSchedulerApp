@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Xml.Serialization;
+using System.Xml;
 using PCLStorage;
 
 namespace ScheduleApp
@@ -96,8 +96,44 @@ namespace ScheduleApp
             }
         }
 
+        //Aug 19th 2015 - the WriteXML function will now replace the the below CreateSerializer
+        //this function will output a XML file for the scheduler to use. 
+        // referenced http://www.dotnetperls.com/xmlwriter
+        /*
+        public XmlWriter WriteXML()
+        {
+            StringWriter stringWriter = new StringWriter();
+
+            using (XmlWriter result = XmlWriter.Create(stringWriter))
+            {
+                result.WriteStartDocument();
+                result.WriteStartElement("TestingXMLoutput");
+                result.WriteElementString("TaskID", this.TaskID.ToString());
+                result.WriteElementString("TaskName", this.TaskName);
+                result.WriteElementString("TaskNotes", this.TaskNotes);
+                result.WriteElementString("ReminderEndDate", this.ReminderEndDate.ToString());
+                result.WriteElementString("RingTone", this.RingTone);
+                result.WriteElementString("Done", this.Done.ToString());
+                result.WriteEndElement();
+                result.WriteEndDocument();
+                return result.ToString();
+            }
+            //return result;
+        }
+        */
+        /*
+        public System.Xml.Serialization.XmlSerializer WriteXML2()
+        {
+            System.Xml.Serialization.XmlSerializer writer =
+                new System.Xml.Serialization.XmlSerializer(typeof(Task));
+
+            var path = "c:/users/andy.yao/desktop/";
+            System.IO.FileStream file = System.IO.FileNotFoundException.Create(path);
+        }
+        */
 
 		//Actually needs to return an XML file. -> change this method to WriteXML
+        /*
         public async void CreateSerializer(XmlSerializer ser)
         	//currently takes the serializer, attempt to open 
 		{
@@ -105,6 +141,7 @@ namespace ScheduleApp
             ser = new XmlSerializer(typeof(Task));
             ser.Serialize(await stream.OpenAsync(FileAccess.ReadAndWrite), this);               
         }
+        */
 
         public int TaskID
         {
