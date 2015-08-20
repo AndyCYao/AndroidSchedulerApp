@@ -1,7 +1,9 @@
 ﻿using NUnit.Framework;
 using System;
+using System.IO;
 using ScheduleApp;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace nUnitTestSchedulerApp
 {
@@ -69,15 +71,18 @@ namespace nUnitTestSchedulerApp
             testS.RingToneName = "Crazy Frog";
 
             Task x = new Task(ref testS);
-            //string result;
-            //result= x.WriteXML();
-            Console.WriteLine(x.WriteXML());
-            /*
-            using(XmlReader reader = XmlReader.Create(result))
-            {
 
-            }
-            */
+            //Console.WriteLine(x.WriteXML2());
+            //System.Diagnostics.Debug.WriteLine(x.WriteXML2());
+            XmlSerializer resultXML = new XmlSerializer(typeof(Task));
+            MemoryStream resultStream = x.WriteXML2();
+            resultStream.Position = 0;
+            StreamReader reader = new StreamReader(resultStream);
+            reader.ReadToEnd();
+
+            System.Diagnostics.Debug.WriteLine(resultXML.Deserialize(resultStream));
+
+            //Task y = new
         }
 
 

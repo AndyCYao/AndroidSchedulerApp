@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Xml;
+using System.Xml.Serialization;
 using PCLStorage;
 
 namespace ScheduleApp
@@ -29,7 +30,7 @@ namespace ScheduleApp
         private DateTime m_reminder_end_date;
         private string m_ringtone_name;
 
-        //Aug 8th - ID will now be assigned by the Scheduler.
+        //Aug 8th - ID will now be assigned by the Scheduler. Overload 1
         public Task(string fTaskName, string fTaskNotes, int fID)
         {
             m_task_name = fTaskName.Substring (0, 40);
@@ -40,9 +41,7 @@ namespace ScheduleApp
         //Aug 18th Working on a constructor that takes a struct instead of individual 
         //parameters, and from this struct we update the info.
         // ********************
-        // do i need to define what the struct should look like here?
-        // referencing https://msdn.microsoft.com/en-us/library/awbckfbz(v=vs.110).aspx
-
+        // Overload 2
         public Task(ref TaskInfo f){
             m_id = f.TaskID;
             m_task_name = f.TaskName;
@@ -53,6 +52,8 @@ namespace ScheduleApp
         }
 
         //********************
+        //Overload 3, this is for the XML serializer. it needs a private parameterless constructor
+        private Task() { }
 
         //Declare a Done boolean property for each task
         public bool Done
@@ -96,7 +97,19 @@ namespace ScheduleApp
             }
         }
 
-        //Aug 19th 2015 - the WriteXML function will now replace the the below CreateSerializer
+        //Actually needs to return an XML file. -> change this method to WriteXML
+        /*
+        public async void CreateSerializer(XmlSerializer ser)
+        	//currently takes the serializer, attempt to open 
+		{
+            IFile stream = await FileSystem.Current.LocalStorage.CreateFileAsync(TaskName, CreationCollisionOption.OpenIfExists);
+            ser = new XmlSerializer(typeof(Task));
+            ser.Serialize(await stream.OpenAsync(FileAccess.ReadAndWrite), this);               
+        }
+        */
+
+            
+        //Aug 19th 2015 - the WriteXML function will now replace the the above CreateSerializer
         //this function will output a XML file for the scheduler to use. 
         // referenced http://www.dotnetperls.com/xmlwriter
         /*
@@ -121,27 +134,25 @@ namespace ScheduleApp
             //return result;
         }
         */
-        /*
-        public System.Xml.Serialization.XmlSerializer WriteXML2()
+        
+        public MemoryStream WriteXML2()
         {
             System.Xml.Serialization.XmlSerializer writer =
                 new System.Xml.Serialization.XmlSerializer(typeof(Task));
 
-            var path = "c:/users/andy.yao/desktop/";
-            System.IO.FileStream file = System.IO.FileNotFoundException.Create(path);
+            //using (MemoryStream memStream = new MemoryStream(100))
+            //{
+            //    TextWriter tw = new StreamWriter(memStream);
+            //    writer.Serialize(tw, this);
+            //    return memStream;
+            //}
+            MemoryStream memStream = new MemoryStream(100);
+                TextWriter tw = new StreamWriter(memStream);
+                writer.Serialize(tw, this);
+                return memStream;
         }
-        */
 
-		//Actually needs to return an XML file. -> change this method to WriteXML
-        /*
-        public async void CreateSerializer(XmlSerializer ser)
-        	//currently takes the serializer, attempt to open 
-		{
-            IFile stream = await FileSystem.Current.LocalStorage.CreateFileAsync(TaskName, CreationCollisionOption.OpenIfExists);
-            ser = new XmlSerializer(typeof(Task));
-            ser.Serialize(await stream.OpenAsync(FileAccess.ReadAndWrite), this);               
-        }
-        */
+
 
         public int TaskID
         {
