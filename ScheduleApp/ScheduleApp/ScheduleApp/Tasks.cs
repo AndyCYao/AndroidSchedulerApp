@@ -112,28 +112,20 @@ namespace ScheduleApp
         //Aug 19th 2015 - the WriteXML function will now replace the the above CreateSerializer
         //this function will output a XML file for the scheduler to use. 
         // referenced http://www.dotnetperls.com/xmlwriter
-        /*
-        public XmlWriter WriteXML()
+        
+        public void WriteXML(XmlWriter writer)
         {
             StringWriter stringWriter = new StringWriter();
 
-            using (XmlWriter result = XmlWriter.Create(stringWriter))
-            {
-                result.WriteStartDocument();
-                result.WriteStartElement("TestingXMLoutput");
-                result.WriteElementString("TaskID", this.TaskID.ToString());
-                result.WriteElementString("TaskName", this.TaskName);
-                result.WriteElementString("TaskNotes", this.TaskNotes);
-                result.WriteElementString("ReminderEndDate", this.ReminderEndDate.ToString());
-                result.WriteElementString("RingTone", this.RingTone);
-                result.WriteElementString("Done", this.Done.ToString());
-                result.WriteEndElement();
-                result.WriteEndDocument();
-                return result.ToString();
-            }
-            //return result;
-        }
-        */
+            writer.WriteStartElement("TestingXMLoutput");
+            writer.WriteElementString("TaskID", this.TaskID.ToString());
+            writer.WriteElementString("TaskName", this.TaskName);
+            writer.WriteElementString("TaskNotes", this.TaskNotes);
+            writer.WriteElementString("ReminderEndDate", this.ReminderEndDate.ToString());
+            writer.WriteElementString("RingTone", this.RingTone);
+            writer.WriteElementString("Done", this.Done.ToString());
+            writer.WriteEndElement();
+        }        
         
         public MemoryStream WriteXML2()
         {
@@ -147,9 +139,10 @@ namespace ScheduleApp
             //    return memStream;
             //}
             MemoryStream memStream = new MemoryStream(100);
-                TextWriter tw = new StreamWriter(memStream);
-                writer.Serialize(tw, this);
-                return memStream;
+            TextWriter tw = new StreamWriter(memStream);
+
+            writer.Serialize(tw, this);
+            return memStream;
         }
 
 
