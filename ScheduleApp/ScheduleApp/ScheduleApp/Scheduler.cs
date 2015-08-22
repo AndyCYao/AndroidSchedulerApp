@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,16 +17,59 @@ namespace ScheduleApp
 
         }
 
+        public int Count
+        {
+            get { return tasks.Count; }
+        }
+
         public DateTime GetCurrentTime()
         {
             return DateTime.Now;
+        }
+
+        public List<int> GetTaskIDs()
+        {
+            List<int> tempIDList = new List<int>();
+            for (int i = 0; i < tasks.Count; i++)
+            {
+                tempIDList.Add(tasks.ElementAt(i).TaskID);
+            }
+
+            return tempIDList;
+        }
+
+        public List<Task> GetActiveTasks()
+        {
+            List<Task> tempActiveTasks = new List<Task>();
+            var enumList = tasks.Where(s => s.Done == true);
+
+            foreach (var item in enumList)
+            {
+                tempActiveTasks.Add(item);
+            }
+
+            return tempActiveTasks;
+
+        }
+
+        public List<Task> GetInactiveTasks()
+        {
+            List<Task> tempActiveTasks = new List<Task>();
+            var enumList = tasks.Where(s => s.Done == false);
+
+            foreach (var item in enumList)
+            {
+                tempActiveTasks.Add(item);
+            }
+
+            return tempActiveTasks;
         }
 
         public void AddTask(Task taskToAdd)
         {
             if (taskToAdd.TaskID <= 0)
             {
-                throw new ArgumentOutOfRangeException("taskToAdd.TaskID", "Task ID cannot be lower than or equal to 0");
+                throw new ArgumentOutOfRangeException("taskToAdd.TaskID", "Task ID cannot be lower than or equal to 0.");
             }
             else if (taskToAdd.TaskName == null)
             {
@@ -46,7 +90,7 @@ namespace ScheduleApp
         {
             if (TaskID <= 0)
             {
-                throw new ArgumentOutOfRangeException("taskToAdd.TaskID", "Task ID cannot be lower than or equal to 0");
+                throw new ArgumentOutOfRangeException("taskToAdd.TaskID", "Task ID cannot be lower than or equal to 0.");
             }
             else
             {
@@ -75,7 +119,7 @@ namespace ScheduleApp
 
             if (TaskID <= 0)
             {
-                throw new ArgumentOutOfRangeException("taskToAdd.TaskID", "Task ID cannot be lower than or equal to 0");
+                throw new ArgumentOutOfRangeException("taskToAdd.TaskID", "Task ID cannot be lower than or equal to 0.");
             }
             else
             {
@@ -99,7 +143,7 @@ namespace ScheduleApp
         }
 
 
-        
+
 
     }
 }
