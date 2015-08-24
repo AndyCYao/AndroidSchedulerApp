@@ -8,6 +8,7 @@ namespace ScheduleApp
 {
     //needs to be declared in the namespace, but not in the Task class itself
     //This will be used to simplify the data needed in a task upon creating it. 
+    //aug 24th 2015 updated frequency and unit
     public struct TaskInfo
 	{
 		public int TaskID;
@@ -15,7 +16,9 @@ namespace ScheduleApp
 		public string TaskNotes;
 		public bool Done;
 		public DateTime ReminderEndDate;
-		public string RingToneName;                
+		public string RingToneName;
+        public int Frequency;
+        public string FrequencyUnit;
 
 	}
 
@@ -29,6 +32,10 @@ namespace ScheduleApp
 
         private DateTime m_reminder_end_date;
         private string m_ringtone_name;
+
+        //As in, once every m_freq and unit,  once every 5 hours, once every 10 minutes, etc. 
+        private int m_frequency;
+        private string m_frequency_unit;
 
         //Aug 8th - ID will now be assigned by the Scheduler. Overload 1
         public Task(string fTaskName, string fTaskNotes, int fID)
@@ -49,11 +56,14 @@ namespace ScheduleApp
             m_done = f.Done;
             m_reminder_end_date = f.ReminderEndDate;
             m_ringtone_name = f.RingToneName;
+            m_frequency = f.Frequency;
+            m_frequency_unit = f.FrequencyUnit;
         }
 
         //********************
         //Overload 3, this is for the XML serializer. it needs a private parameterless constructor
-        private Task() { }
+        //not needed any more. 
+        //private Task() { }
 
         //Declare a Done boolean property for each task
         public bool Done
@@ -97,6 +107,23 @@ namespace ScheduleApp
             }
         }
 
+        public string FrequencyUnit
+        {
+            get { return m_frequency_unit; }
+            set {
+                m_frequency_unit = value;
+            }
+        }
+
+        public int Frequency
+        {
+            get { return m_frequency; }
+            set
+            {
+                m_frequency = value;
+            }
+        }
+
         //Actually needs to return an XML file. -> change this method to WriteXML
         /*
         public async void CreateSerializer(XmlSerializer ser)
@@ -108,11 +135,11 @@ namespace ScheduleApp
         }
         */
 
-            
+
         //Aug 19th 2015 - the WriteXML function will now replace the the above CreateSerializer
         //this function will output a XML file for the scheduler to use. 
         // referenced http://www.dotnetperls.com/xmlwriter
-        
+
         public void WriteXML(XmlWriter writer)
         {
             StringWriter stringWriter = new StringWriter();
@@ -124,6 +151,8 @@ namespace ScheduleApp
             writer.WriteElementString("ReminderEndDate", this.ReminderEndDate.ToString());
             writer.WriteElementString("RingTone", this.RingTone);
             writer.WriteElementString("Done", this.Done.ToString());
+            writer.WriteElementString("Frequency", this.Frequency.ToString());
+            writer.WriteElementString("FrequencyUnit", this.FrequencyUnit);
             writer.WriteEndElement();
         }        
         

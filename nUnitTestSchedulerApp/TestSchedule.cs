@@ -70,6 +70,8 @@ namespace nUnitTestSchedulerApp
             testS.Done = false;
             testS.ReminderEndDate = new DateTime(2015, 8, 20);
             testS.RingToneName = "CrazyFrog.wav";
+            testS.Frequency = 5;
+            testS.FrequencyUnit = "days";
 
             Task x = new Task(ref testS);
 
