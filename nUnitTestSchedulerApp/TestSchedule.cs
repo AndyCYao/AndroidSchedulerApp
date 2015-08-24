@@ -59,6 +59,7 @@ namespace nUnitTestSchedulerApp
         }
 
         //Testing the XML writer, see if it outputs what we want to see. 
+        //rewrite the test Aug 24th to the method Peter had updated. 
         [Test]
         public void TestXMLOutput()
         {
@@ -68,10 +69,11 @@ namespace nUnitTestSchedulerApp
             testS.TaskNotes = "update it, then test it";
             testS.Done = false;
             testS.ReminderEndDate = new DateTime(2015, 8, 20);
-            testS.RingToneName = "Crazy Frog";
+            testS.RingToneName = "CrazyFrog.wav";
 
             Task x = new Task(ref testS);
 
+            /*
             //Console.WriteLine(x.WriteXML2());
             //System.Diagnostics.Debug.WriteLine(x.WriteXML2());
             XmlSerializer resultXML = new XmlSerializer(typeof(Task));
@@ -83,6 +85,26 @@ namespace nUnitTestSchedulerApp
             System.Diagnostics.Debug.WriteLine(resultXML.Deserialize(resultStream));
 
             //Task y = new
+            */
+
+            XmlWriter writer = XmlWriter.Create("SerializationTest.xml");
+            writer.WriteStartDocument();
+            x.WriteXML(writer);
+            writer.WriteEndDocument();
+            writer.Dispose();
+
+            XmlReader reader = XmlReader.Create("SerializationTest.xml");
+            reader.Read();
+            reader.ReadStartElement("TestingXMLoutput");
+            Assert.AreEqual(reader.ReadElementContentAsString(), x.TaskID.ToString());
+            Assert.AreEqual(reader.ReadElementContentAsString(), x.TaskName);
+            Assert.AreEqual(reader.ReadElementContentAsString(), x.TaskNotes);
+            Assert.AreEqual(reader.ReadElementContentAsString(), x.ReminderEndDate.ToString());
+            Assert.AreEqual(reader.ReadElementContentAsString(), x.RingTone);
+            Assert.AreEqual(reader.ReadElementContentAsString(), x.Done.ToString());
+            reader.ReadEndElement();
+
+            reader.Dispose();
         }
 
 

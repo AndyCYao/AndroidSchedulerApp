@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Xml;
-using System.Xml.Serialization;
+// using System.Xml.Serialization;
 using PCLStorage;
 
 namespace ScheduleApp
@@ -127,6 +127,7 @@ namespace ScheduleApp
             writer.WriteEndElement();
         }        
         
+        /*
         public MemoryStream WriteXML2()
         {
             System.Xml.Serialization.XmlSerializer writer =
@@ -144,6 +145,7 @@ namespace ScheduleApp
             writer.Serialize(tw, this);
             return memStream;
         }
+        */
 
 
 
