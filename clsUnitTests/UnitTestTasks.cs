@@ -52,14 +52,18 @@ namespace clsUnitTests
 
             XmlReader reader = XmlReader.Create("SerializationTest.xml");
             reader.Read();
-            reader.ReadStartElement("TestingXMLoutput");
-            Assert.AreEqual(reader.ReadElementContentAsString(), GetBooks.TaskID.ToString());
-            Assert.AreEqual(reader.ReadElementContentAsString(), GetBooks.TaskName);
-            Assert.AreEqual(reader.ReadElementContentAsString(), GetBooks.TaskNotes);
-            Assert.AreEqual(reader.ReadElementContentAsString(), GetBooks.ReminderEndDate.ToString());
-            Assert.AreEqual(reader.ReadElementContentAsString(), GetBooks.RingTone);
-            Assert.AreEqual(reader.ReadElementContentAsString(), GetBooks.Done.ToString());
-            reader.ReadEndElement();
+            Task compareTask = new Task("", "", -1);
+            compareTask.ReadXML(reader);
+            reader.Dispose();
+
+            Assert.AreEqual(compareTask.TaskID, GetBooks.TaskID);
+            Assert.AreEqual(compareTask.TaskName, GetBooks.TaskName);
+            Assert.AreEqual(compareTask.TaskNotes, GetBooks.TaskNotes);
+            Assert.AreEqual(compareTask.ReminderEndDate, GetBooks.ReminderEndDate);
+            Assert.AreEqual(compareTask.RingTone, GetBooks.RingTone);
+            Assert.AreEqual(compareTask.Done, GetBooks.Done);
+            Assert.AreEqual(compareTask.Frequency, GetBooks.Frequency);
+            Assert.AreEqual(compareTask.FrequencyUnit, GetBooks.FrequencyUnit);
 
             reader.Dispose();
         }

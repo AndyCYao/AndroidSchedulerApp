@@ -19,7 +19,6 @@ namespace ScheduleApp
 		public string RingToneName;
         public int Frequency;
         public string FrequencyUnit;
-
 	}
 
 	public class Task
@@ -40,9 +39,18 @@ namespace ScheduleApp
         //Aug 8th - ID will now be assigned by the Scheduler. Overload 1
         public Task(string fTaskName, string fTaskNotes, int fID)
         {
-            m_task_name = fTaskName.Substring (0, 40);
+            if (fTaskName.Length > 0)
+            {
+                m_task_name = fTaskName.Substring(0, 40);
+            }
+            else
+            {
+                m_task_name = "";
+            }
+
             m_task_notes = fTaskNotes;
             m_id = fID;
+            m_frequency_unit = "Weeks"; //should initialize all instance members
         }
 
         //Aug 18th Working on a constructor that takes a struct instead of individual 
@@ -142,19 +150,33 @@ namespace ScheduleApp
 
         public void WriteXML(XmlWriter writer)
         {
-            StringWriter stringWriter = new StringWriter();
-
-            writer.WriteStartElement("TestingXMLoutput");
-            writer.WriteElementString("TaskID", this.TaskID.ToString());
-            writer.WriteElementString("TaskName", this.TaskName);
-            writer.WriteElementString("TaskNotes", this.TaskNotes);
-            writer.WriteElementString("ReminderEndDate", this.ReminderEndDate.ToString());
-            writer.WriteElementString("RingTone", this.RingTone);
-            writer.WriteElementString("Done", this.Done.ToString());
-            writer.WriteElementString("Frequency", this.Frequency.ToString());
-            writer.WriteElementString("FrequencyUnit", this.FrequencyUnit);
+            writer.WriteStartElement("Task");
+            writer.WriteElementString("TaskID", TaskID.ToString());
+            writer.WriteElementString("TaskName", TaskName);
+            writer.WriteElementString("TaskNotes", TaskNotes);
+            writer.WriteElementString("ReminderEndDate", ReminderEndDate.ToString());
+            writer.WriteElementString("RingTone", RingTone);
+            writer.WriteElementString("Done", Done.ToString());
+            writer.WriteElementString("Frequency", Frequency.ToString());
+            writer.WriteElementString("FrequencyUnit", FrequencyUnit);
             writer.WriteEndElement();
         }        
+
+        public void ReadXML(XmlReader reader)
+        {
+            reader.ReadStartElement("Task");
+
+            m_id = reader.ReadElementContentAsInt();
+            TaskName = reader.ReadElementContentAsString();
+            TaskNotes = reader.ReadElementContentAsString();
+            ReminderEndDate = DateTime.Parse(reader.ReadElementContentAsString());
+            RingTone = reader.ReadElementContentAsString();
+            Done = Boolean.Parse(reader.ReadElementContentAsString());
+            Frequency = reader.ReadElementContentAsInt();
+            FrequencyUnit = reader.ReadElementContentAsString();
+
+            reader.ReadEndElement();
+        }
         
         /*
         public MemoryStream WriteXML2()

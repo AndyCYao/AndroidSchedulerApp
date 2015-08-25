@@ -97,16 +97,16 @@ namespace nUnitTestSchedulerApp
 
             XmlReader reader = XmlReader.Create("SerializationTest.xml");
             reader.Read();
-            reader.ReadStartElement("TestingXMLoutput");
-            Assert.AreEqual(reader.ReadElementContentAsString(), x.TaskID.ToString());
-            Assert.AreEqual(reader.ReadElementContentAsString(), x.TaskName);
-            Assert.AreEqual(reader.ReadElementContentAsString(), x.TaskNotes);
-            Assert.AreEqual(reader.ReadElementContentAsString(), x.ReminderEndDate.ToString());
-            Assert.AreEqual(reader.ReadElementContentAsString(), x.RingTone);
-            Assert.AreEqual(reader.ReadElementContentAsString(), x.Done.ToString());
-            reader.ReadEndElement();
-
+            Task compareTask = new Task("", "", -1);
+            compareTask.ReadXML(reader);
             reader.Dispose();
+
+            Assert.AreEqual(compareTask.TaskID, x.TaskID);
+            Assert.AreEqual(compareTask.TaskName, x.TaskName);
+            Assert.AreEqual(compareTask.TaskNotes, x.TaskNotes);
+            Assert.AreEqual(compareTask.ReminderEndDate, x.ReminderEndDate);
+            Assert.AreEqual(compareTask.RingTone, x.RingTone);
+            Assert.AreEqual(compareTask.Done, x.Done);
         }
 
 
