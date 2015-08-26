@@ -75,11 +75,11 @@
     <Compile Include="Notifications.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\TaskViewer.xaml.cs">
-      <DependentUpon>TaskViewer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\MainPage.xaml.cs">
+    <Compile Include="Resources\Layout\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Layout\TaskViewer.xaml.cs">
+      <DependentUpon>TaskViewer.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -118,11 +118,14 @@
   </Target>
   -->
   <ItemGroup>
-    <EmbeddedResource Include="Resources\TaskViewer.xaml">
+    <EmbeddedResource Include="Resources\Layout\MainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\MainPage.xaml">
+    <EmbeddedResource Include="Resources\Layout\TaskViewer.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Layout\" />
   </ItemGroup>
 </Project>
