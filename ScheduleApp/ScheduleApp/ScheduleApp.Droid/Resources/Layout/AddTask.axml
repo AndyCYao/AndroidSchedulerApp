@@ -1,8 +1,61 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
+    android:minWidth="25px"
+    android:minHeight="25px">
+    <TextView
+        android:text="Task Name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addTaskName" />
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addTaskNameField" />
+    <TextView
+        android:text="Task Notes"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addTaskNotes" />
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addTaskNotesField" />
+    <TextView
+        android:text="Set Reminder End Date"
+        android:layout_width="match_parent"
+        android:layout_height="27.4dp"
+        android:id="@+id/addReminderEndDate"
+        android:layout_marginBottom="10.9dp" />
+    <EditText
+        android:inputType="date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addReminderEndDateField" />
+    <TextView
+        android:text="Frequency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/AddFrequency" />
+    <ExpandableListView
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="38.3dp"
+        android:id="@+id/AddFrequencyField"
+        android:layout_marginBottom="0.0dp" />
+    <TextView
+        android:text="Frequency Unit"
+        android:layout_width="match_parent"
+        android:layout_height="27.9dp"
+        android:id="@+id/addFrequencyUnit" />
+    <ExpandableListView
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="38.3dp"
+        android:id="@+id/AddFrequencyUnitField"
+        android:layout_marginBottom="0.0dp" />
 </LinearLayout>
-
