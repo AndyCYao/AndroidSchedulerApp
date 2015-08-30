@@ -144,6 +144,27 @@ namespace ScheduleApp
 
 
 
+        public void AddTaskWithInfo(string name, string notes, DateTime reminder, string ringToneName, int frequency, string frequencyUnit)
+        {
+            TaskInfo tempTaskInfo = new TaskInfo();
+            tempTaskInfo.TaskName = name;
+            tempTaskInfo.TaskNotes = notes;
+            tempTaskInfo.Done = false;
+            tempTaskInfo.ReminderEndDate = reminder;
+            tempTaskInfo.RingToneName = ringToneName;
+            tempTaskInfo.Frequency = frequency;
+            tempTaskInfo.FrequencyUnit = frequencyUnit;
 
+            if (tasks.Count > 0)
+            {
+                tempTaskInfo.TaskID = tasks[tasks.Count - 1].TaskID + 1;
+            }
+            else
+            {
+                tempTaskInfo.TaskID = 1;
+            }
+
+            AddTask(new Task(ref tempTaskInfo));
+        }
     }
 }
