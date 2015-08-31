@@ -45,6 +45,8 @@ namespace nUnitTestSchedulerApp
             testS.Done = false;
             testS.ReminderEndDate = new DateTime(2015, 8, 20);
             testS.RingToneName = "Crazy Frog";
+			testS.Frequency = 1;
+			testS.FrequencyUnit = "minute";
 
             Task x = new Task(ref testS);
             Assert.AreEqual(testS.TaskNotes, x.TaskNotes);

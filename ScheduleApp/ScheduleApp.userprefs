@@ -1,8 +1,18 @@
 ﻿<Properties StartupItem="ScheduleApp/ScheduleApp/ScheduleApp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ScheduleApp/ScheduleApp/App.cs">
+    <Files>
+      <File FileName="../nUnitTestSchedulerApp/TestSchedule.cs" Line="51" Column="35" />
+      <File FileName="ScheduleApp/ScheduleApp/App.cs" Line="8" Column="1" />
+      <File FileName="ScheduleApp/ScheduleApp/EmptyClass.cs" Line="6" Column="3" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <DisabledProjects>
+    <String>ScheduleApp/ScheduleApp.iOS/ScheduleApp.iOS.csproj</String>
+  </DisabledProjects>
+  <MonoDevelop.Ide.ItemProperties.ScheduleApp.Droid AndroidDesignerPreferredDevice="Nexus 4" />
 </Properties>
