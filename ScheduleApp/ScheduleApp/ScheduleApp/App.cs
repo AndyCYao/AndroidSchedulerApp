@@ -21,11 +21,18 @@ namespace ScheduleApp
                     Children = {
                         new Label {
                             XAlign = TextAlignment.Center,
-                            Text = "Welcome to Xamarin Forms!"
-                        }
+                            Text = "Schedule App 2015"
+						},
+						new Button{
+							Text = "Add Task",
+							Font = Font.SystemFontOfSize(NamedSize.Large),
+							BorderWidth = 1,
+							HorizontalOptions = LayoutOptions.Center,
+							VerticalOptions = LayoutOptions.CenterAndExpand
+						}
                     }
                 }
-            };
+            }
         }
 
         protected override void OnStart()
