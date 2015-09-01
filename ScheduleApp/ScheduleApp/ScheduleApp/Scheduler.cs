@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ScheduleApp
 {
-    class Scheduler
+    public class Scheduler
     {
         private List<Task> tasks = new List<Task>();
 
@@ -111,7 +111,7 @@ namespace ScheduleApp
             }
         }
 
-        // TaskAt class is sketchy. Use with care.
+        // TaskAt function is sketchy. Use with care.
         // Will return null task if no such Task id is found or Task id <= 0.
         public Task TaskAt(int TaskID)
         {

@@ -9,7 +9,7 @@ namespace ScheduleApp
 	{
 		public MainPage ()
 		{
-			InitializeComponent ();
+			InitializeComponent();
 		}
 	}
 }
