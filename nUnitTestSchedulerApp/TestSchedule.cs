@@ -45,6 +45,8 @@ namespace nUnitTestSchedulerApp
             testS.Done = false;
             testS.ReminderEndDate = new DateTime(2015, 8, 20);
             testS.RingToneName = "Crazy Frog";
+            testS.Frequency = 12;
+            testS.FrequencyUnit = "Hours";
 
             Task x = new Task(ref testS);
             Assert.AreEqual(testS.TaskNotes, x.TaskNotes);
@@ -53,6 +55,8 @@ namespace nUnitTestSchedulerApp
             Assert.AreEqual(testS.ReminderEndDate, x.ReminderEndDate);
             Assert.AreEqual(testS.RingToneName, x.RingTone);
             Assert.AreEqual(testS.TaskID, x.TaskID);
+            Assert.AreEqual(testS.FrequencyUnit, x.FrequencyUnit);
+            Assert.AreEqual(testS.Frequency, x.Frequency);
 
             //Just to see if there were any false positives. 
             //Assert.AreEqual(2, x.TaskID);
