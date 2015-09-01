@@ -61,6 +61,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="UnitTestAppConfig.cs" />
+    <Compile Include="UnitTestCore.cs" />
     <Compile Include="UnitTestPhrases.cs" />
     <Compile Include="UnitTestTasks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

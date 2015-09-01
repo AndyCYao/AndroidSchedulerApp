@@ -1,19 +1,33 @@
 ﻿namespace ScheduleApp
 {
-    class Core
+    public class Core
     {
-        private PhraseManager phraseManager;
-        //private Scheduler scheduler;
-        //private AppConfig configuration;
+        string SCHEDULEAPP_PHRASE_FILE = "Phrases.xml";
+        string SCHEDULEAPP_CONFIG_FILE = "Config.xml";
+        private PhraseManager m_phraseManager;
+        private Scheduler m_scheduler;
+        private AppConfig m_configuration;
 
         public Core()
         {
-            //initialize configuration
-                //either the Core checks to see if a config exists to load 
-                //or the configuration class does that
+            m_configuration = new AppConfig(SCHEDULEAPP_CONFIG_FILE);
+            m_phraseManager = new PhraseManager(SCHEDULEAPP_PHRASE_FILE);
+            m_scheduler = new Scheduler();
+        }
 
-            phraseManager = new PhraseManager(/*Possible saved phrase location*/);
-            //initialize scheduler instance
+        public PhraseManager GetPhraseManager()
+        {
+            return m_phraseManager;
+        }
+
+        public Scheduler GetScheduler()
+        {
+            return m_scheduler;
+        }
+
+        public AppConfig GetConfig()
+        {
+            return m_configuration;
         }
     }
 }
