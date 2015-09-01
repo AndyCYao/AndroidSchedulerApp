@@ -157,7 +157,7 @@ namespace ScheduleApp
             }
             else
             {
-                throw new System.IO.InvalidDataException("Error: Could not load phrases.");
+                //throw new System.IO.InvalidDataException("Error: Could not load phrases.");
             }
 
             return 0;

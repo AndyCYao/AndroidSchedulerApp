@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="AppConfig.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="PhraseManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
