@@ -6,33 +6,18 @@ using System.Text;
 
 using Xamarin.Forms;
 
+
+//AY 4-Sept-15.
+//Reorganize the pages under the "View" folder,
+//because navigation between those pages have to go through the INavigate interface
+//per reference here https://developer.xamarin.com/guides/cross-platform/xamarin-forms/getting-started/introduction-to-xamarin-forms/
 namespace ScheduleApp
 {
     public class App : Application
     {
         public App()
         {
-            // The root page of your application
-            MainPage = new ContentPage
-            {
-                Content = new StackLayout
-                {
-                    VerticalOptions = LayoutOptions.Center,
-                    Children = {
-                        new Label {
-                            XAlign = TextAlignment.Center,
-                            Text = "Schedule App 2015"
-                        },
-                        new Button{
-                            Text = "Add Task",
-                            Font = Font.SystemFontOfSize(NamedSize.Large),
-                            BorderWidth = 1,
-                            HorizontalOptions = LayoutOptions.Center,
-                            VerticalOptions = LayoutOptions.CenterAndExpand
-                        }
-                    }
-                }
-            };
+			MainPage = new NavigationPage (new Main ());
         }
 
         protected override void OnStart()
