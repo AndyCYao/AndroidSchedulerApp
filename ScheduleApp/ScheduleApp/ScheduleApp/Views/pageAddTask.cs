@@ -35,6 +35,44 @@ namespace ScheduleApp
 				Format= "D",
 			};
 
+			var ringToneLabel = new Label { Text = "Select Ringtone" };
+			var ringTonePicker = new Picker{ };
+
+			//This part we can create a dictionary object that contains all the
+			//ringtones, then load it into this picker, until then we just include
+			//these three. 
+			ringTonePicker.Items.Add ("Crazy Frog");
+			ringTonePicker.Items.Add ("Minions");
+			ringTonePicker.Items.Add ("Flight of the Valkryie");
+
+			var frequencyLabel = new Label { Text = "Select Frequency" };
+			var frequencyPicker = new Picker { };
+
+			for (int i = 1; i <= 10; i++) {
+			
+				frequencyPicker.Items.Add(i.ToString());
+			};
+
+			var frequencyUnitLabel = new Label { Text = "Select Unit" };
+			var frequencyUnitPicker = new Picker{ };
+
+			frequencyUnitPicker.Items.Add ("Minutes");
+			frequencyUnitPicker.Items.Add ("Hours");
+			frequencyUnitPicker.Items.Add ("Days");
+			frequencyUnitPicker.Items.Add ("Weeks");
+
+			var SaveButton = new Button {
+				Text = "Save!"
+					//Font = Font.SystemFontOfSize (NamedSize.Large),
+					//BorderWidth = 1,
+					//HorizontalOptions = LayoutOptions.Center,
+					//VerticalOptions = LayoutOptions.CenterAndExpand
+			};
+			SaveButton.Clicked += (sender, e) => {
+				//Push the information presented into Scheduler Class. 
+			};
+
+
 			Content = new StackLayout {
 				VerticalOptions = LayoutOptions.CenterAndExpand,
 				Padding = new Thickness (20),
@@ -45,8 +83,15 @@ namespace ScheduleApp
 					noteEntry,
 					doneLabel,
 					donePicker,
+					ringToneLabel,
+					ringTonePicker,
+					frequencyLabel,
+					frequencyPicker,
+					frequencyUnitLabel,
+					frequencyUnitPicker,
 					reminderEndDateLabel,
-					reminderEndDatePicker
+					reminderEndDatePicker,
+					SaveButton
 				}
 			};
 		}

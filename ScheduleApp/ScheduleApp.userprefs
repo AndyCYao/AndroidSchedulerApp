@@ -1,11 +1,22 @@
 ﻿<Properties StartupItem="ScheduleApp/ScheduleApp.Droid/ScheduleApp.Droid.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Nexus 4 (Lollipop)" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ScheduleApp/ScheduleApp/Views/Main.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ScheduleApp/ScheduleApp/Views/pageAddTask.cs">
     <Files>
-      <File FileName="ScheduleApp/ScheduleApp/Tasks.cs" Line="1" Column="1" />
-      <File FileName="ScheduleApp/ScheduleApp/App.cs" Line="16" Column="35" />
-      <File FileName="ScheduleApp/ScheduleApp/Views/Main.cs" Line="34" Column="4" />
+      <File FileName="ScheduleApp/ScheduleApp/Views/pageAddTask.cs" Line="18" Column="4" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ScheduleApp" expanded="True">
+            <Node name="ScheduleApp" expanded="True">
+              <Node name="Views" expanded="True">
+                <Node name="pageAddTask.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
