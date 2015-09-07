@@ -143,7 +143,7 @@ namespace ScheduleApp
         }
 
 
-
+        //task ID's will increment continually until the end of ints
         public void AddTaskWithInfo(string name, string notes, DateTime reminder, string ringToneName, int frequency, string frequencyUnit)
         {
             TaskInfo tempTaskInfo = new TaskInfo();
@@ -165,6 +165,37 @@ namespace ScheduleApp
             }
 
             AddTask(new Task(ref tempTaskInfo));
+        }
+
+
+        public void UpdateTaskWithInfo(int taskID, string name, string notes, DateTime reminder, string ringToneName, int frequency, string frequencyUnit)
+        {
+            Task updateTask = TaskAt(taskID);
+
+            updateTask.TaskName = name;
+            updateTask.TaskNotes = notes;
+            updateTask.ReminderEndDate = reminder;
+            updateTask.RingTone = ringToneName;
+            updateTask.Frequency = frequency;
+            updateTask.FrequencyUnit = frequencyUnit;
+        }
+
+
+        public async void scheduleTimer()
+        {
+            while (true)
+            {
+                List<Task> activeTasks = GetActiveTasks();
+                for (int i = 0; i < activeTasks.Count; i++)
+                {
+                    if (DateTime.Now >= activeTasks[i].ReminderEndDate && DateTime.Now <= activeTasks[i].ReminderEndDate.AddMinutes(1))
+                    {
+                        //Console.WriteLine(activeTasks[i].TaskName + " alarm time!!!");
+                    }
+                }
+
+                await System.Threading.Tasks.Task.Delay(1000);
+            }
         }
     }
 }
