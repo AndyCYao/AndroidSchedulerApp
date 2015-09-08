@@ -7,11 +7,11 @@
         private PhraseManager m_phraseManager;
         private Scheduler m_scheduler;
         private AppConfig m_configuration;
-        private Core m_core;
+        private static Core m_core = null;
 
         public static Core GetCore()
         {
-            if (!m_core)
+            if (m_core == null)
             {
                 m_core = new Core();
             }
@@ -19,7 +19,7 @@
             return m_core;
         }
 
-        public Core()
+        private Core()
         {
             m_configuration = new AppConfig(SCHEDULEAPP_CONFIG_FILE);
             m_phraseManager = new PhraseManager(SCHEDULEAPP_PHRASE_FILE);

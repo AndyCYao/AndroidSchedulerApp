@@ -8,9 +8,9 @@ namespace clsUnitTests
     public class UnitTestCore
     {
         [TestMethod]
-        public void GetterTest()
+        public void CoreGetterTest()
         {
-            Core core = new Core();
+            Core core = Core.GetCore();
             PhraseManager manager = core.GetPhraseManager();
             Assert.AreEqual(manager.PhraseCount(), 0);
 
