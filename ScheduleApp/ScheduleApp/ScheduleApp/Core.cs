@@ -7,6 +7,17 @@
         private PhraseManager m_phraseManager;
         private Scheduler m_scheduler;
         private AppConfig m_configuration;
+        private Core m_core;
+
+        public static Core GetCore()
+        {
+            if (!m_core)
+            {
+                m_core = new Core();
+            }
+
+            return m_core;
+        }
 
         public Core()
         {
