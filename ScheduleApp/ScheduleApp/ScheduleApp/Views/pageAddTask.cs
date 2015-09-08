@@ -17,13 +17,14 @@ namespace ScheduleApp
 		public pageAddTask ()
 		{
 			Title = "Add Task";
+            
 			var nameLabel = new Label { Text = "Task Name" };
 			var nameEntry = new Entry ();
 			nameEntry.SetBinding (Entry.TextProperty, "Task Name");
 
 			var noteLabel = new Label { Text = "Task Note" };
 			var noteEntry = new Entry ();
-			nameEntry.SetBinding (Entry.TextProperty, "Task Note");
+			noteEntry.SetBinding (Entry.TextProperty, "Task Note");
 
 			var doneLabel = new Label { Text = "Done" };
 			var donePicker = new Picker{};
