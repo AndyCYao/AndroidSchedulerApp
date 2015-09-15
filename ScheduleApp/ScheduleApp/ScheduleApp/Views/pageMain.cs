@@ -39,20 +39,21 @@ namespace ScheduleApp
 				var pAddTask = new pageAddTask();
 				this.Navigation.PushAsync(pAddTask);
 			};
-			var SettingButton = new Button { Text = "Setting" };
-			SettingButton.Clicked += (sender, e) => {
-//				go to Settings Page
-//				var todoItem = (TodoItem)BindingContext;
-//				this.Navigation.PopAsync();
-			};
+			var ConfigButton = new Button { Text = "Configuration" };
+            ConfigButton.Clicked += (sender, e) => {
+                var pAppSettings = new pageAppConfig();
+                //				var todoItem = (TodoItem)BindingContext;
+                //				this.Navigation.PopAsync();
+                this.Navigation.PushAsync(pAppSettings);
+            };
 
 				
 			Content = new StackLayout {
 				VerticalOptions = LayoutOptions.Center,
 				Children = {
 					AddTask,
-					SettingButton
-				}
+                    ConfigButton
+                }
 			};
 		}
 	};

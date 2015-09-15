@@ -21,7 +21,7 @@ namespace clsUnitTests
         [TestMethod]
         public void PhraseManagerTest()
         {
-            PhraseManager manager = new PhraseManager();
+            PhraseManager manager = new PhraseManager("Blah");
             Phrase phrase1 = new Phrase("<name>, I am testing this phrase.", 5, 3, 0);
             Phrase phrase2 = new Phrase("So it's gonna be forever, or it's going to go down in flames!");
             Phrase phrase3 = new Phrase("And you love the game!", 4, 2);
