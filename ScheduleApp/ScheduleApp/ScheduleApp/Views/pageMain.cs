@@ -13,8 +13,20 @@ namespace ScheduleApp
 	// The root page of your application
 	public class Main: ContentPage
 	{
+		ListView listView; //This is to list all the current tasks in our XML memory.
 		public Main(){
 			Title = "Scheduler App 2015";
+			listView = new ListView ();
+			//below needs a DataTemplateType (typeOfScheduler probably)
+			listView.ItemTemplate = new DataTemplate ();
+
+			//On click of the item it pushs to a task page.
+			listView.ItemSelected += (sender, e) => {
+				// var selectedTask = xxx.SelectedItem();
+				// create a new page with this task as the binding context
+				// var TaskPage = new TaskPage();
+				// Navigation.PushAsync(TaskPage);
+			};
 
 			var AddTask = new Button {
 				Text = "Add Task"
