@@ -12,4 +12,5 @@ Sept 5th 2015-
 Sept 15th 2015 - AY
 To Do List:
     -Flesh out the MainPage so that upon entering the page, it shows all the tasks in memory
+      -connect it with the Core function, Static Class only one instance of this class.  ->  Scheduler Getter, 
     -Create a View Task page. 
