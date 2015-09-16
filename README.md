@@ -9,3 +9,7 @@ Sept 5th 2015-
 
   Created a Main Page and Add Task Page in xamarin.form. need to wire the add task page to the scheduler's add task method.
   
+Sept 15th 2015 - AY
+To DO LIST:
+    -Flesh out the MainPage so that upon entering the page, it shows all the tasks in memory
+    -Create a View Task page. 
