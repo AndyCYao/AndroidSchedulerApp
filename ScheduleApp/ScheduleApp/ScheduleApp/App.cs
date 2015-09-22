@@ -17,6 +17,7 @@ namespace ScheduleApp
     {
         public App()
         {
+			
 			MainPage = new NavigationPage (new Main ());
         }
 

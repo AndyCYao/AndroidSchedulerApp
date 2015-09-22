@@ -10,15 +10,25 @@ using System.Diagnostics;
 //main page that will greet the user.
 namespace ScheduleApp
 {
+
 	// The root page of your application
 	public class Main: ContentPage
 	{
+		
+
 		ListView listView; //This is to list all the current tasks in our XML memory.
 		public Main(){
 			Title = "Scheduler App 2015";
 			listView = new ListView ();
 			//below needs a DataTemplateType (typeOfScheduler probably)
-			listView.ItemTemplate = new DataTemplate ();
+			//listView.ItemTemplate = new DataTemplate(Scheduler);
+
+			//Sept 21. 15 the List view needs to be populated with existings tasks. 
+			//users will have the option to view the tasks, and do actions to them when they click the 
+			//specific task. 
+			Scheduler mainScheduler = Core.GetScheduler();
+
+
 
 			//On click of the item it pushs to a task page.
 			listView.ItemSelected += (sender, e) => {
@@ -30,10 +40,6 @@ namespace ScheduleApp
 
 			var AddTask = new Button {
 				Text = "Add Task"
-				//Font = Font.SystemFontOfSize (NamedSize.Large),
-				//BorderWidth = 1,
-				//HorizontalOptions = LayoutOptions.Center,
-				//VerticalOptions = LayoutOptions.CenterAndExpand
 			};
 			AddTask.Clicked += (sender, e) => {
 				var pAddTask = new pageAddTask();
