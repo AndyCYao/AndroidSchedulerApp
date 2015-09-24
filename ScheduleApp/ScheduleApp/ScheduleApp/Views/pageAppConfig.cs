@@ -24,7 +24,7 @@ namespace ScheduleApp
             { "White", Color.White }, { "Yellow", Color.Yellow }
         };
 
-        public pageAppConfig ()
+        public pageAppConfig()
 		{
             Core core = Core.GetCore();
             AppConfig config = core.GetConfig();
@@ -73,9 +73,9 @@ namespace ScheduleApp
 
             BoxView fontColourBoxView = new BoxView
             {
-                WidthRequest = 150,
-                HeightRequest = 150,
-                HorizontalOptions = LayoutOptions.Center,
+                WidthRequest = 20,
+                HeightRequest = 20,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
@@ -105,9 +105,9 @@ namespace ScheduleApp
 
             BoxView backgroundColourBoxView = new BoxView
             {
-                WidthRequest = 150,
-                HeightRequest = 150,
-                HorizontalOptions = LayoutOptions.Center,
+                WidthRequest = 20,
+                HeightRequest = 20,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
@@ -132,17 +132,20 @@ namespace ScheduleApp
 					//VerticalOptions = LayoutOptions.CenterAndExpand
 			};
 			SaveButton.Clicked += (sender, e) => {
-                var themeStruct = config.Theme;
+                ThemeStruct themeStruct = config.Theme;
 
                 themeStruct.defaultNotificationSound = ringTonePicker.Items[ringTonePicker.SelectedIndex];
                 themeStruct.backgroundColour = Convert.ToInt32(nameToColor[backgroundColourPicker.Items[backgroundColourPicker.SelectedIndex]]);
                 themeStruct.font = fontPicker.Items[fontPicker.SelectedIndex];
                 themeStruct.fontColour = Convert.ToInt32(nameToColor[fontColourPicker.Items[fontColourPicker.SelectedIndex]]);
                 themeStruct.fontSize = Convert.ToInt32(fontSizeEntry.Text);
+
+                config.Write(core.SCHEDULEAPP_CONFIG_FILE);
 			};
 
-            var scrollView = new ScrollView
+            ScrollView scrollView = new ScrollView
             {
+                VerticalOptions = LayoutOptions.FillAndExpand,
                 Content = new StackLayout
                 {
                     VerticalOptions = LayoutOptions.CenterAndExpand,
@@ -164,6 +167,8 @@ namespace ScheduleApp
                     }
                 }
             };
+
+            this.Content = scrollView;
         }
     }
 }

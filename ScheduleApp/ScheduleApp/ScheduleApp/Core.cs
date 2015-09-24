@@ -2,8 +2,8 @@
 {
     public class Core
     {
-        string SCHEDULEAPP_PHRASE_FILE = "Phrases.xml";
-        string SCHEDULEAPP_CONFIG_FILE = "Config.xml";
+        public string SCHEDULEAPP_PHRASE_FILE = "Phrases.xml";
+        public string SCHEDULEAPP_CONFIG_FILE = "Config.xml";
         private PhraseManager m_phraseManager;
         private Scheduler m_scheduler;
         private AppConfig m_configuration;
