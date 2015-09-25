@@ -14,3 +14,7 @@ To Do List:
     -Flesh out the MainPage so that upon entering the page, it shows all the tasks in memory
       -connect it with the Core function, Static Class only one instance of this class.  ->  Scheduler Getter, 
     -Create a View Task page. 
+
+Sept 24th 2015 --AY
+    -Test to see if the connector works from pageMain.cs  to the scheduler.getActiveTask.
+    -See if we can add task and it saves to the Scheduler AddTask. 
