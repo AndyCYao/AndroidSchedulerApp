@@ -10,15 +10,20 @@ using System.Diagnostics;
 //Sept 4th 2015
 //Controls are listed in this document below
 //https://developer.xamarin.com/guides/cross-platform/xamarin-forms/controls/views/
+
+//Sept 26th 2015
+//https://developer.xamarin.com/api/type/Xamarin.Forms.ScrollView/
+//will use this to implement a scrolling action. 
+//may have to put a table layout instead
+//http://developer.xamarin.com/guides/cross-platform/xamarin-forms/user-interface/tableview/
 namespace ScheduleApp
 {
 	public class pageAddTask:ContentPage
 	{
 		public pageAddTask ()
 		{
-			Title = "Add Task";
-            
-			var nameLabel = new Label { Text = "Task Name" };
+			//Title = "Add Task";
+            var nameLabel = new Label { Text = "Task Name" };
 			var nameEntry = new Entry ();
 			nameEntry.SetBinding (Entry.TextProperty, "Task Name");
 
@@ -73,9 +78,11 @@ namespace ScheduleApp
 				//Push the information presented into Scheduler Class. 
 			};
 
-
-			Content = new StackLayout {
-				VerticalOptions = LayoutOptions.CenterAndExpand,
+			var table = new TableView();
+			table.Intent = TableIntent.Settings;	
+			var layOut = new StackLayout {
+				//VerticalOptions = LayoutOptions.CenterAndExpand,
+				Orientation = StackOrientation.Horizontal,
 				Padding = new Thickness (20),
 				Children = {
 					nameLabel,
@@ -95,7 +102,13 @@ namespace ScheduleApp
 					SaveButton
 				}
 			};
-		}
-	}
-}
 
+			table.Root = new TableRoot () {
+				new TableSection ("Add Task") {
+					new ViewCell (){ View = layOut }
+				}	
+			};
+		Content = table;
+	}
+	}
+};
