@@ -22,7 +22,7 @@ namespace ScheduleApp
 	{
 		public pageAddTask ()
 		{
-			//Title = "Add Task";
+			Title = "Add Task With ScrollView";
             var nameLabel = new Label { Text = "Task Name" };
 			var nameEntry = new Entry ();
 			nameEntry.SetBinding (Entry.TextProperty, "Task Name");
@@ -78,37 +78,31 @@ namespace ScheduleApp
 				//Push the information presented into Scheduler Class. 
 			};
 
-			var table = new TableView();
-			table.Intent = TableIntent.Settings;	
-			var layOut = new StackLayout {
-				//VerticalOptions = LayoutOptions.CenterAndExpand,
-				Orientation = StackOrientation.Horizontal,
-				Padding = new Thickness (20),
-				Children = {
-					nameLabel,
-					nameEntry,
-					noteLabel,
-					noteEntry,
-					doneLabel,
-					donePicker,
-					ringToneLabel,
-					ringTonePicker,
-					frequencyLabel,
-					frequencyPicker,
-					frequencyUnitLabel,
-					frequencyUnitPicker,
-					reminderEndDateLabel,
-					reminderEndDatePicker,
-					SaveButton
+			ScrollView scrollView = new ScrollView {
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				Content = new StackLayout {
+					VerticalOptions = LayoutOptions.CenterAndExpand,
+					Padding = new Thickness (20),
+					Children = {
+						nameLabel,
+						nameEntry,
+						noteLabel,
+						noteEntry,
+						doneLabel,
+						donePicker,
+						ringToneLabel,
+						ringTonePicker,
+						frequencyLabel,
+						frequencyPicker,
+						frequencyUnitLabel,
+						frequencyUnitPicker,
+						reminderEndDateLabel,
+						reminderEndDatePicker,
+						SaveButton
+					}
 				}
 			};
-
-			table.Root = new TableRoot () {
-				new TableSection ("Add Task") {
-					new ViewCell (){ View = layOut }
-				}	
-			};
-		Content = table;
+			this.Content = scrollView;
 	}
 	}
 };
