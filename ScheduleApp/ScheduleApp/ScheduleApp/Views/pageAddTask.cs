@@ -69,13 +69,23 @@ namespace ScheduleApp
 
 			var SaveButton = new Button {
 				Text = "Save!"
-					//Font = Font.SystemFontOfSize (NamedSize.Large),
-					//BorderWidth = 1,
-					//HorizontalOptions = LayoutOptions.Center,
-					//VerticalOptions = LayoutOptions.CenterAndExpand
 			};
 			SaveButton.Clicked += (sender, e) => {
+				//Create a Task struct call TaskInfo
+				TaskInfo taskStruct;
+				taskStruct.TaskName = nameEntry.ToString();
+				taskStruct.TaskNotes = noteEntry.ToString();
+				taskStruct.ReminderEndDate = reminderEndDatePicker.ToString();
+				taskStruct.Done = donePicker.ToString();
+				taskStruct.RingToneName = ringTonePicker.ToString();
+				taskStruct.Frequency = frequencyPicker.GetValue();
+				taskStruct.FrequencyUnit = frequencyUnitPicker.ToString();
+
+				Task newTask = new Task(ref taskStruct);
 				//Push the information presented into Scheduler Class. 
+				Scheduler SchAdd = new Scheduler();
+				SchAdd.AddTask(newTask);
+					
 			};
 
 			ScrollView scrollView = new ScrollView {
