@@ -22,13 +22,15 @@ namespace ScheduleApp
 	{
 		public pageAddTask ()
 		{
+			DateTime tempReminderEndDate;
+
 			Title = "Add Task With ScrollView";
             var nameLabel = new Label { Text = "Task Name" };
-			var nameEntry = new Entry ();
+			var nameEntry = new Entry {Placeholder = "New Task Name"};
 			nameEntry.SetBinding (Entry.TextProperty, "Task Name");
 
 			var noteLabel = new Label { Text = "Task Note" };
-			var noteEntry = new Entry ();
+			var noteEntry = new Entry {Placeholder = "New Task Notes"};
 			noteEntry.SetBinding (Entry.TextProperty, "Task Note");
 
 			var doneLabel = new Label { Text = "Done" };
@@ -39,6 +41,7 @@ namespace ScheduleApp
 			var reminderEndDateLabel = new Label{ Text = "Set End Date" };
 			var reminderEndDatePicker = new DatePicker{ 
 				Format= "D",
+
 			};
 
 			var ringToneLabel = new Label { Text = "Select Ringtone" };
@@ -71,21 +74,29 @@ namespace ScheduleApp
 				Text = "Save!"
 			};
 			SaveButton.Clicked += (sender, e) => {
-				//Create a Task struct call TaskInfo
-				TaskInfo taskStruct;
-				taskStruct.TaskName = nameEntry.ToString();
-				taskStruct.TaskNotes = noteEntry.ToString();
-				taskStruct.ReminderEndDate = reminderEndDatePicker.ToString();
-				taskStruct.Done = donePicker.ToString();
-				taskStruct.RingToneName = ringTonePicker.ToString();
-				taskStruct.Frequency = frequencyPicker.GetValue();
-				taskStruct.FrequencyUnit = frequencyUnitPicker.ToString();
 
-				Task newTask = new Task(ref taskStruct);
+				string tTaskName;
+				string tTaskNotes;
+				DateTime tReminderEndDate;
+				bool tDone;
+				string tRingToneName;
+				int tFrequency;
+				string tFrequencyUnit;
+
+				tTaskName= nameEntry.Text.ToString();
+				tTaskNotes = noteEntry.Text.ToString();
+				//tReminderEndDate = reminderEndDatePicker.DateSelected;
+				//tDone = donePicker.Items[donePicker.SelectedIndex];
+				tRingToneName = ringTonePicker.Items(ringTonePicker.SelectedIndex);
+				tFrequency = frequencyPicker.GetValue();
+				tFrequencyUnit = frequencyUnitPicker.Items[donePicker.SelectedIndex()];
+
+				string Results;
+				Results = tTaskName + " " +  tTaskNotes;
+				DisplayAlert("Hello, Testing",Results,"Ok");
 				//Push the information presented into Scheduler Class. 
-				Scheduler SchAdd = new Scheduler();
-				SchAdd.AddTask(newTask);
-					
+				//Scheduler SchAdd = new Scheduler();
+				//SchAdd.AddTaskWithInfo();	
 			};
 
 			ScrollView scrollView = new ScrollView {
