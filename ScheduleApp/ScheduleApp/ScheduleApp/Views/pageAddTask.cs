@@ -80,19 +80,19 @@ namespace ScheduleApp
 				DateTime tReminderEndDate;
 				bool tDone;
 				string tRingToneName;
-				int tFrequency;
+				string tFrequency;
 				string tFrequencyUnit;
 
-				tTaskName= nameEntry.Text.ToString();
-				tTaskNotes = noteEntry.Text.ToString();
+				//tTaskName= nameEntry.Text.ToString();
+				//tTaskNotes = noteEntry.Text.ToString();
 				//tReminderEndDate = reminderEndDatePicker.DateSelected;
 				//tDone = donePicker.Items[donePicker.SelectedIndex];
-				tRingToneName = ringTonePicker.Items(ringTonePicker.SelectedIndex);
-				tFrequency = frequencyPicker.GetValue();
-				tFrequencyUnit = frequencyUnitPicker.Items[donePicker.SelectedIndex()];
+				tRingToneName = ringTonePicker.Items[ringTonePicker.SelectedIndex];
+				//tFrequency = frequencyPicker.Items[frequencyPicker.SelectedIndex];
+				//tFrequencyUnit = frequencyUnitPicker.Items[donePicker.SelectedIndex];
 
 				string Results;
-				Results = tTaskName + " " +  tTaskNotes;
+				Results =  tRingToneName + " ";
 				DisplayAlert("Hello, Testing",Results,"Ok");
 				//Push the information presented into Scheduler Class. 
 				//Scheduler SchAdd = new Scheduler();
