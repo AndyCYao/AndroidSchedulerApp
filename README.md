@@ -18,3 +18,6 @@ To Do List:
 Sept 24th 2015 --AY
     -Test to see if the connector works from pageMain.cs  to the scheduler.getActiveTask.
     -See if we can add task and it saves to the Scheduler AddTask. 
+
+Oct 8th 2015- AY
+     -Create validation in the pageAddTask so that there isn't empty fields after usesrs press Save. so that before it is   submitted to the scheduler there wouldn't be any null and crash.
