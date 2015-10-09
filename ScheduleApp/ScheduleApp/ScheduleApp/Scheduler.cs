@@ -202,7 +202,7 @@ namespace ScheduleApp
                     }
                 }
 
-                await System.Threading.Tasks.Task.Delay(1000);
+                await System.Threading.Tasks.Task.Delay(60000);
             }
         }
     }
