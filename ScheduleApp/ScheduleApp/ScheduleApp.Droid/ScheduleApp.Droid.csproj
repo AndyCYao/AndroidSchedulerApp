@@ -49,8 +49,11 @@
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml" />    
+	<Reference Include="System.ObjectModel" />
+    <Reference Include="System.Net.Primitives" />
     <Reference Include="Xamarin.Android.Support.v4">
       <HintPath>..\..\packages\Xamarin.Android.Support.v4.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
     </Reference>
@@ -81,6 +84,7 @@
     <Compile Include="Notifications.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\LocalNotification.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

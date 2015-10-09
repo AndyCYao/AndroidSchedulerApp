@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace ScheduleApp
 {
@@ -181,6 +182,8 @@ namespace ScheduleApp
         }
 
 
+        //This method needs to be called when the App begins.
+        //If we have a background startup service, the App should invoke this Timer as well.
         public async void scheduleTimer()
         {
             while (true)
@@ -190,7 +193,12 @@ namespace ScheduleApp
                 {
                     if (DateTime.Now >= activeTasks[i].ReminderEndDate && DateTime.Now <= activeTasks[i].ReminderEndDate.AddMinutes(1))
                     {
-                        //Console.WriteLine(activeTasks[i].TaskName + " alarm time!!!");
+                        //we need to discuss what the notification should contain
+						DependencyService.Get<NotificationService>().Notify(
+							"Notification title",
+							"Notification content / description",
+							0
+						);
                     }
                 }
 
