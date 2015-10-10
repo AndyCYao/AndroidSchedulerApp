@@ -183,7 +183,7 @@ namespace ScheduleApp
 
 
         //This method needs to be called when the App begins.
-        //If we have a background startup service, the App should invoke this Timer as well.
+        //If we have a background startup service, the in memory Task list must be populated/refreshed first before this method is invoked.
         public async void scheduleTimer()
         {
             while (true)

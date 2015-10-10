@@ -25,6 +25,7 @@ namespace ScheduleApp
 			//specific task. 
 			Core MainCore = Core.GetCore();
 			Scheduler MainScheduler = MainCore.GetScheduler ();
+            //MainScheduler.scheduleTimer();
 			List<Task> TasksList = MainScheduler.GetActiveTasks ();
 
 			//Info on ListView are in this reference
