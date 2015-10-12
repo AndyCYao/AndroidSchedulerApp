@@ -20,29 +20,42 @@ namespace ScheduleApp
 {
 	public class pageAddTask:ContentPage
 	{
-		public pageAddTask ()
-		{
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            Style = Core.GetCore().GetConfig().GeneratePageStyle();
+        }
+
+        public pageAddTask()
+        {
+            AppConfig config = Core.GetCore().GetConfig();
+            
 			Title = "Add Task With ScrollView";
-            var nameLabel = new Label { Text = "Task Name" };
-			var nameEntry = new Entry ();
-			nameEntry.SetBinding (Entry.TextProperty, "Task Name");
+            var nameLabel = new Label { Text = "Task Name", Style = config.GenerateLabelStyle() };
+            
+            var nameEntry = new Entry();
+            nameEntry.Style = config.GenerateEntryStyle();
+            nameEntry.SetBinding (Entry.TextProperty, "Task Name");
 
-			var noteLabel = new Label { Text = "Task Note" };
+			var noteLabel = new Label { Text = "Task Note", Style = config.GenerateLabelStyle() };
 			var noteEntry = new Entry ();
-			noteEntry.SetBinding (Entry.TextProperty, "Task Note");
+            noteEntry.Style = config.GenerateEntryStyle();
+            noteEntry.SetBinding (Entry.TextProperty, "Task Note");
 
-			var doneLabel = new Label { Text = "Done" };
-			var donePicker = new Picker{};
+			var doneLabel = new Label { Text = "Done", Style = config.GenerateLabelStyle() };
+			var donePicker = new Picker{ Style = config.GeneratePickerStyle() };
 			donePicker.Items.Add ("Yes");
 			donePicker.Items.Add ("No");
 
-			var reminderEndDateLabel = new Label{ Text = "Set End Date" };
+			var reminderEndDateLabel = new Label{ Text = "Set End Date", Style = config.GenerateLabelStyle() };
 			var reminderEndDatePicker = new DatePicker{ 
 				Format= "D",
-			};
+                Style = config.GeneratePickerStyle()
+            };
 
-			var ringToneLabel = new Label { Text = "Select Ringtone" };
-			var ringTonePicker = new Picker{ };
+			var ringToneLabel = new Label { Text = "Select Ringtone", Style = config.GenerateLabelStyle() };
+			var ringTonePicker = new Picker{ Style = config.GeneratePickerStyle() };
 
 			//This part we can create a dictionary object that contains all the
 			//ringtones, then load it into this picker, until then we just include
@@ -51,16 +64,16 @@ namespace ScheduleApp
 			ringTonePicker.Items.Add ("Minions");
 			ringTonePicker.Items.Add ("Flight of the Valkryie");
 
-			var frequencyLabel = new Label { Text = "Select Frequency" };
-			var frequencyPicker = new Picker { };
+			var frequencyLabel = new Label { Text = "Select Frequency", Style = config.GenerateLabelStyle() };
+			var frequencyPicker = new Picker { Style = config.GeneratePickerStyle() };
 
 			for (int i = 1; i <= 10; i++) {
 			
 				frequencyPicker.Items.Add(i.ToString());
 			};
 
-			var frequencyUnitLabel = new Label { Text = "Select Unit" };
-			var frequencyUnitPicker = new Picker{ };
+			var frequencyUnitLabel = new Label { Text = "Select Unit", Style = config.GenerateLabelStyle() };
+			var frequencyUnitPicker = new Picker{ Style = config.GeneratePickerStyle() };
 
 			frequencyUnitPicker.Items.Add ("Minutes");
 			frequencyUnitPicker.Items.Add ("Hours");
@@ -68,18 +81,19 @@ namespace ScheduleApp
 			frequencyUnitPicker.Items.Add ("Weeks");
 
 			var SaveButton = new Button {
-				Text = "Save!"
+				Text = "Save!",
 					//Font = Font.SystemFontOfSize (NamedSize.Large),
 					//BorderWidth = 1,
 					//HorizontalOptions = LayoutOptions.Center,
 					//VerticalOptions = LayoutOptions.CenterAndExpand
-			};
+                Style = config.GenerateButtonStyle()
+            };
 			SaveButton.Clicked += (sender, e) => {
 				//Push the information presented into Scheduler Class. 
 			};
 
 			ScrollView scrollView = new ScrollView {
-				VerticalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
 				Content = new StackLayout {
 					VerticalOptions = LayoutOptions.CenterAndExpand,
 					Padding = new Thickness (20),

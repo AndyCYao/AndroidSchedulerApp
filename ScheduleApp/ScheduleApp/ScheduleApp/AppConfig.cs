@@ -2,16 +2,18 @@
 using System.Xml.Linq;
 using PCLStorage;
 using System.Xml;
+using System.Collections.Generic;
+using Xamarin.Forms;
 
 namespace ScheduleApp
 {
     public struct ThemeStruct
     {
         public string defaultNotificationSound;
-        public int fontSize;
+        public Xamarin.Forms.NamedSize fontSize;
         public string font;
-        public int fontColour;
-        public int backgroundColour;
+        public Xamarin.Forms.Color fontColour;
+        public Xamarin.Forms.Color backgroundColour;
     }
 
     public class AppConfig
@@ -19,6 +21,44 @@ namespace ScheduleApp
         private ThemeStruct m_theme;
         private uint m_maxTasksPerPage;
         private bool m_showClosedTasks;
+
+        public Dictionary<string, NamedSize> nameToSize = new Dictionary<string, NamedSize>
+        {
+            { "Default", NamedSize.Default },
+            { "Micro", NamedSize.Micro }, { "Small", NamedSize.Small },
+            { "Medium", NamedSize.Medium }, { "Large", NamedSize.Large }
+        };
+
+        public Dictionary<NamedSize, string> sizeToName = new Dictionary<NamedSize, string>
+        {
+            { NamedSize.Default, "Default" },
+            { NamedSize.Micro, "Micro" }, { NamedSize.Small, "Small" },
+            { NamedSize.Medium, "Medium" }, { NamedSize.Large, "Large" }
+        };
+
+        public Dictionary<string, Color> nameToColour = new Dictionary<string, Color>
+        {
+            { "Aqua", Color.Aqua }, { "Black", Color.Black },
+            { "Blue", Color.Blue }, { "Fuschia", Color.Fuchsia },
+            { "Gray", Color.Gray }, { "Green", Color.Green },
+            { "Lime", Color.Lime }, { "Maroon", Color.Maroon },
+            { "Navy", Color.Navy }, { "Olive", Color.Olive },
+            { "Purple", Color.Purple }, { "Red", Color.Red },
+            { "Silver", Color.Silver }, { "Teal", Color.Teal },
+            { "White", Color.White }, { "Yellow", Color.Yellow }
+        };
+
+        public Dictionary<Color, string> colourToName = new Dictionary<Color, string>
+        {
+            { Color.Aqua, "Aqua" }, { Color.Black, "Black" },
+            { Color.Blue, "Blue" }, { Color.Fuchsia, "Fuschia" },
+            { Color.Gray, "Gray" }, { Color.Green, "Green" },
+            { Color.Lime, "Lime" }, { Color.Maroon, "Maroon" },
+            { Color.Navy, "Navy" }, { Color.Olive, "Olive" },
+            { Color.Purple, "Purple" }, { Color.Red, "Red" },
+            { Color.Silver, "Silver" }, { Color.Teal, "Teal" },
+            { Color.White, "White" }, { Color.Yellow, "Yellow" }
+        };
 
         public AppConfig(string fileToLoad = "")
         {
@@ -36,18 +76,20 @@ namespace ScheduleApp
         {
             m_maxTasksPerPage = 10;
             m_showClosedTasks = false;
-            m_theme.backgroundColour = 0x00FF00;
+            m_theme.backgroundColour = Xamarin.Forms.Color.Black;
             m_theme.font = "Helvetica";
-            m_theme.fontColour = 0xFFFFFF;
-            m_theme.fontSize = 10;
+            m_theme.fontColour = Xamarin.Forms.Color.White;
+            m_theme.fontSize = Xamarin.Forms.NamedSize.Default;
             m_theme.defaultNotificationSound = "XGonGiveItToYa.mp3";
         }
 
         public async void Write(string path)
         {
             IFile file = await FileSystem.Current.LocalStorage.CreateFileAsync(path, CreationCollisionOption.ReplaceExisting);
-            XmlWriter writer = XmlWriter.Create(await file.OpenAsync(FileAccess.ReadAndWrite));
-            XDocument doc = new XDocument();
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.CloseOutput = true;
+            XmlWriter writer = XmlWriter.Create(await file.OpenAsync(FileAccess.ReadAndWrite), settings);
+            
             writer.WriteStartDocument();
             writer.WriteStartElement("Config");
 
@@ -57,14 +99,15 @@ namespace ScheduleApp
             writer.WriteStartElement("Theme");
             writer.WriteElementString("DefaultNotificationSound", Theme.defaultNotificationSound.ToString());
             writer.WriteElementString("Font", Theme.font.ToString());
-            writer.WriteElementString("FontSize", Theme.fontSize.ToString());
-            writer.WriteElementString("FontColour", Theme.fontColour.ToString());
-            writer.WriteElementString("BackgroundColour", Theme.backgroundColour.ToString());
+            writer.WriteElementString("FontSize", sizeToName[Theme.fontSize]);
+            writer.WriteElementString("FontColour", colourToName[Theme.fontColour]);
+            writer.WriteElementString("BackgroundColour", colourToName[Theme.backgroundColour]);
             writer.WriteEndElement();
 
             writer.WriteEndElement();
             writer.WriteEndDocument();
             writer.Dispose();
+            
         }
 
         public async void Read(string path)
@@ -83,10 +126,10 @@ namespace ScheduleApp
                     reader.ReadStartElement("Theme");
                         m_theme.defaultNotificationSound = reader.ReadElementContentAsString();
                         m_theme.font = reader.ReadElementContentAsString();
-                        m_theme.fontSize = reader.ReadElementContentAsInt();
-                        m_theme.fontColour = reader.ReadElementContentAsInt();
-                        m_theme.backgroundColour = reader.ReadElementContentAsInt();
-                    reader.ReadEndElement();
+                        m_theme.fontSize = nameToSize[reader.ReadElementContentAsString()];
+                        m_theme.fontColour = nameToColour[reader.ReadElementContentAsString()];
+                        m_theme.backgroundColour = nameToColour[reader.ReadElementContentAsString()];
+                reader.ReadEndElement();
 
                 reader.ReadEndElement();
             }
@@ -112,6 +155,77 @@ namespace ScheduleApp
         {
             get { return m_showClosedTasks; }
             set { m_showClosedTasks = value; }
+        }
+
+        public Style GenerateLabelStyle()
+        {
+            var themeStyle = new Style(typeof(Label))
+            {
+                Setters = {
+                new Setter { Property = Label.BackgroundColorProperty, Value = m_theme.backgroundColour },
+                    /*new Setter { Property = Label.FontProperty, Value = m_theme.font },*/
+                    new Setter { Property = Label.FontSizeProperty, Value = Device.GetNamedSize(m_theme.fontSize, typeof(Label)) },
+                    new Setter { Property = Label.TextColorProperty, Value = m_theme.fontColour }
+                }
+            };
+
+            return themeStyle;
+        }
+
+        public Style GenerateEntryStyle()
+        {
+            var themeStyle = new Style(typeof(Entry))
+            {
+                Setters = {
+                new Setter { Property = Entry.BackgroundColorProperty, Value = m_theme.backgroundColour },
+                    new Setter { Property = Entry.TextColorProperty, Value = m_theme.fontColour }
+                }
+            };
+
+            return themeStyle;
+        }
+
+        public Style GeneratePickerStyle()
+        {
+            var themeStyle = new Style(typeof(Picker))
+            {
+                Setters = {
+                    new Setter { Property = Picker.BackgroundColorProperty, Value = m_theme.backgroundColour },
+                    new Setter { Property = Picker.StyleProperty, Value = GenerateLabelStyle() }
+                }
+            };
+
+            return themeStyle;
+        }
+
+        public Style GenerateButtonStyle()
+        {
+            var themeStyle = new Style(typeof(Button))
+            {
+                Setters = {
+                    new Setter { Property = Button.BackgroundColorProperty, Value = m_theme.backgroundColour },
+                    new Setter { Property = Button.TextColorProperty, Value = m_theme.fontColour },
+                    /*new Setter { Property = Button.FontProperty, Value = m_theme.font },*/
+                    new Setter { Property = Button.FontSizeProperty, Value = Device.GetNamedSize(m_theme.fontSize, typeof(Button)) },
+                    new Setter { Property = Button.BorderColorProperty, Value = Color.White },
+                    new Setter { Property = Button.BorderRadiusProperty, Value = 2 },
+                    new Setter { Property = Button.BorderWidthProperty, Value = 2 }
+                }
+            };
+
+            return themeStyle;
+        }
+
+        public Style GeneratePageStyle()
+        {
+            var themeStyle = new Style(typeof(ContentPage))
+            {
+                Setters = {
+                    new Setter { Property = ContentPage.BackgroundColorProperty, Value = m_theme.backgroundColour }
+                }
+            };
+
+            return themeStyle;
         }
     }
 }
