@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ScheduleApp;
+using Xamarin.Forms;
 
 namespace clsUnitTests
 {
@@ -12,10 +13,10 @@ namespace clsUnitTests
         {
             AppConfig config = new AppConfig();
 
-            Assert.AreEqual(config.Theme.backgroundColour, 0x00FF00);
+            Assert.AreEqual(config.Theme.backgroundColour, Color.Black);
             Assert.AreEqual(config.Theme.font, "Helvetica");
-            Assert.AreEqual(config.Theme.fontSize, 10);
-            Assert.AreEqual(config.Theme.fontColour, 0xFFFFFF);
+            Assert.AreEqual(config.Theme.fontSize, Xamarin.Forms.NamedSize.Default);
+            Assert.AreEqual(config.Theme.fontColour, Color.White);
             Assert.AreEqual(config.Theme.defaultNotificationSound, "XGonGiveItToYa.mp3");
         }
 
@@ -28,14 +29,15 @@ namespace clsUnitTests
 
             ThemeStruct theme = config.Theme;
 
-            theme.backgroundColour = 0x0000FF;
+            theme.backgroundColour = Color.Teal;
             theme.font = "Courier";
-            theme.fontSize = 20;
-            theme.fontColour = 0xFF0000;
+            theme.fontSize = Xamarin.Forms.NamedSize.Large;
+            theme.fontColour = Color.Red;
             theme.defaultNotificationSound = "ScarboroughFair.wav";
             //string path = Directory.GetCurrentDirectory() + "\\AppConfigSerialization.xml";
+            config.Theme = theme;
             string path = "AppConfigSerialization.xml";
-            //config.Write(path);
+            config.Write(path);
 
             AppConfig compare = new AppConfig(path);
 

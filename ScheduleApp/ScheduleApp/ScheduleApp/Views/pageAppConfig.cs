@@ -12,18 +12,6 @@ namespace ScheduleApp
 {
 	public class pageAppConfig:ContentPage
 	{
-        Dictionary<string, Color> nameToColor = new Dictionary<string, Color>
-        {
-            { "Aqua", Color.Aqua }, { "Black", Color.Black },
-            { "Blue", Color.Blue }, { "Fuschia", Color.Fuchsia },
-            { "Gray", Color.Gray }, { "Green", Color.Green },
-            { "Lime", Color.Lime }, { "Maroon", Color.Maroon },
-            { "Navy", Color.Navy }, { "Olive", Color.Olive },
-            { "Purple", Color.Purple }, { "Red", Color.Red },
-            { "Silver", Color.Silver }, { "Teal", Color.Teal },
-            { "White", Color.White }, { "Yellow", Color.Yellow }
-        };
-
         public pageAppConfig()
 		{
             Core core = Core.GetCore();
@@ -34,15 +22,22 @@ namespace ScheduleApp
             var defaultNotificationLabel = new Label { Text = "Default Notification Sound" };
             var defaultNotificationLabelDesc = new Label { Text = "Represents the default ring tone to assign for new tasks." };
 			var ringTonePicker = new Picker{ };
-            //This part we can create a dictionary object that contains all the
-            //ringtones, then load it into this picker, until then we just include
-            //these three. 
+            //TODO: Enumerate contents of Ringtones folder(at least on Android) into a dictionary and populate the picker
             ringTonePicker.Items.Add ("Crazy Frog");
             ringTonePicker.Items.Add ("Minions");
             ringTonePicker.Items.Add ("Flight of the Valkryie");
             ringTonePicker.SetBinding(Entry.TextProperty, "Default Notification Sound");
             ringTonePicker.Title = "Default Notification Sound";
             ringTonePicker.SelectedIndex = 0;
+
+            for (int i = 0; i < ringTonePicker.Items.Count; i++)
+            {
+                if (config.Theme.defaultNotificationSound == ringTonePicker.Items[i])
+                {
+                    ringTonePicker.SelectedIndex = i;
+                    break;
+                }
+            }
 
             var fontLabel = new Label { Text = "Font" };
             var fontPicker = new Picker();
@@ -55,14 +50,42 @@ namespace ScheduleApp
             fontPicker.Title = "Font";
             fontPicker.SelectedIndex = 0;
 
-			var fontSizeLabel = new Label { Text = "Font Size" };
-            var fontSizeEntry = new Entry();
-            fontSizeEntry.SetBinding(Entry.TextProperty, "Font Size");
-            
-			var fontColourLabel = new Label{ Text = "Font Colour" };
+            for (int i = 0; i < fontPicker.Items.Count; i++)
+            {
+                if (config.Theme.font == fontPicker.Items[i])
+                {
+                    fontPicker.SelectedIndex = i;
+                    break;
+                }
+            }
+
+            var fontSizeLabel = new Label { Text = "Font Size" };
+            var fontSizePicker = new Picker();
+            fontSizePicker.Items.Add("Default");
+            fontSizePicker.Items.Add("Micro");
+            fontSizePicker.Items.Add("Small");
+            fontSizePicker.Items.Add("Medium");
+            fontSizePicker.Items.Add("Large");
+
+            fontSizePicker.SetBinding(Entry.TextProperty, "Font Size");
+            fontSizePicker.SelectedIndex = 0;
+
+            string sizeToFind = config.sizeToName[config.Theme.fontSize];
+            var sizeArray = config.nameToSize.ToArray();
+
+            for (int i = 0; i < fontSizePicker.Items.Count; i++)
+            {
+                if (sizeToFind == fontSizePicker.Items[i])
+                {
+                    fontSizePicker.SelectedIndex = i;
+                    break;
+                }
+            }
+
+            var fontColourLabel = new Label{ Text = "Font Colour" };
             var fontColourPicker = new Picker();
 
-            var colourArray = nameToColor.ToArray();
+            var colourArray = config.nameToColour.ToArray();
             for (int i = 0; i < colourArray.Length; i++)
             {
                 fontColourPicker.Items.Add(colourArray[i].Key);
@@ -70,6 +93,17 @@ namespace ScheduleApp
             fontColourPicker.SetBinding(Entry.TextProperty, "Font Colour");
             fontColourPicker.Title = "Font Colour";
             fontColourPicker.SelectedIndex = 0;
+
+            string colourToFind = config.colourToName[config.Theme.fontColour];
+
+            for (int i = 0; i < colourArray.Length; i++)
+            {
+                if (colourToFind == colourArray[i].Key)
+                {
+                    fontColourPicker.SelectedIndex = i;
+                    break;
+                }
+            }
 
             BoxView fontColourBoxView = new BoxView
             {
@@ -79,6 +113,8 @@ namespace ScheduleApp
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
+            fontColourBoxView.Color = config.nameToColour[colourToFind];
+
             fontColourPicker.SelectedIndexChanged += (sender, args) =>
             {
                 if (fontColourPicker.SelectedIndex == -1)
@@ -87,8 +123,8 @@ namespace ScheduleApp
                 }
                 else
                 {
-                    string colorName = fontColourPicker.Items[fontColourPicker.SelectedIndex];
-                    fontColourBoxView.Color = nameToColor[colorName];
+                    string colourName = fontColourPicker.Items[fontColourPicker.SelectedIndex];
+                    fontColourBoxView.Color = config.nameToColour[colourName];
                 }
             };
 
@@ -103,6 +139,17 @@ namespace ScheduleApp
             backgroundColourPicker.Title = "Background Colour";
             backgroundColourPicker.SelectedIndex = 0;
 
+            colourToFind = config.colourToName[config.Theme.backgroundColour];
+
+            for (int i = 0; i < colourArray.Length; i++)
+            {
+                if (colourToFind == colourArray[i].Key)
+                {
+                    backgroundColourPicker.SelectedIndex = i;
+                    break;
+                }    
+            }
+
             BoxView backgroundColourBoxView = new BoxView
             {
                 WidthRequest = 20,
@@ -110,6 +157,8 @@ namespace ScheduleApp
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
+
+            backgroundColourBoxView.Color = config.nameToColour[colourToFind];
 
             backgroundColourPicker.SelectedIndexChanged += (sender, args) =>
             {
@@ -120,27 +169,33 @@ namespace ScheduleApp
                 else
                 {
                     string colorName = backgroundColourPicker.Items[backgroundColourPicker.SelectedIndex];
-                    backgroundColourBoxView.Color = nameToColor[colorName];
+                    backgroundColourBoxView.Color = config.nameToColour[colorName];
                 }
             };
 
             var SaveButton = new Button {
 				Text = "Save Configuration"
-					//Font = Font.SystemFontOfSize (NamedSize.Large),
-					//BorderWidth = 1,
-					//HorizontalOptions = LayoutOptions.Center,
-					//VerticalOptions = LayoutOptions.CenterAndExpand
 			};
 			SaveButton.Clicked += (sender, e) => {
                 ThemeStruct themeStruct = config.Theme;
 
-                themeStruct.defaultNotificationSound = ringTonePicker.Items[ringTonePicker.SelectedIndex];
-                themeStruct.backgroundColour = Convert.ToInt32(nameToColor[backgroundColourPicker.Items[backgroundColourPicker.SelectedIndex]]);
-                themeStruct.font = fontPicker.Items[fontPicker.SelectedIndex];
-                themeStruct.fontColour = Convert.ToInt32(nameToColor[fontColourPicker.Items[fontColourPicker.SelectedIndex]]);
-                themeStruct.fontSize = Convert.ToInt32(fontSizeEntry.Text);
+                if (backgroundColourPicker.Items[backgroundColourPicker.SelectedIndex] 
+                    == fontColourPicker.Items[fontColourPicker.SelectedIndex])
+                {
+                    DisplayAlert("Error", "You cannot select the same background and foreground colour. Please correct your selection and try again.", "Ok");
+                }
+                else
+                {
+                    themeStruct.defaultNotificationSound = ringTonePicker.Items[ringTonePicker.SelectedIndex];
+                    themeStruct.backgroundColour = config.nameToColour[backgroundColourPicker.Items[backgroundColourPicker.SelectedIndex]];
+                    themeStruct.font = fontPicker.Items[fontPicker.SelectedIndex];
+                    themeStruct.fontColour = config.nameToColour[fontColourPicker.Items[fontColourPicker.SelectedIndex]];
+                    themeStruct.fontSize = config.nameToSize[fontSizePicker.Items[fontSizePicker.SelectedIndex]];
+                    config.Theme = themeStruct;
+                }                
 
                 config.Write(core.SCHEDULEAPP_CONFIG_FILE);
+                Navigation.PopToRootAsync();
 			};
 
             ScrollView scrollView = new ScrollView
@@ -156,7 +211,7 @@ namespace ScheduleApp
                         fontLabel,
                         fontPicker,
                         fontSizeLabel,
-                        fontSizeEntry,
+                        fontSizePicker,
                         fontColourLabel,
                         fontColourPicker,
                         fontColourBoxView,
