@@ -1,4 +1,4 @@
-﻿<Properties StartupItem="ScheduleApp\ScheduleApp.Droid\ScheduleApp.Droid.csproj">
+﻿<Properties StartupItem="ScheduleApp/ScheduleApp.Droid/ScheduleApp.Droid.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.192.168.56.101:5555" />
   <MonoDevelop.Ide.Workbench ActiveDocument="ScheduleApp\ScheduleApp\Scheduler.cs">
     <Files>
