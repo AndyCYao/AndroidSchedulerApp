@@ -101,25 +101,25 @@ namespace ScheduleApp
 				DateTime tReminderEndDate;
 				bool tDone;
 				string tRingToneName;
-				string tFrequency;
+				int tFrequency;
 				string tFrequencyUnit;
 
 				if (nameEntry.Text != null && noteEntry.Text != null){ 
-				tTaskName = nameEntry.Text.ToString ();
-				tTaskNotes = noteEntry.Text.ToString ();
-				tReminderEndDate = reminderEndDatePicker.Date;
-				tDone = Convert.ToBoolean (donePicker.Items [donePicker.SelectedIndex]);
-				tRingToneName = ringTonePicker.Items [ringTonePicker.SelectedIndex];
-				tFrequency = frequencyPicker.Items [frequencyPicker.SelectedIndex];
-				tFrequencyUnit = frequencyUnitPicker.Items [donePicker.SelectedIndex];
+					tTaskName = nameEntry.Text.ToString ();
+					tTaskNotes = noteEntry.Text.ToString ();
+					tReminderEndDate = reminderEndDatePicker.Date;
+					tDone = Convert.ToBoolean (donePicker.Items [donePicker.SelectedIndex]);
+					tRingToneName = ringTonePicker.Items [ringTonePicker.SelectedIndex];
+					tFrequency = Convert.ToInt32(frequencyPicker.Items [frequencyPicker.SelectedIndex]);
+					tFrequencyUnit = frequencyUnitPicker.Items [frequencyUnitPicker.SelectedIndex];
 
-				string Results;
-				Results = tReminderEndDate + " ";
-				DisplayAlert ("Hello, Testing", Results, "Ok");
+					//string Results;
+					//Results = tReminderEndDate + " " + tTaskName + " " + tTaskNotes + " " + tDone + " " + tRingToneName + " "  + tFrequency + " " + tFrequencyUnit ;
+					//DisplayAlert ("Hello, Testing", Results, "Ok");
 
 				//Push the information presented into Scheduler Class. 
-				//Scheduler SchAdd = new Scheduler();
-				//SchAdd.AddTaskWithInfo(tTaskName,tTaskNotes,tReminderEndDate,tRingToneName,tFrequency,tFrequencyUnit);    
+					Scheduler SchAdd = new Scheduler();
+					SchAdd.AddTaskWithInfo(tTaskName,tTaskNotes,tReminderEndDate,tRingToneName,tFrequency,tFrequencyUnit);    
 				
 				}
 				else{
