@@ -21,3 +21,11 @@ Sept 24th 2015 --AY
 
 Oct 8th 2015- AY
      -Create validation in the pageAddTask so that there isn't empty fields after usesrs press Save. so that before it is   submitted to the scheduler there wouldn't be any null and crash.
+     
+Oct 15th 2015 -AY
+    -in the Task class, implement a NextReminderDate property and StartDateTime property. this is used to calculate the         next interval to remind.
+    -Tabled for now, Blackout period in a Day. 
+    -need to enumerate the ringtones and get the default value from the config core. maybe get the ringtones from a ringtone 
+    folder, 
+    York To do-> Implement the active task list form in the pageMain
+    Andy to do-> and the pageAddTask will need to loop through this folder, just like how Config configures it. -> Utility        class, a static instance that has a function that says get ringtone. 
