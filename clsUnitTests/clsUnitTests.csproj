@@ -74,6 +74,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="UnitTestUtility.cs" />
     <Compile Include="UnitTestAppConfig.cs" />
     <Compile Include="UnitTestCore.cs" />
     <Compile Include="UnitTestPhrases.cs" />
