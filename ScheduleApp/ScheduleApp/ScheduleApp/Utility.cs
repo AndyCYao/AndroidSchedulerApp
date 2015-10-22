@@ -22,9 +22,11 @@ namespace ScheduleApp
             
             //List<String> Results = new List<String>();
             String Results;
-
-            IFolder rootFolder = FileSystem.Current.LocalStorage();
-            Results = rootFolder.Name;
+            Results = "Test";
+            String fPath = "/RingTones/";
+            IFolder rootFolder = FileSystem.Current.LocalStorage;
+            //IFolder folder = await rootFolder.GetFolderAsync(fPath,CreationCollisionOption.OpenIfExists);
+            //Results = rootFolder;
             
 
             return Results;
