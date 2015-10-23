@@ -12,11 +12,11 @@ namespace clsUnitTests
         [TestMethod]
         public void ReturnFolder()
         {
-            string TestFolder = "RingTones";
-            string CurrentFolder = Utility.GetRingTones();
-            
+            string TestFolder = "~/RingTones/";
+            var ActualFolder = Utility.NavigateToFolder(TestFolder) ;
+  
             //Console.WriteLine(GetBooks.TaskNotes);
-            Assert.AreEqual(TestFolder, CurrentFolder);
+            Assert.AreEqual(TestFolder, ActualFolder);
             
         }
     }

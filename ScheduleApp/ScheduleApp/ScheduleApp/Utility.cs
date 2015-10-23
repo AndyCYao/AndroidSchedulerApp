@@ -15,21 +15,30 @@ namespace ScheduleApp
         pageAddTask for their ringtone picker.         
         */
 
-        //public List<String> GetRingTones(){
-        public static string GetRingTones() {
+        public static List<String> GetRingTones(){        
             //The GetRingTones method will look through the Ringtone folder
-            //loop through all the files that ends in .midi , retrieve their names. 
+            //loop through all the files that ends in .midi , retrieve their names.             
+            List<String> Results = new List<String>();
             
-            //List<String> Results = new List<String>();
-            String Results;
-            Results = "Test";
             String fPath = "/RingTones/";
-            IFolder rootFolder = FileSystem.Current.LocalStorage;
-            //IFolder folder = await rootFolder.GetFolderAsync(fPath,CreationCollisionOption.OpenIfExists);
-            //Results = rootFolder;
-            
+
+            var ringToneFolder = NavigateToFolder(fPath);          
 
             return Results;
+        }
+
+        //Taken from 
+        //https://mallibone.com/post/storing-files-from-the-portable-class-library-(pcl)
+
+        //for some reason calling FileSystem.Current.LocalStorage returns a
+        //...\AppData\Local\Microsoft Corporation\Microsoft (R) Windows (R) Operating System\10.0.10052.0
+
+        public static async Task<IFolder> NavigateToFolder(string targetFolder) {
+            /* Using PCL Storage */
+            IFolder rootFolder = FileSystem.Current.LocalStorage;
+            IFolder folder = await rootFolder.GetFolderAsync(targetFolder);
+  
+            return folder;
         }
     }
 }
