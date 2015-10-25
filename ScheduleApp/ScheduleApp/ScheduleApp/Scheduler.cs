@@ -76,7 +76,7 @@ namespace ScheduleApp
             {
                 throw new ArgumentNullException("taskToAdd.TaskName");
             }
-            else if (taskToAdd.ReminderEndDate == null)
+            else if (taskToAdd.ReminderEnd == null)
             {
                 throw new ArgumentNullException("taskToAdd.ReminderEndDate");
             }
@@ -145,13 +145,14 @@ namespace ScheduleApp
 
 
         //task ID's will increment continually until the end of ints
-        public void AddTaskWithInfo(string name, string notes, DateTime reminder, string ringToneName, int frequency, string frequencyUnit)
+        public void AddTaskWithInfo(string name, string notes, DateTime reminderBegin, DateTime reminderEnd, string ringToneName, int frequency, string frequencyUnit)
         {
             TaskInfo tempTaskInfo = new TaskInfo();
             tempTaskInfo.TaskName = name;
             tempTaskInfo.TaskNotes = notes;
             tempTaskInfo.Done = false;
-            tempTaskInfo.ReminderEndDate = reminder;
+            tempTaskInfo.ReminderBegin = reminderBegin;
+            tempTaskInfo.ReminderEnd = reminderEnd;
             tempTaskInfo.RingToneName = ringToneName;
             tempTaskInfo.Frequency = frequency;
             tempTaskInfo.FrequencyUnit = frequencyUnit;
@@ -175,7 +176,7 @@ namespace ScheduleApp
 
             updateTask.TaskName = name;
             updateTask.TaskNotes = notes;
-            updateTask.ReminderEndDate = reminder;
+            updateTask.ReminderEnd = reminder;
             updateTask.RingTone = ringToneName;
             updateTask.Frequency = frequency;
             updateTask.FrequencyUnit = frequencyUnit;
@@ -191,7 +192,7 @@ namespace ScheduleApp
                 List<Task> activeTasks = GetActiveTasks();
                 for (int i = 0; i < activeTasks.Count; i++)
                 {
-                    if (DateTime.Now >= activeTasks[i].ReminderEndDate && DateTime.Now <= activeTasks[i].ReminderEndDate.AddMinutes(1))
+                    if (DateTime.Now >= activeTasks[i].ReminderEnd && DateTime.Now <= activeTasks[i].ReminderEnd.AddMinutes(1))
                     {
                         //we need to discuss what the notification should contain
 						DependencyService.Get<NotificationService>().Notify(

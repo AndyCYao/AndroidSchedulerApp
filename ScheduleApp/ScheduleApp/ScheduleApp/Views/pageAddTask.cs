@@ -49,7 +49,15 @@ namespace ScheduleApp
 			donePicker.Items.Add ("true");
 			donePicker.Items.Add ("false");
 			donePicker.SelectedIndex = 0;
-			var reminderEndDateLabel = new Label{ Text = "Set End Date", Style = config.GenerateLabelStyle () };
+
+            var reminderBeginDateLabel = new Label { Text = "Set Begin Date", Style = config.GenerateLabelStyle() };
+            var reminderBeginDatePicker = new DatePicker
+            {
+                Format = "D",
+                Style = config.GeneratePickerStyle()
+            };
+
+            var reminderEndDateLabel = new Label{ Text = "Set End Date", Style = config.GenerateLabelStyle () };
 			var reminderEndDatePicker = new DatePicker { 
 				Format = "D",
 				Style = config.GeneratePickerStyle ()
@@ -98,7 +106,8 @@ namespace ScheduleApp
 
 				string tTaskName;
 				string tTaskNotes;
-				DateTime tReminderEndDate;
+                DateTime tReminderBeginDate;
+                DateTime tReminderEndDate;
 				bool tDone;
 				string tRingToneName;
 				int tFrequency;
@@ -107,6 +116,7 @@ namespace ScheduleApp
 				if (nameEntry.Text != null && noteEntry.Text != null){ 
 					tTaskName = nameEntry.Text.ToString ();
 					tTaskNotes = noteEntry.Text.ToString ();
+                    tReminderBeginDate = reminderBeginDatePicker.Date;
 					tReminderEndDate = reminderEndDatePicker.Date;
 					tDone = Convert.ToBoolean (donePicker.Items [donePicker.SelectedIndex]);
 					tRingToneName = ringTonePicker.Items [ringTonePicker.SelectedIndex];
@@ -119,8 +129,7 @@ namespace ScheduleApp
 
 				//Push the information presented into Scheduler Class. 
 					Scheduler SchAdd = new Scheduler();
-					SchAdd.AddTaskWithInfo(tTaskName,tTaskNotes,tReminderEndDate,tRingToneName,tFrequency,tFrequencyUnit);    
-				
+					SchAdd.AddTaskWithInfo(tTaskName, tTaskNotes, tReminderBeginDate, tReminderEndDate, tRingToneName, tFrequency, tFrequencyUnit);    				
 				}
 				else{
 				  DisplayAlert("But wait!","Please write a little about your Task name and task notes","Ok");
@@ -140,7 +149,9 @@ namespace ScheduleApp
 						donePicker,
 						ringToneLabel,
 						ringTonePicker,
-						frequencyLabel,
+                        reminderBeginDateLabel,
+                        reminderBeginDatePicker,
+                        frequencyLabel,
 						frequencyPicker,
 						frequencyUnitLabel,
 						frequencyUnitPicker,

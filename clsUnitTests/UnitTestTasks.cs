@@ -59,7 +59,7 @@ namespace clsUnitTests
             Assert.AreEqual(compareTask.TaskID, GetBooks.TaskID);
             Assert.AreEqual(compareTask.TaskName, GetBooks.TaskName);
             Assert.AreEqual(compareTask.TaskNotes, GetBooks.TaskNotes);
-            Assert.AreEqual(compareTask.ReminderEndDate, GetBooks.ReminderEndDate);
+            Assert.AreEqual(compareTask.ReminderEnd, GetBooks.ReminderEnd);
             Assert.AreEqual(compareTask.RingTone, GetBooks.RingTone);
             Assert.AreEqual(compareTask.Done, GetBooks.Done);
             Assert.AreEqual(compareTask.Frequency, GetBooks.Frequency);
