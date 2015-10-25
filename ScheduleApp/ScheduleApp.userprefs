@@ -1,14 +1,8 @@
 ﻿<Properties StartupItem="ScheduleApp/ScheduleApp.Droid/ScheduleApp.Droid.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.192.168.56.101:5555" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ScheduleApp\ScheduleApp\Scheduler.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Nexus 4 (Lollipop) New Sep 24" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../nUnitTestSchedulerApp/TestSchedule.cs">
     <Files>
-      <File FileName="ScheduleApp\ScheduleApp\Views\pageAddTask.cs" Line="84" Column="27" />
-      <File FileName="ScheduleApp\ScheduleApp\Views\pageMain.cs" Line="17" Column="3" />
-      <File FileName="ScheduleApp\ScheduleApp\Services\NotificationService.cs" Line="10" Column="1" />
-      <File FileName="ScheduleApp\ScheduleApp.Droid\Service\LocalNotification.cs" Line="34" Column="2" />
-      <File FileName="ScheduleApp\ScheduleApp\Tasks.cs" Line="31" Column="1" NotebookId="1" />
-      <File FileName="ScheduleApp\ScheduleApp\Scheduler.cs" Line="201" Column="18" NotebookId="1" />
-      <File FileName="ScheduleApp\ScheduleApp.Droid\MainActivity.cs" Line="20" Column="40" NotebookId="1" />
+      <File FileName="../nUnitTestSchedulerApp/TestSchedule.cs" Line="4" Column="19" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

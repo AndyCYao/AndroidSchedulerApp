@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Diagnostics;
-
+using PCLStorage;
 //Created by Andy- Sept 4th 2015
 //main page that will greet the user.
 namespace ScheduleApp
@@ -36,7 +36,6 @@ namespace ScheduleApp
 			//I'm replacing above with .ItemSource to Tasks
 			listView.ItemsSource = TasksList;
 
-
 			//On click of the item it pushs to a task page.
 			listView.ItemSelected += (sender, e) => {
 				// var selectedTask = xxx.SelectedItem();
@@ -44,6 +43,14 @@ namespace ScheduleApp
 				// var TaskPage = new TaskPage();
 				// Navigation.PushAsync(TaskPage);
 			};
+
+            //AY create new Label to display which PCLStorage root path is used when
+            //the android player opens.
+            IFolder pclPath = Utility.NavigateToFolder("/Ringtones");
+
+            var pathLabel = new Label { Text = pclPath.Name };
+
+
 
             AddTask = new Button {
                 Text = "Add Task",
@@ -65,6 +72,7 @@ namespace ScheduleApp
 			Content = new StackLayout {
 				VerticalOptions = LayoutOptions.Center,
 				Children = {
+                    pathLabel,
 					AddTask,
                     ConfigButton
                 }

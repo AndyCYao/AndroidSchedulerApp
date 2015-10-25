@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using PCLStorage;
 
 namespace ScheduleApp
@@ -33,12 +34,13 @@ namespace ScheduleApp
         //for some reason calling FileSystem.Current.LocalStorage returns a
         //...\AppData\Local\Microsoft Corporation\Microsoft (R) Windows (R) Operating System\10.0.10052.0
 
-        public static async Task<IFolder> NavigateToFolder(string targetFolder) {
+        public static IFolder NavigateToFolder(string targetFolder) {
             /* Using PCL Storage */
             IFolder rootFolder = FileSystem.Current.LocalStorage;
-            IFolder folder = await rootFolder.GetFolderAsync(targetFolder);
-  
-            return folder;
+            //IFolder folder = await rootFolder.GetFolderAsync(targetFolder);
+            //Debug.WriteLine(folder.Name);
+            //return folder;
+            return rootFolder;
         }
     }
 }

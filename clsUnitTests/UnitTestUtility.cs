@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ScheduleApp;
 using System.Xml;
@@ -14,8 +15,9 @@ namespace clsUnitTests
         {
             string TestFolder = "~/RingTones/";
             var ActualFolder = Utility.NavigateToFolder(TestFolder) ;
-  
+
             //Console.WriteLine(GetBooks.TaskNotes);
+
             Assert.AreEqual(TestFolder, ActualFolder);
             
         }
