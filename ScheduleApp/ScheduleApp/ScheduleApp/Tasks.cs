@@ -15,7 +15,8 @@ namespace ScheduleApp
 		public string TaskName;
 		public string TaskNotes;
 		public bool Done;
-		public DateTime ReminderEndDate;
+        public DateTime ReminderBegin;
+        public DateTime ReminderEnd;
 		public string RingToneName;
         public int Frequency;
         public string FrequencyUnit;
@@ -29,7 +30,9 @@ namespace ScheduleApp
         private string m_task_notes;
         private bool m_done;
 
-        private DateTime m_reminder_end_date;
+        private DateTime m_reminder_begin;
+        private DateTime m_reminder_end;
+        private DateTime m_reminder_next;
         private string m_ringtone_name;
 
         //As in, once every m_freq and unit,  once every 5 hours, once every 10 minutes, etc. 
@@ -62,10 +65,21 @@ namespace ScheduleApp
             m_task_name = f.TaskName;
             m_task_notes = f.TaskNotes;
             m_done = f.Done;
-            m_reminder_end_date = f.ReminderEndDate;
+            m_reminder_begin = f.ReminderBegin;
+            m_reminder_end = f.ReminderEnd;
             m_ringtone_name = f.RingToneName;
             m_frequency = f.Frequency;
             m_frequency_unit = f.FrequencyUnit;
+
+            CalculateNextReminder();
+        }
+
+        private void CalculateNextReminder()
+        {
+            DateTime current = DateTime.Now.ToLocalTime();
+
+            //factor in frequency and unit
+
         }
 
         //********************
@@ -73,7 +87,11 @@ namespace ScheduleApp
         //not needed any more. 
         //private Task() { }
 
-        //Declare a Done boolean property for each task
+        public int TaskID
+        {
+            get { return m_id; }
+        }
+
         public bool Done
         {
             get{  return m_done; }
@@ -82,9 +100,6 @@ namespace ScheduleApp
                 }
         }
 
-        //Both Task Name and Task Notes needs to be able to get modified
-        //directly, not just from at the time of creating the object. 
-        //therefore, i need to create a set for them two as well. 
         public string TaskName
         {
             get { return m_task_name; }
@@ -99,14 +114,24 @@ namespace ScheduleApp
                 m_task_notes= value; 
             }
         }
-        //Notification Details below..
-        public DateTime ReminderEndDate
+        
+        public DateTime ReminderBegin
         {
-            get { return m_reminder_end_date; }
-            set {
-                m_reminder_end_date = value;
+            get { return m_reminder_begin; }
+            set
+            {
+                m_reminder_begin = value;
             }
         }
+
+        public DateTime ReminderEnd
+        {
+            get { return m_reminder_end; }
+            set {
+                m_reminder_end = value;
+            }
+        }
+
         public string RingTone
         {
             get { return m_ringtone_name; }
@@ -154,7 +179,8 @@ namespace ScheduleApp
             writer.WriteElementString("TaskID", TaskID.ToString());
             writer.WriteElementString("TaskName", TaskName);
             writer.WriteElementString("TaskNotes", TaskNotes);
-            writer.WriteElementString("ReminderEndDate", ReminderEndDate.ToString());
+            writer.WriteElementString("ReminderBegin", ReminderBegin.ToString());
+            writer.WriteElementString("ReminderEnd", ReminderEnd.ToString());
             writer.WriteElementString("RingTone", RingTone);
             writer.WriteElementString("Done", Done.ToString());
             writer.WriteElementString("Frequency", Frequency.ToString());
@@ -169,7 +195,8 @@ namespace ScheduleApp
             m_id = reader.ReadElementContentAsInt();
             TaskName = reader.ReadElementContentAsString();
             TaskNotes = reader.ReadElementContentAsString();
-            ReminderEndDate = DateTime.Parse(reader.ReadElementContentAsString());
+            ReminderBegin = DateTime.Parse(reader.ReadElementContentAsString());
+            ReminderEnd = DateTime.Parse(reader.ReadElementContentAsString());
             RingTone = reader.ReadElementContentAsString();
             Done = Boolean.Parse(reader.ReadElementContentAsString());
             Frequency = reader.ReadElementContentAsInt();
@@ -197,13 +224,6 @@ namespace ScheduleApp
             return memStream;
         }
         */
-
-
-
-        public int TaskID
-        {
-            get { return m_id; }
-        }
     }
 }
 

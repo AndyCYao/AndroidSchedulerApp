@@ -39,11 +39,13 @@ namespace nUnitTestSchedulerApp
         public void TestStructConstructor()
         {
             TaskInfo testS;
+
             testS.TaskID = 1;
             testS.TaskName = "Create Struct";
             testS.TaskNotes = "update it, then test it";
             testS.Done = false;
-            testS.ReminderEndDate = new DateTime(2015, 8, 20);
+            testS.ReminderBegin = new DateTime(2015, 8, 20);
+            testS.ReminderEnd = new DateTime(2016, 8, 20);
             testS.RingToneName = "Crazy Frog";
             testS.Frequency = 12;
             testS.FrequencyUnit = "Hours";
@@ -52,7 +54,7 @@ namespace nUnitTestSchedulerApp
             Assert.AreEqual(testS.TaskNotes, x.TaskNotes);
             Assert.AreEqual(testS.TaskName, x.TaskName);
             Assert.AreEqual(testS.Done, x.Done);
-            Assert.AreEqual(testS.ReminderEndDate, x.ReminderEndDate);
+            Assert.AreEqual(testS.ReminderEnd, x.ReminderEnd);
             Assert.AreEqual(testS.RingToneName, x.RingTone);
             Assert.AreEqual(testS.TaskID, x.TaskID);
             Assert.AreEqual(testS.FrequencyUnit, x.FrequencyUnit);
@@ -72,7 +74,8 @@ namespace nUnitTestSchedulerApp
             testS.TaskName = "Create Struct";
             testS.TaskNotes = "update it, then test it";
             testS.Done = false;
-            testS.ReminderEndDate = new DateTime(2015, 8, 20);
+            testS.ReminderBegin = new DateTime(2015, 8, 20);
+            testS.ReminderEnd = new DateTime(2016, 8, 20);
             testS.RingToneName = "CrazyFrog.wav";
             testS.Frequency = 5;
             testS.FrequencyUnit = "days";
@@ -108,7 +111,7 @@ namespace nUnitTestSchedulerApp
             Assert.AreEqual(compareTask.TaskID, x.TaskID);
             Assert.AreEqual(compareTask.TaskName, x.TaskName);
             Assert.AreEqual(compareTask.TaskNotes, x.TaskNotes);
-            Assert.AreEqual(compareTask.ReminderEndDate, x.ReminderEndDate);
+            Assert.AreEqual(compareTask.ReminderEnd, x.ReminderEnd);
             Assert.AreEqual(compareTask.RingTone, x.RingTone);
             Assert.AreEqual(compareTask.Done, x.Done);
         }
