@@ -10,7 +10,8 @@ namespace clsUnitTests
     [TestClass]
     public class UnitTestUtility
     {
-        [TestMethod]
+        //[TestMethod]
+        /*
         public void ReturnFolder()
         {
             string TestFolder = "~/RingTones/";
@@ -21,5 +22,6 @@ namespace clsUnitTests
             Assert.AreEqual(TestFolder, ActualFolder);
             
         }
+        */
     }
 }

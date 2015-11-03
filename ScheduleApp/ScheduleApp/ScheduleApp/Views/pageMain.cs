@@ -46,9 +46,9 @@ namespace ScheduleApp
 
             //AY create new Label to display which PCLStorage root path is used when
             //the android player opens.
-            IFolder pclPath = Utility.NavigateToFolder("/Ringtones");
+            //IFolder pclPath = Utility.NavigateToFolder("/Ringtones");
 
-            var pathLabel = new Label { Text = pclPath.Name };
+            //var pathLabel = new Label { Text = pclPath.Name };
 
 
 
@@ -72,7 +72,7 @@ namespace ScheduleApp
 			Content = new StackLayout {
 				VerticalOptions = LayoutOptions.Center,
 				Children = {
-                    pathLabel,
+                    //pathLabel,
 					AddTask,
                     ConfigButton
                 }

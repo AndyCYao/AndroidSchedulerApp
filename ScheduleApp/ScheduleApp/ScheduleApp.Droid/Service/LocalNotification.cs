@@ -26,7 +26,7 @@ namespace ScheduleApp.Droid.Service
 
 			Notification notification = builder.Build();
 			NotificationManager notificationManager = Application.Context.GetSystemService (Context.NotificationService) as NotificationManager;
-
+           
 			const int notificationId = 0;
 			notificationManager.Notify (notificationId, notification);
         }
