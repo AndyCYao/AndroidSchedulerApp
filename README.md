@@ -29,3 +29,10 @@ Oct 15th 2015 -AY
     folder, 
     York To do-> Implement the active task list form in the pageMain
     Andy to do-> and the pageAddTask will need to loop through this folder, just like how Config configures it. -> Utility        class, a static instance that has a function that says get ringtone. 
+    
+Oct 28th 2015-AY
+    -Since each phone system will have different stock ringtones, we would have to make the "FindRingTones" platform        specific. The to do list would be as so:.
+      1.) Create an interface in ScheduleApp PCL (similar to NotificationServices.cs)
+      2.) In the SchedulApp.Droid, create the local method that the interface references. (similar to Notify)
+      3.) 2.) would have to return a list of ringtone names in string. from looking into Android Media 
+      4.) Unsure- would the Utility.cs call this interface , or the pageAddTask/pageConfig call this interface to retrieve the ringtones?
