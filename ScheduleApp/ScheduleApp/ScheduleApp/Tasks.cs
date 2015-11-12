@@ -76,10 +76,39 @@ namespace ScheduleApp
 
         private void CalculateNextReminder()
         {
-            DateTime current = DateTime.Now.ToLocalTime();
+            DateTime current = DateTime.UtcNow;
+            TimeSpan difference = current.Subtract(m_reminder_begin.ToUniversalTime());
+            TimeSpan multiple;
+            
+            //get datetime difference
+                //determine multiples of specified frequency and unit relative to difference
+                    //add one multiple
+                    //e.g. remind by days
+                            //difference of 10 days and 11 hours
+                                //10 full multiples
+                                    //add 1
+                                        //next reminder is 13 hours from now
+            switch(m_frequency_unit)
+            {
+                case "Minutes": multiple = new TimeSpan(0, m_frequency, 0);  break;
+                case "Hours": multiple = new TimeSpan(m_frequency, 0, 0); break;
+                case "Days": multiple = new TimeSpan(m_frequency, 0, 0, 0); break;
+                case "Weeks": multiple = new TimeSpan(m_frequency * 7, 0, 0, 0); break; 
+                case "Months": break;
+                case "Years": multiple = new TimeSpan(m_frequency * 365, 0, 0); break; 
+                default: /* DO NOTHING */ break;
+            }
 
-            //factor in frequency and unit
+            long multipleCount = difference.Ticks / multiple.Ticks;
+            
+            m_reminder_next = m_reminder_begin.ToUniversalTime();
 
+            for (int i = 0; i <= multipleCount; i++)
+            {
+                m_reminder_next = m_reminder_next.Add(multiple);
+            }
+
+            m_reminder_next = m_reminder_next.ToLocalTime();
         }
 
         //********************

@@ -46,9 +46,9 @@ namespace ScheduleApp
 
 			var doneLabel = new Label { Text = "Done", Style = config.GenerateLabelStyle () };
 			var donePicker = new Picker{ Style = config.GeneratePickerStyle () };
-			donePicker.Items.Add ("true");
-			donePicker.Items.Add ("false");
-			donePicker.SelectedIndex = 0;
+			donePicker.Items.Add ("False");
+            donePicker.Items.Add("True");
+            donePicker.SelectedIndex = 0;
 
             var reminderBeginDateLabel = new Label { Text = "Set Begin Date", Style = config.GenerateLabelStyle() };
             var reminderBeginDatePicker = new DatePicker
