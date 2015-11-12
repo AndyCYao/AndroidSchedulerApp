@@ -19,21 +19,25 @@ namespace ScheduleApp.Droid
 {
     public class LocalRingTones : RingTones
     {
-        public List<String> GetRingTones() {
+        //need an empty parameterless constructor so dependency service can create new instances. 
+        public LocalRingTones(){}
+        public void GetRingTones() {
             List<String> Results = new List<String>();
             //try to show a ringTone picker. per this article
             //http://stackoverflow.com/questions/18732193/how-i-get-the-default-ringtone-list-in-android-on-programmatically
 
             Android.Media.RingtoneManager RingToneMgm = new Android.Media.RingtoneManager(Application.Context);
+            //RingToneMgm.SetType(RingtoneManager.);
             //RingToneMgm.SetType(Android.Media.);
             Android.Database.ICursor cursor = RingToneMgm.Cursor;
             while (cursor.MoveToNext())
             {
-                String title = cursor.GetString(0);
+                //1 is the column that has the title of the ringtones. 
+                String title = cursor.GetString(1);
                 Console.WriteLine(title);
             }
            
-            return Results;
+            //return Results;
         }
     }
 }

@@ -108,6 +108,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LocalRingTones.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Notifications.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

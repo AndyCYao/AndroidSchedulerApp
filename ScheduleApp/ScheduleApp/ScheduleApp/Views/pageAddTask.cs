@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Diagnostics;
 
+using ScheduleApp;
+
+
 //Add Task viewer
 //Sept 4th 2015
 //Controls are listed in this document below
@@ -66,6 +69,10 @@ namespace ScheduleApp
 			var ringToneLabel = new Label { Text = "Select Ringtone", Style = config.GenerateLabelStyle () };
 			var ringTonePicker = new Picker{ Style = config.GeneratePickerStyle () };
 
+            //Nov 11th 2015 - Testing to access Android ringtone folder from the pageAddTask page. 
+            //using this document. https://developer.xamarin.com/guides/cross-platform/xamarin-forms/dependency-service/
+            DependencyService.Get<RingTones>().GetRingTones();
+            
 			//This part we can create a dictionary object that contains all the
 			//ringtones, then load it into this picker, until then we just include
 			//these three. 
