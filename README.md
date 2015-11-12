@@ -36,3 +36,6 @@ Oct 28th 2015-AY
       2.) In the SchedulApp.Droid, create the local method that the interface references. (similar to Notify)
       3.) 2.) would have to return a list of ringtone names in string. from looking into Android Media 
       4.) Unsure- would the Utility.cs call this interface , or the pageAddTask/pageConfig call this interface to retrieve the ringtones?
+      
+Nov 11th 2015-Ay
+    Need to update GetRingTones method to return a tuple of ringtone title, and url? so that when pageAddTask and pageAppConfig calls GetRingTones, it will receive the tuples and load the pickers. 
