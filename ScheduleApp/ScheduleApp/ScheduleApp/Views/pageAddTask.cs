@@ -17,8 +17,7 @@ using ScheduleApp;
 //Sept 26th 2015
 //https://developer.xamarin.com/api/type/Xamarin.Forms.ScrollView/
 //will use this to implement a scrolling action. 
-//may have to put a table layout instead
-//http://developer.xamarin.com/guides/cross-platform/xamarin-forms/user-interface/tableview/
+
 namespace ScheduleApp
 {
 	public class pageAddTask:ContentPage
@@ -80,9 +79,17 @@ namespace ScheduleApp
             {
                 ringTonePicker.Items.Add(ring.Item1);
             }
-			//This is subject to change, need to speak to Peter
-			//on how the default ringtone in the config page gets updated here
 			ringTonePicker.SelectedIndex = 0;
+
+            for(int i = 0; i < ringTonePicker.Items.Count; i++)
+            {
+                if (config.Theme.defaultNotificationSound == ringTonePicker.Items[i])
+                {
+                    ringTonePicker.SelectedIndex = i;
+                    break;
+                }
+            }
+
 
 			var frequencyLabel = new Label { Text = "Select Frequency", Style = config.GenerateLabelStyle () };
 			var frequencyPicker = new Picker { Style = config.GeneratePickerStyle () };
