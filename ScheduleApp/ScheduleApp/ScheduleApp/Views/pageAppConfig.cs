@@ -22,10 +22,17 @@ namespace ScheduleApp
             var defaultNotificationLabel = new Label { Text = "Default Notification Sound" };
             var defaultNotificationLabelDesc = new Label { Text = "Represents the default ring tone to assign for new tasks." };
 			var ringTonePicker = new Picker{ };
-            //TODO: Enumerate contents of Ringtones folder(at least on Android) into a dictionary and populate the picker
-            ringTonePicker.Items.Add ("Crazy Frog");
-            ringTonePicker.Items.Add ("Minions");
-            ringTonePicker.Items.Add ("Flight of the Valkryie");
+
+            List<Tuple<String, String>> rings = DependencyService.Get<RingTones>().GetRingTones();
+
+            //This part we can create a dictionary object that contains all the
+            //ringtones, then load it into this picker, until then we just include
+            //these three. 
+            foreach (var ring in rings)
+            {
+                ringTonePicker.Items.Add(ring.Item1);
+            }
+            
             ringTonePicker.SetBinding(Entry.TextProperty, "Default Notification Sound");
             ringTonePicker.Title = "Default Notification Sound";
             ringTonePicker.SelectedIndex = 0;

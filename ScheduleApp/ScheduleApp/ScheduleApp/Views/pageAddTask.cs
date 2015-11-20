@@ -71,19 +71,15 @@ namespace ScheduleApp
 
             //Nov 11th 2015 - Testing to access Android ringtone folder from the pageAddTask page. 
             //using this document. https://developer.xamarin.com/guides/cross-platform/xamarin-forms/dependency-service/
-            List<Tuple<String, String>> x = DependencyService.Get<RingTones>().GetRingTones();
+            List<Tuple<String, String>> rings = DependencyService.Get<RingTones>().GetRingTones();
 
             //This part we can create a dictionary object that contains all the
             //ringtones, then load it into this picker, until then we just include
             //these three. 
-            foreach (var ring in x)
+            foreach (var ring in rings)
             {
                 ringTonePicker.Items.Add(ring.Item1);
             }
-			//ringTonePicker.Items.Add ("Crazy Frog");
-			//ringTonePicker.Items.Add ("Minions");
-			//ringTonePicker.Items.Add ("Flight of the Valkryie");
-
 			//This is subject to change, need to speak to Peter
 			//on how the default ringtone in the config page gets updated here
 			ringTonePicker.SelectedIndex = 0;
