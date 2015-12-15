@@ -3,39 +3,130 @@ AnYoPe Jul 28th 2015 - Android Scheduler App in C#.
 Andy's Task for Jul 28th-
 
 
-Implement the Task class as per discussion. things to test include: write out necessary setters and getters functions to test the task class, we expect the task class to return a xml snippet with the below info. Test so far as to confirm that it work, should be able to handle really long string, ensure the components of the Task class works. 
 
-Sept 5th 2015-
+# Overview:
+AndroidSchedulerApp (ASA) is an android app that reminds users their tasks, it will send periodic reminders based on the user's preference. The app will be created using xamarin and C#.
 
-  Created a Main Page and Add Task Page in xamarin.form. need to wire the add task page to the scheduler's add task method.
+# Scenario:
+Scenario 1: Andy has a weekly list of events including playing sports, volunteering, and keeping up with the Kardarshians. To help him keep track of all these tasks, he inputs them into the ASA. and the ASA notifies him periodically through push notifications on his Android device.
+
+# Flow Chart: 
+
+# Screen By Screen Specification:
   
-Sept 15th 2015 - AY
-To Do List:
-    -Flesh out the MainPage so that upon entering the page, it shows all the tasks in memory
-      -connect it with the Core function, Static Class only one instance of this class.  ->  Scheduler Getter, 
-    -Create a View Task page. 
+  Main Page:
+    Contains a list box of current tasks. with two buttons that navigates to either "Add Task" or "Setting" respectively.
 
-Sept 24th 2015 --AY
-    -Test to see if the connector works from pageMain.cs  to the scheduler.getActiveTask.
-    -See if we can add task and it saves to the Scheduler AddTask. 
+  Add Task:
+    Allows users to add new tasks, contains all the relevant inputs required. At the time of writing, the inputs include
+    Task Name,
+    Task Notes,
+    Reminder Begin Date,
+    Reminder End Date,
+    Ringtone Name,
+    Frequency,
+    Frequency Unit
 
-Oct 8th 2015- AY
-     -Create validation in the pageAddTask so that there isn't empty fields after usesrs press Save. so that before it is   submitted to the scheduler there wouldn't be any null and crash.
-     
-Oct 15th 2015 -AY
-    -in the Task class, implement a NextReminderDate property and StartDateTime property. this is used to calculate the         next interval to remind.
-    -Tabled for now, Blackout period in a Day. 
-    -need to enumerate the ringtones and get the default value from the config core. maybe get the ringtones from a ringtone 
-    folder, 
-    York To do-> Implement the active task list form in the pageMain
-    Andy to do-> and the pageAddTask will need to loop through this folder, just like how Config configures it. -> Utility        class, a static instance that has a function that says get ringtone. 
+  Setting:
+    Contains all the settings related to the user preference. 
+    Default Notification Sound,
+    Background Colour,
+    Font Picker,
+    Font Colour,
+    Font Size
+
+
+# Technical Note:
+
+local storage only, no users accounts.
+android only-> SDK 2.3 this version covers 90% of user base. compatible with since 2013 apps.
+http://developer.android.com/intl/zh-CN/about/dashboards/index.html
+Depending on OS version, either create a system wide configuration or per profile configuration
+
+
+Some classes to consider:
+  Reminder container
+  Topic to be reminded of
+  Location
+  Time
+
+Code Architecture:
+
+Phrase manager -> used to phrase the notification so users get a customized message. ie 
+    from “read xxx book” to “hey!, don’t forget to -read xxx book’”. 
+    Add phrase (will require some form of noun and verb placement)
+    Remove phrase
+    Phrase at
+  
+Task Class  ->  includes the following property:
+  id - primary key  this will be given to the Scheduler instead.  
+  Name -> main subject line ie: “Read books by x author”
+  Notes -> more detail ie: “Book held at library”
+  Done ->  a boolean whether the task is completed or not. 
+  Details of notification-> 
+  “reminder end date” and 
+  “frequency of reminder before the end date.”   , choose unit of frequency (hrs, days, weeks) 
+  with location tracking or not (i think its call GeoFencing in OSX)  etc. 
+  ringtone track
+  starting time. (ie begin, next week, next day, etc.) 
+  The scheduler uses the task’s details of notification and make the notification.
+
+
+  Scheduler
+    Generates notifications
+      Could potentially group simultaneous notifications
+      Interacts with the Phrase Manager
+      **Look up libraries which could generate sentences based on given input**
+    Stores tasks
+      Add tasks
+      Remove tasks
+      TaskAt
+    Get current time
     
-Oct 28th 2015-AY
-    -Since each phone system will have different stock ringtones, we would have to make the "FindRingTones" platform        specific. The to do list would be as so:.
-      1.) Create an interface in ScheduleApp PCL (similar to NotificationServices.cs)
-      2.) In the SchedulApp.Droid, create the local method that the interface references. (similar to Notify)
-      3.) 2.) would have to return a list of ringtone names in string. from looking into Android Media 
-      4.) Unsure- would the Utility.cs call this interface , or the pageAddTask/pageConfig call this interface to retrieve the ringtones?
-      
-Nov 11th 2015-Ay
-    Need to update GetRingTones method to return a tuple of ringtone title, and url? so that when pageAddTask and pageAppConfig calls GetRingTones, it will receive the tuples and load the pickers. 
+App Configuration
+    Default notification sound
+    Show completed tasks
+    Max number of tasks to show per page
+    Themes?
+      Font
+      Colour
+      Size
+      Background colour
+    Read
+    Write
+
+Core class
+    Is a singleton with a getter to be used by thing such as the UI
+    Has a scheduler
+    Has a phrase manager
+    Contains an app configuration instance
+
+  
+  To Do list for -> York-> notifications and integrate with timed reminders
+
+UI side Notification Class  -> properties:
+    Intent (stub action after user taps notification)
+    PendingIntent (action to take after user taps notification)
+    BigTextStyles (use full text when notification expanded)
+    BigPictureStyles (use large images when notification expanded)
+    InboxStyle (whether multiple notifications stack)
+    Priority (for when to best notify user)
+    Visibility (for lockscreen notifications)
+    Category (type of notification used in system settings)
+
+-> methods::
+init()
+buildNotification()
+buildCompatNotification()
+-sound (bool)
+-vibration (bool)
+-contentIntent(Intent)
+getNotificationManager()
+publishNotification()
+updateNotification()
+
+Convention for writing code:  use hungarian notation.
+Design
+
+Backend
+Peter - System which takes in user defined “interest” and interfaces with the notification system
