@@ -4,15 +4,15 @@ Andy's Task for Jul 28th-
 
 
 
-## Overview:
+### Overview:
 AndroidSchedulerApp (ASA) is an android app that reminds users their tasks, it will send periodic reminders based on the user's preference. The app will be created using xamarin and C#.
 
-## Scenario:
+### Scenario:
 Scenario 1: Andy has a weekly list of events including playing sports, volunteering, and keeping up with the Kardarshians. To help him keep track of all these tasks, he inputs them into the ASA. and the ASA notifies him periodically through push notifications on his Android device.
 
-## Flow Chart: 
+### Flow Chart: 
 
-## Screen By Screen Specification:
+### Screen By Screen Specification:
   
   Main Page:
     Contains a list box of current tasks. with two buttons that navigates to either "Add Task" or "Setting" respectively.
@@ -36,7 +36,7 @@ Scenario 1: Andy has a weekly list of events including playing sports, volunteer
     Font Size
 
 
-## Technical Note:
+### Technical Note:
 
 local storage only, no users accounts.
 android only-> SDK 2.3 this version covers 90% of user base. compatible with since 2013 apps.
