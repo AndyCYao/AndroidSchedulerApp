@@ -25,9 +25,6 @@ namespace ScheduleApp
 
             List<Tuple<String, String>> rings = DependencyService.Get<RingTones>().GetRingTones();
 
-            //This part we can create a dictionary object that contains all the
-            //ringtones, then load it into this picker, until then we just include
-            //these three. 
             foreach (var ring in rings)
             {
                 ringTonePicker.Items.Add(ring.Item1);

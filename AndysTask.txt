@@ -39,3 +39,15 @@ Oct 28th 2015-AY
       
 Nov 11th 2015-Ay
     Need to update GetRingTones method to return a tuple of ringtone title, and url? so that when pageAddTask and pageAppConfig calls GetRingTones, it will receive the tuples and load the pickers. 
+
+Dec 21th 2015 -AY
+    To do - Device a way to allow users to select the ringtone from the ringtone list in settings page. to make it automatically start playing. 
+
+    1.) create another method under pageAppConfig for "play ringtone", this argument will take the argument of ringtone URL upon being selected in the ringtone list. 
+    2.) this method will use the MediaPlayer object to play the selected url. based on this discussion
+        http://stackoverflow.com/questions/2618182/how-to-play-ringtone-alarm-sound-in-android
+
+        xamarin doc. on mediaplayer is here
+        https://developer.xamarin.com/api/type/Android.Media.MediaPlayer/
+
+    3.) Question is, do we need to create another Android interface to access the Mediaplayer or ringtone method. if so , might have to add the interface in LocalRingTones.cs 
