@@ -11,6 +11,9 @@ namespace ScheduleApp
     public interface RingTones
     {
         List<Tuple<String, String>> GetRingTones();
-     
+    }
+
+    public interface playRingTones {
+        void playRingTones();
     }
 }

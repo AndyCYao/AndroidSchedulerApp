@@ -13,6 +13,7 @@ using ScheduleApp.Droid;
 using ScheduleApp;
 
 [assembly: Xamarin.Forms.Dependency(typeof(LocalRingTones))]
+[assembly: Xamarin.Forms.Dependency(typeof(LocalPlayRingTones))]
 
 //This is the Android part of the GetRingtones
 namespace ScheduleApp.Droid
@@ -42,6 +43,9 @@ namespace ScheduleApp.Droid
            
             return Results;
         }
+    }
+
+    public class LocalPlayRingTones : playRingTones {
     }
 }
 

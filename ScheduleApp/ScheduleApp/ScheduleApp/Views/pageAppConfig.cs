@@ -43,6 +43,17 @@ namespace ScheduleApp
                 }
             }
 
+            //Dec 21st 2015
+            
+            ringTonePicker.SelectedIndexChanged += (sender, args) =>
+            {
+               
+                DisplayAlert("Check",ringTonePicker.SelectedIndex.ToString(),"Ok");
+            };
+            Mediaplayer
+
+            
+
             var fontLabel = new Label { Text = "Font" };
             var fontPicker = new Picker();
 

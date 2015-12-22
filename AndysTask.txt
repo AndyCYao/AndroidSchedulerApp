@@ -43,8 +43,12 @@ Nov 11th 2015-Ay
 Dec 21th 2015 -AY
     To do - Device a way to allow users to select the ringtone from the ringtone list in settings page. to make it automatically start playing. 
 
-    1.) create another method under pageAppConfig for "play ringtone", this argument will take the argument of ringtone URL upon being selected in the ringtone list. 
-    2.) this method will use the MediaPlayer object to play the selected url. based on this discussion
+1.) create another method under pageAppConfig for "play ringtone", this argument will take the argument of ringtone URL upon being selected in the ringtone list. 
+1.5) we have to find the event listener that captures when the ringtone list is updated. 
+	problem- xamarin picker class behaves differently in Droid vs. osx. per discussion. the event change would only happen AFTER the done button is pressed. so not ideal
+	https://forums.xamarin.com/discussion/20847/picker-selection-event
+    
+2.) this method will use the MediaPlayer object to play the selected url. based on this discussion
         http://stackoverflow.com/questions/2618182/how-to-play-ringtone-alarm-sound-in-android
 
         xamarin doc. on mediaplayer is here
