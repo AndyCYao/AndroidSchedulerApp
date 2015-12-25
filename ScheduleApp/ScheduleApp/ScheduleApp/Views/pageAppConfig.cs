@@ -44,13 +44,21 @@ namespace ScheduleApp
             }
 
             //Dec 21st 2015
-            
             ringTonePicker.SelectedIndexChanged += (sender, args) =>
             {
-               
-                DisplayAlert("Check",ringTonePicker.SelectedIndex.ToString(),"Ok");
+                //print what is the URI of the selected ringtone
+                string searchFor = ringTonePicker.Items[ringTonePicker.SelectedIndex];
+                foreach (var ring in rings)
+                {
+                    if (ring.Item1 == searchFor)
+                    {
+                        string searchURI = ring.Item2;
+                        DisplayAlert("Check", searchURI, "Ok");
+                        DependencyService.Get<playRingTones>().playRingTones(searchURI);
+                    }
+                }
             };
-            Mediaplayer
+            //Mediaplayer
 
             
 

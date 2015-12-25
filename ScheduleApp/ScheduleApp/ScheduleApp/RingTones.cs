@@ -14,6 +14,6 @@ namespace ScheduleApp
     }
 
     public interface playRingTones {
-        void playRingTones();
+        void playRingTones(string searchURI);
     }
 }

@@ -13,7 +13,6 @@ using ScheduleApp.Droid;
 using ScheduleApp;
 
 [assembly: Xamarin.Forms.Dependency(typeof(LocalRingTones))]
-[assembly: Xamarin.Forms.Dependency(typeof(LocalPlayRingTones))]
 
 //This is the Android part of the GetRingtones
 namespace ScheduleApp.Droid
@@ -36,6 +35,8 @@ namespace ScheduleApp.Droid
                 //1 is the column that has the title of the ringtones. 
                 String title = cursor.GetString(1);
                 String url = cursor.GetString(2);
+                //String url = RingToneMgm.getRingtoneUri(currentPosition);
+                
                 var RingInfo = Tuple.Create(title, url);
                 //Console.WriteLine(title);
                 Results.Add(RingInfo);
@@ -43,9 +44,20 @@ namespace ScheduleApp.Droid
            
             return Results;
         }
+
+        public void playRingTones(string SearchUri)
+        {
+            //Uri notification = RingtoneManager.GetDefaultUri(RingtoneManager.TYPE_Notification);
+            //MediaPlayer mp = MediaPlayer.Create(getApplicationContext(), SearchUri);
+            //mp.Start();
+
+            //Testing to see if it can play any default sound 
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            MediaPlayer mp = MediaPlayer.create(Android.App.Application.Context, notification);
+            mp.start();
+        }
     }
 
-    public class LocalPlayRingTones : playRingTones {
-    }
+
 }
 
