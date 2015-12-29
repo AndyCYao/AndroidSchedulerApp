@@ -8,7 +8,7 @@ using ScheduleApp;
 //Get local ringtones per operating system. 
 namespace ScheduleApp
 {
-    public interface RingTones
+    public interface iRingTones
     {
         List<Tuple<String, String>> GetRingTones();
     }

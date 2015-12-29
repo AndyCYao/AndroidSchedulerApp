@@ -37,7 +37,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="AppConfig.cs" />
-    <Compile Include="RingTones.cs" />
+    <Compile Include="iRingTones.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="PhraseManager.cs" />

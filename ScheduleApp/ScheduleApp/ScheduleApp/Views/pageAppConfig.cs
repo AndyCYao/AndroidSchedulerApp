@@ -23,7 +23,7 @@ namespace ScheduleApp
             var defaultNotificationLabelDesc = new Label { Text = "Represents the default ring tone to assign for new tasks." };
 			var ringTonePicker = new Picker{ };
 
-            List<Tuple<String, String>> rings = DependencyService.Get<RingTones>().GetRingTones();
+            List<Tuple<String, String>> rings = DependencyService.Get<iRingTones>().GetRingTones();
 
             foreach (var ring in rings)
             {

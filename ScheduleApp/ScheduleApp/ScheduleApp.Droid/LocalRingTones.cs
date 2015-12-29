@@ -12,12 +12,16 @@ using Android.Media;
 using ScheduleApp.Droid;
 using ScheduleApp;
 
+
+
+//using Xamarin.Forms;
+
 [assembly: Xamarin.Forms.Dependency(typeof(LocalRingTones))]
 
 //This is the Android part of the GetRingtones
 namespace ScheduleApp.Droid
 {
-    public class LocalRingTones : RingTones
+    public class LocalRingTones : iRingTones
     {
         //need an empty parameterless constructor so dependency service can create new instances. 
         public LocalRingTones(){}
@@ -44,17 +48,18 @@ namespace ScheduleApp.Droid
            
             return Results;
         }
-
-        public void playRingTones(string SearchUri)
+        private MediaPlayer mp;
+        public void playRingTones(string strUri)
         {
             //Uri notification = RingtoneManager.GetDefaultUri(RingtoneManager.TYPE_Notification);
             //MediaPlayer mp = MediaPlayer.Create(getApplicationContext(), SearchUri);
             //mp.Start();
 
             //Testing to see if it can play any default sound 
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            MediaPlayer mp = MediaPlayer.create(Android.App.Application.Context, notification);
-            mp.start();
+            //Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            //MediaPlayer mp = MediaPlayer.create(Android.App.Application.Context, notification);
+            mp = MediaPlayer.Create(global::Android.App.Application.Context, "");
+            mp.Start();
         }
     }
 

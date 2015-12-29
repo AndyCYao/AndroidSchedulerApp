@@ -134,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\AndroidManifest.xml" />
+    <Content Include="Resources\Raw\ding_persevy.wav" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ScheduleApp\ScheduleApp.csproj">
