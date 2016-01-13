@@ -21,10 +21,24 @@ namespace ScheduleApp
 
             var defaultNotificationLabel = new Label { Text = "Default Notification Sound" };
             var defaultNotificationLabelDesc = new Label { Text = "Represents the default ring tone to assign for new tasks." };
-			var ringTonePicker = new Picker{ };
 
-            List<Tuple<String, String>> rings = DependencyService.Get<iRingTones>().GetRingTones();
 
+
+
+            //List<Tuple<String, String>> rings = DependencyService.Get<iRingTones>().GetRingTones();
+            Button RingTonePickerBtn = new Button
+            {
+                Text = "Select RingTone",
+            };
+
+            RingTonePickerBtn.Clicked += (sender, args) =>
+            {
+                DependencyService.Get<iRingTones>().GetRingTones1();
+            };
+            //Replace custom picker with Android Media picker. 
+            /*
+
+            var ringTonePicker = new Picker{ };
             foreach (var ring in rings)
             {
                 ringTonePicker.Items.Add(ring.Item1);
@@ -42,8 +56,10 @@ namespace ScheduleApp
                     break;
                 }
             }
+            */
 
-            //Dec 21st 2015
+            //Jan 10th 2016 - replacing custom ringTonePicker with the one implemented by the actual Android.Media
+            /*
             ringTonePicker.SelectedIndexChanged += (sender, args) =>
             {
                 //print what is the URI of the selected ringtone
@@ -59,7 +75,7 @@ namespace ScheduleApp
                 }
             };
             //Mediaplayer
-
+            */
             
 
             var fontLabel = new Label { Text = "Font" };
@@ -209,7 +225,7 @@ namespace ScheduleApp
                 }
                 else
                 {
-                    themeStruct.defaultNotificationSound = ringTonePicker.Items[ringTonePicker.SelectedIndex];
+                    //themeStruct.defaultNotificationSound = ringTonePicker.Items[ringTonePicker.SelectedIndex];
                     themeStruct.backgroundColour = config.nameToColour[backgroundColourPicker.Items[backgroundColourPicker.SelectedIndex]];
                     themeStruct.font = fontPicker.Items[fontPicker.SelectedIndex];
                     themeStruct.fontColour = config.nameToColour[fontColourPicker.Items[fontColourPicker.SelectedIndex]];
@@ -230,7 +246,8 @@ namespace ScheduleApp
                     Padding = new Thickness(20),
                     Children = {
                         defaultNotificationLabel,
-                        ringTonePicker,
+                        //ringTonePicker,
+                        RingTonePickerBtn,
                         fontLabel,
                         fontPicker,
                         fontSizeLabel,

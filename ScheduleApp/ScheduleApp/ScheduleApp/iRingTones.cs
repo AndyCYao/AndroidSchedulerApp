@@ -10,10 +10,8 @@ namespace ScheduleApp
 {
     public interface iRingTones
     {
-        List<Tuple<String, String>> GetRingTones();
+        //List<Tuple<String, String>> GetRingTones();
+        void GetRingTones1();
     }
 
-    public interface playRingTones {
-        void playRingTones(string searchURI);
-    }
 }

@@ -1,20 +1,22 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
-using Android.Media;
+using Android.Widget;
+
+using Android.Net;
 using ScheduleApp.Droid;
-using ScheduleApp;
-
-
-
-//using Xamarin.Forms;
+using Android.Media;
+using Xamarin.Forms;
+using Android.Content.PM;
+using Android.Util;
+using System.Diagnostics;
 
 [assembly: Xamarin.Forms.Dependency(typeof(LocalRingTones))]
 
@@ -24,43 +26,21 @@ namespace ScheduleApp.Droid
     public class LocalRingTones : iRingTones
     {
         //need an empty parameterless constructor so dependency service can create new instances. 
-        public LocalRingTones(){}
-        public List<Tuple<String, String>> GetRingTones() {
+        public LocalRingTones() { }
 
-            List<Tuple<String, String>> Results = new List<Tuple<String, String>>();
-            //try to show a ringTone picker. per this article
-            //http://stackoverflow.com/questions/18732193/how-i-get-the-default-ringtone-list-in-android-on-programmatically
-
-            Android.Media.RingtoneManager RingToneMgm = new Android.Media.RingtoneManager(Application.Context);
-
-            Android.Database.ICursor cursor = RingToneMgm.Cursor;
-            while (cursor.MoveToNext())
-            {
-                //1 is the column that has the title of the ringtones. 
-                String title = cursor.GetString(1);
-                String url = cursor.GetString(2);
-                //String url = RingToneMgm.getRingtoneUri(currentPosition);
-                
-                var RingInfo = Tuple.Create(title, url);
-                //Console.WriteLine(title);
-                Results.Add(RingInfo);
-            }
-           
-            return Results;
-        }
-        private MediaPlayer mp;
-        public void playRingTones(string strUri)
+        public void GetRingTones1()
         {
-            //Uri notification = RingtoneManager.GetDefaultUri(RingtoneManager.TYPE_Notification);
-            //MediaPlayer mp = MediaPlayer.Create(getApplicationContext(), SearchUri);
-            //mp.Start();
+            Intent intent = new Intent(RingtoneManager.ActionRingtonePicker);
+            intent.PutExtra(RingtoneManager.ExtraRingtoneTitle, "Select ringtone for notifications:");
+            intent.PutExtra(RingtoneManager.ExtraRingtoneShowSilent, false);
+            intent.PutExtra(RingtoneManager.ExtraRingtoneShowDefault, true);
+            intent.PutExtra(RingtoneManager.ExtraRingtoneType, "TYPE_ALL");
 
-            //Testing to see if it can play any default sound 
-            //Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            //MediaPlayer mp = MediaPlayer.create(Android.App.Application.Context, notification);
-            mp = MediaPlayer.Create(global::Android.App.Application.Context, "");
-            mp.Start();
+            ((Activity)Forms.Context).StartActivityForResult(intent, 0);
+            
         }
+
+       
     }
 
 
