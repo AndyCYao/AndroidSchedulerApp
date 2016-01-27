@@ -30,12 +30,15 @@ namespace ScheduleApp.Droid
 
         public void GetRingTones1()
         {
+            Core core = Core.GetCore();
+            AppConfig config = core.GetConfig();
+
             Intent intent = new Intent(RingtoneManager.ActionRingtonePicker);
             intent.PutExtra(RingtoneManager.ExtraRingtoneTitle, "Select ringtone for notifications:");
             intent.PutExtra(RingtoneManager.ExtraRingtoneShowSilent, false);
             intent.PutExtra(RingtoneManager.ExtraRingtoneShowDefault, true);
             intent.PutExtra(RingtoneManager.ExtraRingtoneType, "TYPE_ALL");
-
+            intent.PutExtra(RingtoneManager.ExtraRingtoneExistingUri, config.Theme.defaultNotificationSound);
             ((Activity)Forms.Context).StartActivityForResult(intent, 0);
             
         }

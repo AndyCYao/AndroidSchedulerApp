@@ -38,15 +38,6 @@ namespace ScheduleApp
             //Replace custom picker with Android Media picker. 
             /*
 
-            var ringTonePicker = new Picker{ };
-            foreach (var ring in rings)
-            {
-                ringTonePicker.Items.Add(ring.Item1);
-            }
-            
-            ringTonePicker.SetBinding(Entry.TextProperty, "Default Notification Sound");
-            ringTonePicker.Title = "Default Notification Sound";
-            ringTonePicker.SelectedIndex = 0;
 
             for (int i = 0; i < ringTonePicker.Items.Count; i++)
             {
