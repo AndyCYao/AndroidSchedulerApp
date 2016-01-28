@@ -4,6 +4,7 @@
     {
         public string SCHEDULEAPP_PHRASE_FILE = "Phrases.xml";
         public string SCHEDULEAPP_CONFIG_FILE = "Config.xml";
+        public string SCHEDULEAPP_TASKS_FILE = "Tasks.xml";
         private PhraseManager m_phraseManager;
         private Scheduler m_scheduler;
         private AppConfig m_configuration;
@@ -23,7 +24,7 @@
         {
             m_configuration = new AppConfig(SCHEDULEAPP_CONFIG_FILE);
             m_phraseManager = new PhraseManager(SCHEDULEAPP_PHRASE_FILE);
-            m_scheduler = new Scheduler();
+            m_scheduler = new Scheduler(SCHEDULEAPP_TASKS_FILE);
         }
 
         public PhraseManager GetPhraseManager()

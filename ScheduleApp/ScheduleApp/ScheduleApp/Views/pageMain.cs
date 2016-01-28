@@ -24,9 +24,9 @@ namespace ScheduleApp
 			//users will have the option to view the tasks, and do actions to them when they click the 
 			//specific task. 
 			Core MainCore = Core.GetCore();
-			Scheduler MainScheduler = MainCore.GetScheduler ();
+			Scheduler MainScheduler = MainCore.GetScheduler();
             //MainScheduler.scheduleTimer();
-			List<Task> TasksList = MainScheduler.GetActiveTasks ();
+			List<AppTask> TasksList = MainScheduler.GetTasks(false);
 
             //Info on ListView are in this reference
             //https://developer.xamarin.com/guides/cross-platform/xamarin-forms/user-interface/listview/data-and-databinding/

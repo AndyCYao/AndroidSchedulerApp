@@ -15,7 +15,7 @@ namespace clsUnitTests
             Assert.AreEqual(manager.PhraseCount(), 0);
 
             Scheduler scheduler = core.GetScheduler();
-            Assert.AreEqual(scheduler.Count, 0);
+            Assert.AreEqual(scheduler.TaskCount, 0);
 
             AppConfig config = core.GetConfig();
             Assert.AreEqual(config.ShowClosedTasks, false);

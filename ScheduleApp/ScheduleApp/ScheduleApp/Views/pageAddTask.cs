@@ -141,18 +141,21 @@ namespace ScheduleApp
 					tFrequency = Convert.ToInt32(frequencyPicker.Items [frequencyPicker.SelectedIndex]);
 					tFrequencyUnit = frequencyUnitPicker.Items [frequencyUnitPicker.SelectedIndex];
 
-					//string Results;
-					//Results = tReminderEndDate + " " + tTaskName + " " + tTaskNotes + " " + tDone + " " + tRingToneName + " "  + tFrequency + " " + tFrequencyUnit ;
-					//DisplayAlert ("Hello, Testing", Results, "Ok");
+                    //string Results;
+                    //Results = tReminderEndDate + " " + tTaskName + " " + tTaskNotes + " " + tDone + " " + tRingToneName + " "  + tFrequency + " " + tFrequencyUnit ;
+                    //DisplayAlert ("Hello, Testing", Results, "Ok");
 
-				//Push the information presented into Scheduler Class. 
-					Scheduler SchAdd = new Scheduler();
-					SchAdd.AddTaskWithInfo(tTaskName, tTaskNotes, tReminderBeginDate, tReminderEndDate, tRingToneName, tFrequency, tFrequencyUnit);    				
-				}
+                    Core.GetCore().GetScheduler().AddTaskWithInfo(
+                        tTaskName, tTaskNotes, tReminderBeginDate, 
+                        tReminderEndDate, tRingToneName, tFrequency, tFrequencyUnit);
+
+                    Navigation.PopAsync();
+                }
 				else{
-				  DisplayAlert("But wait!","Please write a little about your Task name and task notes","Ok");
+				  DisplayAlert("But wait!","Please write a little about your Task name and task notes.","Ok");
 				};
 			};
+
 			ScrollView scrollView = new ScrollView {
 				VerticalOptions = LayoutOptions.FillAndExpand,
 				Content = new StackLayout {
