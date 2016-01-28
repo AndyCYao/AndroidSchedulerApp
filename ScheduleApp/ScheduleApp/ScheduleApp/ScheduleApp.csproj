@@ -37,11 +37,11 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="AppConfig.cs" />
+    <Compile Include="iRingTones.cs" />
     <Compile Include="Messages\CancelledMessage.cs" />
     <Compile Include="Messages\PendingTaskMessage.cs" />
     <Compile Include="Messages\StartTaskNotification.cs" />
     <Compile Include="Messages\StopTaskNotification.cs" />
-    <Compile Include="RingTones.cs" />
     <Compile Include="TaskEnumeratePending.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Core.cs" />
