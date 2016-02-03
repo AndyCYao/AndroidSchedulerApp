@@ -29,13 +29,14 @@ namespace ScheduleApp.Droid
             base.OnActivityResult(requestCode, resultCode, intent);
             if (resultCode == Result.Ok)
             {
-                switch (requestCode)
+                    switch (requestCode)
                 {
                     case 0:
                         //do stuff in the app config to set the default code.
                         Android.Net.Uri ring = (Android.Net.Uri)intent.GetParcelableExtra(RingtoneManager.ExtraRingtonePickedUri);
 
-                        String Result = ring.LastPathSegment.ToString(); // this is the ringtone id 
+                        String Result = ring; // this is the ringtone id 
+
                         Core core = Core.GetCore();
                         AppConfig config = core.GetConfig();
                         ThemeStruct ConfigStruct = config.Theme;

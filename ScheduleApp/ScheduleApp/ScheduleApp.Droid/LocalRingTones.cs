@@ -18,6 +18,7 @@ using Android.Content.PM;
 using Android.Util;
 using System.Diagnostics;
 
+
 [assembly: Xamarin.Forms.Dependency(typeof(LocalRingTones))]
 
 //This is the Android part of the GetRingtones
@@ -38,7 +39,13 @@ namespace ScheduleApp.Droid
             intent.PutExtra(RingtoneManager.ExtraRingtoneShowSilent, false);
             intent.PutExtra(RingtoneManager.ExtraRingtoneShowDefault, true);
             intent.PutExtra(RingtoneManager.ExtraRingtoneType, "TYPE_ALL");
-            intent.PutExtra(RingtoneManager.ExtraRingtoneExistingUri, config.Theme.defaultNotificationSound);
+            //Need condition to see if default Noti. actually exists, else dont send anything
+            //look below. for possible solution. 
+            //http://stackoverflow.com/questions/7645951/how-to-check-if-resource-pointed-by-uri-is-available
+
+            Android.Net.Uri rURI = Android.Net.Uri.Parse(config.Theme.defaultNotificationSound);
+           intent.PutExtra(RingtoneManager.ExtraRingtoneExistingUri, rURI);
+
             ((Activity)Forms.Context).StartActivityForResult(intent, 0);
             
         }

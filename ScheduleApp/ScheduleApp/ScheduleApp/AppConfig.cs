@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Xml.Linq;
 using PCLStorage;
 using System.Xml;
 using System.Collections.Generic;
 using Xamarin.Forms;
+
 
 namespace ScheduleApp
 {
