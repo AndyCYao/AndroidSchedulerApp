@@ -13,11 +13,13 @@ namespace ScheduleApp
     {
         public async Task RunEnumeration(CancellationToken token)
         {
-            await Task.Run(async () =>
+            await Task.Run(() =>
             {
-                while(true)
+                TimeSpan minute = new TimeSpan(0, 1, 0);
+
+                while (true)
                 {
-                    int currentTime = (int)DateTime.Now.Ticks;
+                    Int64 currentTimeTicks = DateTime.Now.Ticks;
                     token.ThrowIfCancellationRequested();
 
                     var taskList = getTasksToNotifyAndUpdate();
@@ -32,9 +34,9 @@ namespace ScheduleApp
                         MessagingCenter.Send<PendingTaskMessage>(message, "PendingTaskMessage");
                     });
 
-                    if (DateTime.Now.Ticks - currentTime < 60000)
+                    while ((DateTime.Now.Ticks - currentTimeTicks) < minute.Ticks)
                     {
-                        await Task.Delay(60000 - ((int)DateTime.Now.Ticks - currentTime));
+                        Task.Delay(1000);
                     }                    
                 }                 
             }, token);
