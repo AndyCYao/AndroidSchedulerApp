@@ -10,6 +10,7 @@ namespace ScheduleApp
     public struct ThemeStruct
     {
         public string defaultNotificationSound;
+        
         public Xamarin.Forms.NamedSize fontSize;
         public string font;
         public Xamarin.Forms.Color fontColour;

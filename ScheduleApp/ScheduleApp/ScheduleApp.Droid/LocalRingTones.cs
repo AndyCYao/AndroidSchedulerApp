@@ -33,7 +33,7 @@ namespace ScheduleApp.Droid
         {
             Core core = Core.GetCore();
             AppConfig config = core.GetConfig();
-
+            
             Intent intent = new Intent(RingtoneManager.ActionRingtonePicker);
             intent.PutExtra(RingtoneManager.ExtraRingtoneTitle, "Select ringtone for notifications:");
             intent.PutExtra(RingtoneManager.ExtraRingtoneShowSilent, false);
@@ -43,8 +43,11 @@ namespace ScheduleApp.Droid
             //look below. for possible solution. 
             //http://stackoverflow.com/questions/7645951/how-to-check-if-resource-pointed-by-uri-is-available
 
-            Android.Net.Uri rURI = Android.Net.Uri.Parse(config.Theme.defaultNotificationSound);
-           intent.PutExtra(RingtoneManager.ExtraRingtoneExistingUri, rURI);
+            
+
+                Android.Net.Uri rURI = Android.Net.Uri.Parse(RingtoneManager.ExtraRingtoneDefaultUri);
+
+            //  intent.PutExtra(RingtoneManager.ExtraRingtoneExistingUri,rURI);
 
             ((Activity)Forms.Context).StartActivityForResult(intent, 0);
             

@@ -34,13 +34,23 @@ namespace ScheduleApp.Droid
                     case 0:
                         //do stuff in the app config to set the default code.
                         Android.Net.Uri ring = (Android.Net.Uri)intent.GetParcelableExtra(RingtoneManager.ExtraRingtonePickedUri);
-
-                        String Result = ring; // this is the ringtone id 
+                    
+                        //validiating the ring.path through checking the cursor.
+                        
+                        Android.Media.RingtoneManager RingToneMgm = new Android.Media.RingtoneManager(Application.Context);
+                        Android.Database.ICursor cursor = RingToneMgm.Cursor;
+                        while (cursor.MoveToNext())
+                        {
+                            //here i have to check the ring.path;
+                            //http://stackoverflow.com/questions/7645951/how-to-check-if-resource-pointed-by-uri-is-available
+                            var Result = cursor.GetString(RingToneMgm.ID_COLUMN_INDEX);
+                        }
+                        //Android.Net.Uri TestRing = Android.Net.Uri.Parse(Result);
 
                         Core core = Core.GetCore();
                         AppConfig config = core.GetConfig();
                         ThemeStruct ConfigStruct = config.Theme;
-                        ConfigStruct.defaultNotificationSound = Result;
+                        //ConfigStruct.defaultNotificationSound = Result;
 
                         config.Theme = ConfigStruct;
 
