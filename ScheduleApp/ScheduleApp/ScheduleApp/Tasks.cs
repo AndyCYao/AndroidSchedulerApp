@@ -22,9 +22,8 @@ namespace ScheduleApp
         public string FrequencyUnit;
 	}
 
-	public class Task
+	public class AppTask
     {
-        // static int numOfTasks = 0; the scheduler will handle assigning primary keys, not the Tasks' role now. 
         private int m_id;
         private string m_task_name;
         private string m_task_notes;
@@ -39,8 +38,13 @@ namespace ScheduleApp
         private int m_frequency;
         private string m_frequency_unit;
 
+        public AppTask()
+        {
+            //intentionally doing nothing - exists for an XmlSerializer...
+        }
+
         //Aug 8th - ID will now be assigned by the Scheduler. Overload 1
-        public Task(string fTaskName, string fTaskNotes, int fID)
+        public AppTask(string fTaskName, string fTaskNotes, int fID)
         {
             if (fTaskName.Length > 0)
             {
@@ -60,7 +64,7 @@ namespace ScheduleApp
         //parameters, and from this struct we update the info.
         // ********************
         // Overload 2
-        public Task(ref TaskInfo f){
+        public AppTask(ref TaskInfo f){
             m_id = f.TaskID;
             m_task_name = f.TaskName;
             m_task_notes = f.TaskNotes;
@@ -76,8 +80,8 @@ namespace ScheduleApp
 
         private void CalculateNextReminder()
         {
-            DateTime current = DateTime.UtcNow;
-            TimeSpan difference = current.Subtract(m_reminder_begin.ToUniversalTime());
+            DateTime current = DateTime.Now;
+            TimeSpan difference = current.Subtract(m_reminder_begin.ToLocalTime());
             TimeSpan multiple;
             
             //get datetime difference
@@ -101,14 +105,12 @@ namespace ScheduleApp
 
             long multipleCount = difference.Ticks / multiple.Ticks;
             
-            m_reminder_next = m_reminder_begin.ToUniversalTime();
+            m_reminder_next = m_reminder_begin.ToLocalTime();
 
             for (int i = 0; i <= multipleCount; i++)
             {
                 m_reminder_next = m_reminder_next.Add(multiple);
             }
-
-            m_reminder_next = m_reminder_next.ToLocalTime();
         }
 
         //********************
@@ -161,6 +163,15 @@ namespace ScheduleApp
             }
         }
 
+        public DateTime NextReminder
+        {
+            get { return m_reminder_next; }
+            set
+            {
+                m_reminder_next = value;
+            }
+        }
+
         public string RingTone
         {
             get { return m_ringtone_name; }
@@ -205,6 +216,7 @@ namespace ScheduleApp
         public void WriteXML(XmlWriter writer)
         {
             writer.WriteStartElement("Task");
+
             writer.WriteElementString("TaskID", TaskID.ToString());
             writer.WriteElementString("TaskName", TaskName);
             writer.WriteElementString("TaskNotes", TaskNotes);
@@ -214,6 +226,7 @@ namespace ScheduleApp
             writer.WriteElementString("Done", Done.ToString());
             writer.WriteElementString("Frequency", Frequency.ToString());
             writer.WriteElementString("FrequencyUnit", FrequencyUnit);
+
             writer.WriteEndElement();
         }        
 
@@ -233,7 +246,7 @@ namespace ScheduleApp
 
             reader.ReadEndElement();
         }
-        
+
         /*
         public MemoryStream WriteXML2()
         {
@@ -255,4 +268,3 @@ namespace ScheduleApp
         */
     }
 }
-

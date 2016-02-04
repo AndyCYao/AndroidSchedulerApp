@@ -20,7 +20,7 @@ namespace clsUnitTests
         {
             string TestTaskName = "PickUpBook-HarryPotter";
             string TestTaskNote = "BooksAtLibrary";
-            Task GetBooks = new Task(TestTaskName, TestTaskNote, 0);
+            AppTask GetBooks = new AppTask(TestTaskName, TestTaskNote, 0);
             //Console.WriteLine(GetBooks.TaskNotes);
             Assert.AreEqual(TestTaskNote, GetBooks.TaskNotes);
             Assert.AreEqual(TestTaskName, GetBooks.TaskName);
@@ -30,7 +30,7 @@ namespace clsUnitTests
         {
             string TestTaskName = "PickUpBook-HarryPotterAndTheChamberOfSecrets";
             string TestTaskNote = "BooksAtLibrary";
-            Task GetBooks = new Task(TestTaskName, TestTaskNote, 0);
+            AppTask GetBooks = new AppTask(TestTaskName, TestTaskNote, 0);
             //Console.WriteLine(GetBooks.TaskNotes);
             Assert.AreEqual(TestTaskNote, GetBooks.TaskNotes);
             Assert.AreEqual(TestTaskName.Substring(0,40), GetBooks.TaskName);
@@ -41,7 +41,7 @@ namespace clsUnitTests
         {
             string TestTaskName = "PickUpBook-HarryPotterAndTheChamberOfSecrets";
             string TestTaskNote = "BooksAtLibrary";
-            Task GetBooks = new Task(TestTaskName, TestTaskNote, 0);
+            AppTask GetBooks = new AppTask(TestTaskName, TestTaskNote, 0);
             GetBooks.RingTone = "Ringaling.wav";
 
             XmlWriter writer = XmlWriter.Create("SerializationTest.xml");
@@ -52,7 +52,7 @@ namespace clsUnitTests
 
             XmlReader reader = XmlReader.Create("SerializationTest.xml");
             reader.Read();
-            Task compareTask = new Task("", "", -1);
+            AppTask compareTask = new AppTask("", "", -1);
             compareTask.ReadXML(reader);
             reader.Dispose();
 

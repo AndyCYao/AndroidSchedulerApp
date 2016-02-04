@@ -9,15 +9,14 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using ScheduleApp.Droid.Service;
 using ScheduleApp;
 
-[assembly: Xamarin.Forms.Dependency(typeof(LocalNotification))]
-namespace ScheduleApp.Droid.Service
+[assembly: Xamarin.Forms.Dependency(typeof(ScheduleApp.NotificationService))]
+namespace ScheduleApp.Droid
 {
-    public class LocalNotification : NotificationService
+    public class LocalNotification : ScheduleApp.NotificationService
     {
-        public void Notify(string title, string description, int ID)
+        public void Notify(string title, string description, int id)
         {
 			Notification.Builder builder = new Notification.Builder (Application.Context)
 				.SetContentTitle (title)

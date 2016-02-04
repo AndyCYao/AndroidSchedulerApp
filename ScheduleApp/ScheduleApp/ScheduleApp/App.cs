@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ScheduleApp.Messages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,14 +17,15 @@ namespace ScheduleApp
     public class App : Application
     {
         public App()
-        {
-			
+        {			
 			MainPage = new NavigationPage (new Main ());
         }
 
         protected override void OnStart()
         {
             // Handle when your app starts
+            var message = new StartTaskNotification();
+            MessagingCenter.Send(message, "StartTaskNotification");
         }
 
         protected override void OnSleep()

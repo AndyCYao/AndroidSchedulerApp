@@ -1,31 +1,35 @@
 ﻿using System;
 using System.Collections;
+using PCLStorage;
+using System.Xml;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using System.Xml.Serialization;
 
 namespace ScheduleApp
 {
     public class Scheduler
     {
-        private List<Task> tasks = new List<Task>();
+        private List<AppTask> tasks;
+        private string tasksPath = "DefaultTasks.xml";
 
-
-        public Scheduler()
+        public Scheduler(string filePath = "")
         {
+            tasks = new List<AppTask>();
 
+            if (filePath.Length > 0)
+            {
+                System.Threading.Tasks.Task.Run(() => Read(filePath)).Wait();
+                tasksPath = filePath;
+            }
         }
 
-        public int Count
+        public int TaskCount
         {
             get { return tasks.Count; }
-        }
-
-        public DateTime GetCurrentTime()
-        {
-            return DateTime.Now;
         }
 
         public List<int> GetTaskIDs()
@@ -39,40 +43,28 @@ namespace ScheduleApp
             return tempIDList;
         }
 
-        public List<Task> GetActiveTasks()
+        public List<AppTask> GetTasks(Boolean getInactive)
         {
-            List<Task> tempActiveTasks = new List<Task>();
-            var enumList = tasks.Where(s => s.Done == true);
+            List<AppTask> filteredTasks = new List<AppTask>();
+            var enumList = tasks.Where(s => s.Done == getInactive);
 
             foreach (var item in enumList)
             {
-                tempActiveTasks.Add(item);
+                filteredTasks.Add(item);
             }
 
-            return tempActiveTasks;
-
+            return filteredTasks;
         }
 
-        public List<Task> GetInactiveTasks()
+        public void AddTask(AppTask taskToAdd)
         {
-            List<Task> tempActiveTasks = new List<Task>();
-            var enumList = tasks.Where(s => s.Done == false);
+            //if (taskToAdd.TaskID <= 0)
+            //{
+            //    //throw new ArgumentOutOfRangeException("taskToAdd.TaskID", "Task ID cannot be lower than or equal to 0.");
 
-            foreach (var item in enumList)
-            {
-                tempActiveTasks.Add(item);
-            }
-
-            return tempActiveTasks;
-        }
-
-        public void AddTask(Task taskToAdd)
-        {
-            if (taskToAdd.TaskID <= 0)
-            {
-                throw new ArgumentOutOfRangeException("taskToAdd.TaskID", "Task ID cannot be lower than or equal to 0.");
-            }
-            else if (taskToAdd.TaskName == null)
+            //}
+            //else 
+            if (taskToAdd.TaskName == null)
             {
                 throw new ArgumentNullException("taskToAdd.TaskName");
             }
@@ -84,6 +76,8 @@ namespace ScheduleApp
             {
                 tasks.Add(taskToAdd);
             }
+
+            Write(tasksPath);
         }
 
 
@@ -114,40 +108,38 @@ namespace ScheduleApp
 
         // TaskAt function is sketchy. Use with care.
         // Will return null task if no such Task id is found or Task id <= 0.
-        public Task TaskAt(int TaskID)
+        public AppTask TaskAt(int index)
         {
-            Task returnTask = null;
-
-            if (TaskID <= 0)
+            if (index < 0 || index >= tasks.Count)
             {
-				throw new ArgumentOutOfRangeException("taskToAdd.TaskID", "Task ID cannot be lower than or equal to 0.");
-            }
-            else
-            {
-                bool found = false;
-                for (int i = 0; i < tasks.Count && !found; i++)
-                {
-                    if (tasks.ElementAt(i).TaskID == TaskID)
-                    {
-                        found = true;
-                        returnTask = tasks.ElementAt(i);
-                    }
-                }
-
-                if (!found)
-                {
-                    throw new Exception("No such TaskID found. Cannot remove task.");
-                }
+                throw new ArgumentOutOfRangeException("Index out of range", "Task index cannot be less than zero or greater than or equal to the task count.");
             }
 
-            return returnTask;
+            return tasks.ElementAt(index);
         }
 
+        public AppTask FindTaskById(int id)
+        {
+            Boolean found = false;
+
+            for (int i = 0; i < tasks.Count && !found; i++)
+            {
+                if (tasks.ElementAt(i).TaskID == id)
+                {
+                    return tasks.ElementAt(i);
+                }
+            }
+
+            return null;
+        }
 
         //task ID's will increment continually until the end of ints
-        public void AddTaskWithInfo(string name, string notes, DateTime reminderBegin, DateTime reminderEnd, string ringToneName, int frequency, string frequencyUnit)
+        public void AddTaskWithInfo(string name, string notes,
+                    DateTime reminderBegin, DateTime reminderEnd,
+                    string ringToneName, int frequency, string frequencyUnit)
         {
             TaskInfo tempTaskInfo = new TaskInfo();
+
             tempTaskInfo.TaskName = name;
             tempTaskInfo.TaskNotes = notes;
             tempTaskInfo.Done = false;
@@ -166,13 +158,15 @@ namespace ScheduleApp
                 tempTaskInfo.TaskID = 1;
             }
 
-            AddTask(new Task(ref tempTaskInfo));
+            AddTask(new AppTask(ref tempTaskInfo));
         }
 
 
-        public void UpdateTaskWithInfo(int taskID, string name, string notes, DateTime reminder, string ringToneName, int frequency, string frequencyUnit)
+        public void UpdateTaskWithInfo(int taskID, string name,
+                        string notes, DateTime reminder, string ringToneName,
+                        int frequency, string frequencyUnit)
         {
-            Task updateTask = TaskAt(taskID);
+            AppTask updateTask = FindTaskById(taskID);
 
             updateTask.TaskName = name;
             updateTask.TaskNotes = notes;
@@ -182,29 +176,58 @@ namespace ScheduleApp
             updateTask.FrequencyUnit = frequencyUnit;
         }
 
-
-        //This method needs to be called when the App begins.
-        //If we have a background startup service, the in memory Task list must be populated/refreshed first before this method is invoked.
-        public async void scheduleTimer()
+        public async void Write(string path)
         {
-            while (true)
+            IFile file = await FileSystem.Current.LocalStorage.CreateFileAsync(path, CreationCollisionOption.ReplaceExisting);
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.CloseOutput = true;
+            XmlWriter writer = XmlWriter.Create(await file.OpenAsync(FileAccess.ReadAndWrite), settings);
+
+            writer.WriteStartDocument();
+            writer.WriteStartElement("Tasks");
+
+            for (int i = 0; i < tasks.Count; i++)
             {
-                List<Task> activeTasks = GetActiveTasks();
-                for (int i = 0; i < activeTasks.Count; i++)
+                tasks[i].WriteXML(writer);
+            }
+
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            writer.Dispose();
+        }
+
+        public async void Read(string path)
+        {
+            try
+            { 
+                ExistenceCheckResult result = await FileSystem.Current.LocalStorage.CheckExistsAsync(path);
+                                
+                if (result == ExistenceCheckResult.FileExists)
                 {
-                    if (DateTime.Now >= activeTasks[i].ReminderEnd && DateTime.Now <= activeTasks[i].ReminderEnd.AddMinutes(1))
-                    {
-                        //we need to discuss what the notification should contain
-						DependencyService.Get<NotificationService>().Notify(
-							"Notification title",
-							"Notification content / description",
-							0
-						);
+                    IFile file = await FileSystem.Current.LocalStorage.GetFileAsync(path);
+                    XmlReader reader = XmlReader.Create(await file.OpenAsync(FileAccess.Read));
+
+                    tasks.Clear();
+
+                    reader.ReadToDescendant("Task");
+
+                    while (reader != null && reader.Name == "Task")
+                    { 
+                        AppTask task = new AppTask();
+                        task.ReadXML(reader);
+                        tasks.Add(task);
                     }
                 }
-
-                await System.Threading.Tasks.Task.Delay(60000);
+                else
+                {
+                    Write(path);
+                }
             }
+            catch(Exception e)
+            {
+                String error = e.Message;
+            }
+
         }
     }
 }
