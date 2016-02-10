@@ -84,8 +84,18 @@ namespace ScheduleApp
 			ringTonePicker.SelectedIndex = 0;
             */
 
+            Button RingTonePickerBtn = new Button
+            {
+                Text = "Select RingTone",
+            };
 
-            for(int i = 0; i < ringTonePicker.Items.Count; i++)
+            RingTonePickerBtn.Clicked += (sender, args) =>
+            {
+                DependencyService.Get<iRingTones>().GetRingTones1();
+            };
+
+
+            for (int i = 0; i < ringTonePicker.Items.Count; i++)
             {
                 if (config.Theme.defaultNotificationSound == ringTonePicker.Items[i])
                 {
@@ -137,8 +147,9 @@ namespace ScheduleApp
                     tReminderBeginDate = reminderBeginDatePicker.Date;
 					tReminderEndDate = reminderEndDatePicker.Date;
 					tDone = Convert.ToBoolean (donePicker.Items [donePicker.SelectedIndex]);
-					tRingToneName = ringTonePicker.Items [ringTonePicker.SelectedIndex];
-					tFrequency = Convert.ToInt32(frequencyPicker.Items [frequencyPicker.SelectedIndex]);
+                    // tRingToneName = ringTonePicker.Items [ringTonePicker.SelectedIndex];
+                    tRingToneName = "testing on Feb 7th 2015";
+                    tFrequency = Convert.ToInt32(frequencyPicker.Items [frequencyPicker.SelectedIndex]);
 					tFrequencyUnit = frequencyUnitPicker.Items [frequencyUnitPicker.SelectedIndex];
 
                     //string Results;
@@ -169,7 +180,8 @@ namespace ScheduleApp
 						doneLabel,
 						donePicker,
 						ringToneLabel,
-						ringTonePicker,
+                        // ringTonePicker,
+                        RingTonePickerBtn,
                         reminderBeginDateLabel,
                         reminderBeginDatePicker,
                         frequencyLabel,

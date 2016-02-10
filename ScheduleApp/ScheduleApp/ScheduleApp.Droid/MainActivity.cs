@@ -6,17 +6,14 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
-<<<<<<< HEAD
 using Android.Util;
 using Android.Media;
 using Android.Content;
 using ScheduleApp;
-=======
 using Xamarin.Forms;
 using ScheduleApp.Messages;
-using Android.Content;
 using System.Collections.Generic;
->>>>>>> 8e73d8170ad18d1f42bf3467f903d5156a9245ea
+
 
 namespace ScheduleApp.Droid
 {
@@ -104,14 +101,14 @@ namespace ScheduleApp.Droid
                         Android.Net.Uri ring = (Android.Net.Uri)intent.GetParcelableExtra(RingtoneManager.ExtraRingtonePickedUri);
                     
                         //validiating the ring.path through checking the cursor.
-                        
+                        /*
                         Android.Media.RingtoneManager RingToneMgm = new Android.Media.RingtoneManager(Application.Context);
                         Android.Database.ICursor cursor = RingToneMgm.Cursor;
                         while (cursor.MoveToNext())
                         {
                             //here i have to check the ring.path;
                             //http://stackoverflow.com/questions/7645951/how-to-check-if-resource-pointed-by-uri-is-available
-                            var Result = cursor.GetString(RingToneMgm.ID_COLUMN_INDEX);
+                            //var Result = cursor.GetString(RingToneMgm.ID_COLUMN_INDEX);
                         }
                         //Android.Net.Uri TestRing = Android.Net.Uri.Parse(Result);
 
@@ -122,9 +119,9 @@ namespace ScheduleApp.Droid
 
                         config.Theme = ConfigStruct;
 
-
+                        */
                         break;
-
+                        
 
                     default:
                         break;
