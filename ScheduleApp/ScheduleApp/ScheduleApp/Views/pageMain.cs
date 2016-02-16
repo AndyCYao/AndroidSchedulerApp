@@ -25,16 +25,31 @@ namespace ScheduleApp
 			//specific task. 
 			Core MainCore = Core.GetCore();
 			Scheduler MainScheduler = MainCore.GetScheduler();
-            //MainScheduler.scheduleTimer();
-			List<AppTask> TasksList = MainScheduler.GetTasks(false);
 
+            //Feb 13 2016 - below is doc. for listview itemsource
+ 
+            List<AppTask> TasksList = MainScheduler.GetTasks(false);
+            //System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList = new System.Collections.ObjectModel.ObservableCollection<TasksList>;
             //Info on ListView are in this reference
             //https://developer.xamarin.com/guides/cross-platform/xamarin-forms/user-interface/listview/data-and-databinding/
             listView = new ListView ();
-			//below needs a DataTemplateType (typeOfScheduler probably)
-			//listView.ItemTemplate = new DataTemplate(TasksList);
-			//I'm replacing above with .ItemSource to Tasks
-			listView.ItemsSource = TasksList;
+		   
+            //Method 1
+            /*
+            foreach(var Tasks in TasksList)
+            {
+                listView.ItemsSource.Add(Tasks.TaskName);
+                    (Tasks.TaskName());
+            }
+            */
+
+            //Method 2
+            listView.ItemsSource = from x in TasksList select x.TaskName;
+
+            //suppose to get the items from an observable collection .
+			//listView.ItemsSource = TasksList;
+    
+
 
 			//On click of the item it pushs to a task page.
 			listView.ItemSelected += (sender, e) => {
@@ -43,13 +58,6 @@ namespace ScheduleApp
 				// var TaskPage = new TaskPage();
 				// Navigation.PushAsync(TaskPage);
 			};
-
-            //AY create new Label to display which PCLStorage root path is used when
-            //the android player opens.
-            //IFolder pclPath = Utility.NavigateToFolder("/Ringtones");
-
-            //var pathLabel = new Label { Text = pclPath.Name };
-
 
 
             AddTask = new Button {
@@ -73,7 +81,8 @@ namespace ScheduleApp
 				VerticalOptions = LayoutOptions.Center,
 				Children = {
                     //pathLabel,
-					AddTask,
+                    listView,
+  					AddTask,
                     ConfigButton
                 }
 			};
