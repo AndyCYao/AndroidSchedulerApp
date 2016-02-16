@@ -67,14 +67,14 @@ namespace ScheduleApp.Droid
                     if (list.Count == 0)
                     {
                         var notification = new LocalNotification();
-                        notification.Notify("ScheduleApp", "No upcoming tasks...", 0);
+                        notification.Notify("ScheduleApp", "No upcoming tasks...", RingtoneManager.ExtraRingtoneDefaultUri, 0);
                     }
-
+                    //perhaps summarize all tasks into a single notification
                     for (int i = 0; i < list.Count; i++)
                     {
                         var task = list[i];
                         var notification = new LocalNotification();
-                        notification.Notify(task.TaskName, "Get it done!", i);
+                        notification.Notify(task.TaskName, "Get it done!", Core.GetCore().GetConfig().Theme.defaultNotificationSound, i);
                     }
                 });
             });
@@ -84,7 +84,7 @@ namespace ScheduleApp.Droid
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     var notification = new LocalNotification();
-                    notification.Notify("ScheduleApp", "Task reminders disabled.", 0);
+                    notification.Notify("ScheduleApp", "Task reminders disabled.", RingtoneManager.ExtraRingtoneDefaultUri, 0);
                 });
             });
         }
@@ -99,27 +99,12 @@ namespace ScheduleApp.Droid
                     case 0:
                         //do stuff in the app config to set the default code.
                         Android.Net.Uri ring = (Android.Net.Uri)intent.GetParcelableExtra(RingtoneManager.ExtraRingtonePickedUri);
-                    
-                        //validiating the ring.path through checking the cursor.
-                        /*
-                        Android.Media.RingtoneManager RingToneMgm = new Android.Media.RingtoneManager(Application.Context);
-                        Android.Database.ICursor cursor = RingToneMgm.Cursor;
-                        while (cursor.MoveToNext())
-                        {
-                            //here i have to check the ring.path;
-                            //http://stackoverflow.com/questions/7645951/how-to-check-if-resource-pointed-by-uri-is-available
-                            //var Result = cursor.GetString(RingToneMgm.ID_COLUMN_INDEX);
-                        }
-                        //Android.Net.Uri TestRing = Android.Net.Uri.Parse(Result);
 
                         Core core = Core.GetCore();
                         AppConfig config = core.GetConfig();
-                        ThemeStruct ConfigStruct = config.Theme;
-                        //ConfigStruct.defaultNotificationSound = Result;
-
-                        config.Theme = ConfigStruct;
-
-                        */
+                        ThemeStruct theme = config.Theme;
+                        theme.defaultNotificationSound = ring.ToString();
+                        config.Theme = theme;
                         break;
                         
 

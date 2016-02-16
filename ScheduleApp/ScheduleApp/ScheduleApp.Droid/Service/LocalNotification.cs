@@ -16,18 +16,22 @@ namespace ScheduleApp.Droid
 {
     public class LocalNotification : ScheduleApp.NotificationService
     {
-        public void Notify(string title, string description, int id)
+        public void Notify(string title, string description, string soundLocation, int id)
         {
-			Notification.Builder builder = new Notification.Builder (Application.Context)
+            Android.Net.Uri sound = Android.Net.Uri.Parse(soundLocation);
+
+            Notification.Builder builder = new Notification.Builder (Application.Context)
 				.SetContentTitle (title)
 				.SetContentText (description)
-				.SetSmallIcon (Resource.Drawable.icon);
+                .SetSound(sound)
+                //.SetLights
+                .SetSmallIcon (Resource.Drawable.icon);               
 
-			Notification notification = builder.Build();
-			NotificationManager notificationManager = Application.Context.GetSystemService (Context.NotificationService) as NotificationManager;
+            Notification notification = builder.Build();
+			NotificationManager notificationManager = Application.Context.GetSystemService(Context.NotificationService) as NotificationManager;
            
 			const int notificationId = 0;
-			notificationManager.Notify (notificationId, notification);
+			notificationManager.Notify(notificationId, notification);
         }
     }
 }

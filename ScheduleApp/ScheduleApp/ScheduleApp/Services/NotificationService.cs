@@ -4,6 +4,6 @@ namespace ScheduleApp
 {
     public interface NotificationService
     {
-        void Notify(string title, string description, int ID);
+        void Notify(string title, string description, string soundLocation, int ID);
     }
 }
