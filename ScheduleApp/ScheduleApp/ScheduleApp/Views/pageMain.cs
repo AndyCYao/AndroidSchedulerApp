@@ -30,34 +30,23 @@ namespace ScheduleApp
  
             List<AppTask> TasksList = MainScheduler.GetTasks(false);
             //System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList = new System.Collections.ObjectModel.ObservableCollection<TasksList>;
-            //Info on ListView are in this reference
-            //https://developer.xamarin.com/guides/cross-platform/xamarin-forms/user-interface/listview/data-and-databinding/
             listView = new ListView ();
-		   
+
             //Method 1
-            /*
-            foreach(var Tasks in TasksList)
-            {
-                listView.ItemsSource.Add(Tasks.TaskName);
-                    (Tasks.TaskName());
-            }
-            */
+            //listView.ItemTemplate = new DataTemplate(typeof(AppTask));
+            //listView.ItemsSource = TasksList;
 
-            //Method 2
+            
+
+            //Method 2 - this works but i want to bind the object instead
             listView.ItemsSource = from x in TasksList select x.TaskName;
+            
 
-            //suppose to get the items from an observable collection .
-			//listView.ItemsSource = TasksList;
-    
-
-
-			//On click of the item it pushs to a task page.
-			listView.ItemSelected += (sender, e) => {
-				// var selectedTask = xxx.SelectedItem();
-				// create a new page with this task as the binding context
-				// var TaskPage = new TaskPage();
-				// Navigation.PushAsync(TaskPage);
-			};
+            //On click of the item it pushs to a task page.
+            listView.ItemSelected += (sender, e) => {
+                //DisplayAlert("Check Check", listView.SelectedItem.ToString(),"Ok");
+                Navigation.PushAsync(new pageViewTask(listView.SelectedItem.ToString()));
+            };
 
 
             AddTask = new Button {

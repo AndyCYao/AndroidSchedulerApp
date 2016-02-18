@@ -14,7 +14,7 @@ namespace ScheduleApp
 {
 	public class pageViewTask:ContentPage
 	{
-		public pageViewTask ()
+		public pageViewTask (string TaskName)
 		{
 			Title = "View Task";
             
