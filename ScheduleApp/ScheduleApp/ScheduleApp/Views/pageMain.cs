@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Diagnostics;
 using PCLStorage;
-//Created by Andy- Sept 4th 2015
 //main page that will greet the user.
 namespace ScheduleApp
 {
@@ -26,26 +25,39 @@ namespace ScheduleApp
 			Core MainCore = Core.GetCore();
 			Scheduler MainScheduler = MainCore.GetScheduler();
 
-            //Feb 13 2016 - below is doc. for listview itemsource
- 
-            List<AppTask> TasksList = MainScheduler.GetTasks(false);
-            //System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList = new System.Collections.ObjectModel.ObservableCollection<TasksList>;
-            listView = new ListView ();
+            //Feb 18 2016 - below is doc. for listview itemsource
+            //Goal this week is to 
+            //- add a refresh pull down function.
+            //  best to read this first
+            //http://motzcod.es/post/87917979362/pull-to-refresh-for-xamarinforms-ios
+            //- Swipe left to delete, 
+            //-DONE  Click to enter and pass the ID to the Edit 
+
+            //List<AppTask> TasksList = MainScheduler.GetTasks(false);
+
 
             //Method 1
             //listView.ItemTemplate = new DataTemplate(typeof(AppTask));
             //listView.ItemsSource = TasksList;
+            System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList = new System.Collections.ObjectModel.ObservableCollection<AppTask>(MainScheduler.GetTasks(false));
 
-            
+
+            listView = new ListView ();
+            listView.ItemsSource = from x in oTasksList select x.TaskName;
 
             //Method 2 - this works but i want to bind the object instead
-            listView.ItemsSource = from x in TasksList select x.TaskName;
-            
+            //listView.ItemsSource = from x in TasksList select x.TaskName;
+
 
             //On click of the item it pushs to a task page.
             listView.ItemSelected += (sender, e) => {
-                //DisplayAlert("Check Check", listView.SelectedItem.ToString(),"Ok");
-                Navigation.PushAsync(new pageViewTask(listView.SelectedItem.ToString()));
+                foreach(var Tasks in oTasksList)
+                {
+                   if (Tasks.TaskName == listView.SelectedItem.ToString()){
+                        //DisplayAlert("Check Check", Tasks.TaskID.ToString(), "Ok");
+                        Navigation.PushAsync(new pageViewTask(Tasks.TaskID.ToString()));
+                    }
+                } 
             };
 
 
