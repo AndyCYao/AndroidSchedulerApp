@@ -16,6 +16,7 @@ namespace ScheduleApp
 		ListView listView; //This is to list all the current tasks in our XML memory.
         Button ConfigButton, AddTask;
 
+
         public Main(){
 			Title = "Scheduler App 2015";
             
@@ -43,11 +44,24 @@ namespace ScheduleApp
 
 
             listView = new ListView ();
+            //https://github.com/monkeyx/phoenix-imperator/blob/815bb3e0ae53a1937e1476cd8b353cd757aa4f6c/PhoenixImperator/Pages/Entities/EntityListPage.cs
+            listView.IsPullToRefreshEnabled = true;
+            listView.RefreshCommand = new Command(() => {
+                //come back to this once we work out the delete 
+                //http://blog.cloush.com/?p=50
+                //DisplayAlert("Is Refreshing", "iS Refreshing TExt", "Ok");
+                listView.IsRefreshing = false;
+            });
+            
+
             listView.ItemsSource = from x in oTasksList select x.TaskName;
+
+
+
+
 
             //Method 2 - this works but i want to bind the object instead
             //listView.ItemsSource = from x in TasksList select x.TaskName;
-
 
             //On click of the item it pushs to a task page.
             listView.ItemSelected += (sender, e) => {
