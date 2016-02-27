@@ -18,7 +18,7 @@ namespace ScheduleApp
 
 
         public Main(){
-			Title = "Scheduler App 2015";
+			Title = "Scheduler App 2016";
             
 			//Sept 21. 15 the List view needs to be populated with existings tasks. 
 			//users will have the option to view the tasks, and do actions to them when they click the 
@@ -69,7 +69,7 @@ namespace ScheduleApp
                 {
                    if (Tasks.TaskName == listView.SelectedItem.ToString()){
                         //DisplayAlert("Check Check", Tasks.TaskID.ToString(), "Ok");
-                        Navigation.PushAsync(new pageViewTask(Tasks.TaskID.ToString()));
+                        Navigation.PushAsync(new pageTask(Core.GetCore().GetScheduler().FindTaskById(Tasks.TaskID)));
                     }
                 } 
             };
@@ -80,7 +80,7 @@ namespace ScheduleApp
                 Style = MainCore.GetConfig().GenerateButtonStyle()
 			};
 			AddTask.Clicked += (sender, e) => {
-				var pAddTask = new pageAddTask();
+				var pAddTask = new pageTask();
 				this.Navigation.PushAsync(pAddTask);
 			};
 			ConfigButton = new Button { Text = "Configuration", Style = MainCore.GetConfig().GenerateButtonStyle() };

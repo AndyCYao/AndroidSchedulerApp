@@ -96,6 +96,8 @@ namespace ScheduleApp
                     {
                         found = true;
                         tasks.RemoveAt(i);
+
+                        Write(tasksPath);
                     }
                 }
 
@@ -163,17 +165,19 @@ namespace ScheduleApp
 
 
         public void UpdateTaskWithInfo(int taskID, string name,
-                        string notes, DateTime reminder, string ringToneName,
-                        int frequency, string frequencyUnit)
+                        string notes, DateTime reminderBegin, DateTime reminderEnd, 
+                        string ringToneName, int frequency, string frequencyUnit)
         {
             AppTask updateTask = FindTaskById(taskID);
 
             updateTask.TaskName = name;
             updateTask.TaskNotes = notes;
-            updateTask.ReminderEnd = reminder;
+            updateTask.ReminderEnd = reminderEnd;
             updateTask.RingTone = ringToneName;
             updateTask.Frequency = frequency;
             updateTask.FrequencyUnit = frequencyUnit;
+
+            Write(tasksPath);
         }
 
         public async void Write(string path)
