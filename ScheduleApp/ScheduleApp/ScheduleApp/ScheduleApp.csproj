@@ -53,7 +53,6 @@
     <Compile Include="Views\pageAppConfig.cs" />
     <Compile Include="Views\pageTask.cs" />
     <Compile Include="Views\pageMain.cs" />
-    <Compile Include="Views\pageViewTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PCLStorage, Version=1.0.2.0, Culture=neutral, PublicKeyToken=286fe515a2c35b64">

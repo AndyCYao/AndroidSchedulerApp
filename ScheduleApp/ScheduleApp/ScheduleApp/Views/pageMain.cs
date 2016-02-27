@@ -15,7 +15,7 @@ namespace ScheduleApp
 	{
 		ListView listView; //This is to list all the current tasks in our XML memory.
         Button ConfigButton, AddTask;
-
+        System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList;
 
         public Main(){
 			Title = "Scheduler App 2016";
@@ -32,13 +32,12 @@ namespace ScheduleApp
             //  best to read this first
             //http://motzcod.es/post/87917979362/pull-to-refresh-for-xamarinforms-ios
             //- Swipe left to delete, 
-            //-DONE  Click to enter and pass the ID to the Edit 
-            
-            System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList = new System.Collections.ObjectModel.ObservableCollection<AppTask>(MainScheduler.GetTasks(false));
-
+            //-DONE  Click to enter and pass the ID to the Edit
 
             listView = new ListView ();
+            RefreshListViewSource();
             //https://github.com/monkeyx/phoenix-imperator/blob/815bb3e0ae53a1937e1476cd8b353cd757aa4f6c/PhoenixImperator/Pages/Entities/EntityListPage.cs
+            /*
             listView.IsPullToRefreshEnabled = true;
             listView.RefreshCommand = new Command(() => {
                 //come back to this once we work out the delete 
@@ -46,16 +45,10 @@ namespace ScheduleApp
                 //DisplayAlert("Is Refreshing", "iS Refreshing TExt", "Ok");
                 listView.IsRefreshing = false;
             });
+            */
             
 
-            listView.ItemsSource = from x in oTasksList select x.TaskName;
-
-
-
-
-
-            //Method 2 - this works but i want to bind the object instead
-            //listView.ItemsSource = from x in TasksList select x.TaskName;
+            //listView.ItemsSource = from x in oTasksList select x.TaskName;
 
             //On click of the item it pushs to a task page.
             listView.ItemSelected += (sender, e) => {
@@ -104,9 +97,19 @@ namespace ScheduleApp
 
             AppConfig appConfig = Core.GetCore().GetConfig();
             //DisplayAlert("Test TEst", "Hello World","ok");
+            RefreshListViewSource();
             Style = appConfig.GeneratePageStyle();
             AddTask.Style = appConfig.GenerateButtonStyle(); 
             ConfigButton.Style = appConfig.GenerateButtonStyle();
+        }
+
+        public void RefreshListViewSource()
+        {
+            Core MainCore = Core.GetCore();
+            Scheduler MainScheduler = MainCore.GetScheduler();
+            System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList = new System.Collections.ObjectModel.ObservableCollection<AppTask>(MainScheduler.GetTasks(false));
+            listView.ItemsSource = from x in oTasksList select x.TaskName;
+
         }
     };
 }
