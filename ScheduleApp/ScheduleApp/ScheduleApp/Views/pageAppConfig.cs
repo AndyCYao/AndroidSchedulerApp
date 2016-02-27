@@ -21,11 +21,7 @@ namespace ScheduleApp
 
             var defaultNotificationLabel = new Label { Text = "Default Notification Sound" };
             var defaultNotificationLabelDesc = new Label { Text = "Represents the default ring tone to assign for new tasks." };
-
-
-
-
-            //List<Tuple<String, String>> rings = DependencyService.Get<iRingTones>().GetRingTones();
+            
             Button RingTonePickerBtn = new Button
             {
                 Text = "Select RingTone",
@@ -35,39 +31,6 @@ namespace ScheduleApp
             {
                 DependencyService.Get<iRingTones>().GetRingTones1();
             };
-            //Replace custom picker with Android Media picker. 
-            /*
-
-
-            for (int i = 0; i < ringTonePicker.Items.Count; i++)
-            {
-                if (config.Theme.defaultNotificationSound == ringTonePicker.Items[i])
-                {
-                    ringTonePicker.SelectedIndex = i;
-                    break;
-                }
-            }
-            */
-
-            //Jan 10th 2016 - replacing custom ringTonePicker with the one implemented by the actual Android.Media
-            /*
-            ringTonePicker.SelectedIndexChanged += (sender, args) =>
-            {
-                //print what is the URI of the selected ringtone
-                string searchFor = ringTonePicker.Items[ringTonePicker.SelectedIndex];
-                foreach (var ring in rings)
-                {
-                    if (ring.Item1 == searchFor)
-                    {
-                        string searchURI = ring.Item2;
-                        DisplayAlert("Check", searchURI, "Ok");
-                        DependencyService.Get<playRingTones>().playRingTones(searchURI);
-                    }
-                }
-            };
-            //Mediaplayer
-            */
-            
 
             var fontLabel = new Label { Text = "Font" };
             var fontPicker = new Picker();

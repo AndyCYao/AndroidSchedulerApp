@@ -8,21 +8,10 @@ using System.Diagnostics;
 
 using ScheduleApp;
 
-
-//Add Task viewer
-//Sept 4th 2015
-//Controls are listed in this document below
-//https://developer.xamarin.com/guides/cross-platform/xamarin-forms/controls/views/
-
-//Sept 26th 2015
-//https://developer.xamarin.com/api/type/Xamarin.Forms.ScrollView/
-//will use this to implement a scrolling action. 
-
 namespace ScheduleApp
 {
-	public class pageAddTask:ContentPage
+	public class pageTask:ContentPage
 	{
-
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
@@ -30,11 +19,11 @@ namespace ScheduleApp
 			Style = Core.GetCore().GetConfig().GeneratePageStyle();
 		}
 
-		public pageAddTask()
+		public pageTask(AppTask existingTask = null)
 		{
 			AppConfig config = Core.GetCore ().GetConfig ();
-
-			Title = "Add Task With ScrollView";
+            
+            Title = "Add Task With ScrollView";
 			var nameLabel = new Label { Text = "Task Name", Style = config.GenerateLabelStyle () };
 
 			var nameEntry = new Entry { Placeholder = "New Task Name" };
@@ -67,23 +56,6 @@ namespace ScheduleApp
 
 			var ringToneLabel = new Label { Text = "Select Ringtone", Style = config.GenerateLabelStyle () };
 			var ringTonePicker = new Picker{ Style = config.GeneratePickerStyle () };
-
-            //Nov 11th 2015 - Testing to access Android ringtone folder from the pageAddTask page. 
-            //using this document. https://developer.xamarin.com/guides/cross-platform/xamarin-forms/dependency-service/
-            //List<Tuple<String, String>> rings = DependencyService.Get<iRingTones>().GetRingTones();
-
-            //This part we can create a dictionary object that contains all the
-            //ringtones, then load it into this picker, until then we just include
-            //these three. 
-
-            /*
-            foreach (var ring in rings)
-            {
-                ringTonePicker.Items.Add(ring.Item1);
-            }
-			ringTonePicker.SelectedIndex = 0;
-            */
-
             Button RingTonePickerBtn = new Button
             {
                 Text = "Select RingTone",
@@ -94,27 +66,14 @@ namespace ScheduleApp
                 DependencyService.Get<iRingTones>().GetRingTones1();
             };
 
-
-            for (int i = 0; i < ringTonePicker.Items.Count; i++)
-            {
-                if (config.Theme.defaultNotificationSound == ringTonePicker.Items[i])
-                {
-                    ringTonePicker.SelectedIndex = i;
-                    break;
-                }
-            }
-
-
-			var frequencyLabel = new Label { Text = "Select Frequency", Style = config.GenerateLabelStyle () };
+            var frequencyLabel = new Label { Text = "Select Frequency", Style = config.GenerateLabelStyle () };
 			var frequencyPicker = new Picker { Style = config.GeneratePickerStyle () };
 
-			for (int i = 1; i <= 10; i++) {
-
+			for (int i = 1; i <= 10; i++)
+            {
 				frequencyPicker.Items.Add (i.ToString ());
 			}
-			;
-			frequencyPicker.SelectedIndex = 5;
-
+			
 			var frequencyUnitLabel = new Label { Text = "Select Unit", Style = config.GenerateLabelStyle () };
 			var frequencyUnitPicker = new Picker{ Style = config.GeneratePickerStyle () };
 
@@ -123,15 +82,94 @@ namespace ScheduleApp
 			frequencyUnitPicker.Items.Add ("Days");
 			frequencyUnitPicker.Items.Add ("Weeks");
 
-			frequencyUnitPicker.SelectedIndex = 2;
+            Button deleteButton = new Button
+            {
+                Text = "Delete",
+                Style = config.GenerateButtonStyle()
+            };
 
-			var SaveButton = new Button {
+            deleteButton.IsVisible = false;
+
+            deleteButton.Clicked += async (sender, e) =>
+            {
+                bool willDelete = await DisplayAlert("Delete Confirmation", "Are you sure you want to remove this task?", "Yes", "No");
+
+                if (willDelete)
+                {
+                    Core.GetCore().GetScheduler().RemoveTask(existingTask.TaskID);
+                    await Navigation.PopAsync();
+                }
+            };
+
+            if (existingTask == null)
+            {
+                frequencyPicker.SelectedIndex = 5;
+                frequencyUnitPicker.SelectedIndex = 2;
+
+                for (int i = 0; i < ringTonePicker.Items.Count; i++)
+                {
+                    if (config.Theme.defaultNotificationSound == ringTonePicker.Items[i])
+                    {
+                        ringTonePicker.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                nameEntry.Placeholder = existingTask.TaskName;
+                nameEntry.Text = existingTask.TaskName;
+                noteEntry.Placeholder = existingTask.TaskNotes;
+                noteEntry.Text = existingTask.TaskNotes;
+
+                if (existingTask.Done)
+                {
+                    donePicker.SelectedIndex = 1;
+                }
+                else
+                {
+                    donePicker.SelectedIndex = 0;
+                }
+
+                reminderBeginDatePicker.Date = existingTask.ReminderBegin;
+                reminderEndDatePicker.Date = existingTask.ReminderEnd;
+
+                for (int i = 0; i < ringTonePicker.Items.Count; i++)
+                {
+                    if (existingTask.RingTone == ringTonePicker.Items[i])
+                    {
+                        ringTonePicker.SelectedIndex = i;
+                        break;
+                    }
+                }
+
+                for (int i = 0; i < frequencyPicker.Items.Count; i++)
+                {
+                    if (existingTask.Frequency.ToString() == frequencyPicker.Items[i])
+                    {
+                        frequencyPicker.SelectedIndex = i;
+                        break;
+                    }
+                }
+
+                for (int i = 0; i < frequencyUnitPicker.Items.Count; i++)
+                {
+                    if (existingTask.FrequencyUnit == frequencyUnitPicker.Items[i])
+                    {
+                        frequencyUnitPicker.SelectedIndex = i;
+                        break;
+                    }
+                }
+
+                deleteButton.IsVisible = true;
+            }
+
+            var SaveButton = new Button {
 				Text = "Save!",
 				Style = config.GenerateButtonStyle ()
 			};
 
 			SaveButton.Clicked += (sender, e) => {
-
 				string tTaskName;
 				string tTaskNotes;
                 DateTime tReminderBeginDate;
@@ -147,18 +185,24 @@ namespace ScheduleApp
                     tReminderBeginDate = reminderBeginDatePicker.Date;
 					tReminderEndDate = reminderEndDatePicker.Date;
 					tDone = Convert.ToBoolean (donePicker.Items [donePicker.SelectedIndex]);
-                    // tRingToneName = ringTonePicker.Items [ringTonePicker.SelectedIndex];
-                    tRingToneName = "testing on Feb 7th 2015";
+                    tRingToneName = "ThisDoesntExist.mp3";
+                    //tRingToneName = RingTonePickerBtn.
                     tFrequency = Convert.ToInt32(frequencyPicker.Items [frequencyPicker.SelectedIndex]);
 					tFrequencyUnit = frequencyUnitPicker.Items [frequencyUnitPicker.SelectedIndex];
 
-                    //string Results;
-                    //Results = tReminderEndDate + " " + tTaskName + " " + tTaskNotes + " " + tDone + " " + tRingToneName + " "  + tFrequency + " " + tFrequencyUnit ;
-                    //DisplayAlert ("Hello, Testing", Results, "Ok");
-
-                    Core.GetCore().GetScheduler().AddTaskWithInfo(
-                        tTaskName, tTaskNotes, tReminderBeginDate, 
+                    if (existingTask == null)
+                    {
+                        Core.GetCore().GetScheduler().AddTaskWithInfo(
+                        tTaskName, tTaskNotes, tReminderBeginDate,
                         tReminderEndDate, tRingToneName, tFrequency, tFrequencyUnit);
+                    }
+                    else
+                    {
+                        Core.GetCore().GetScheduler().UpdateTaskWithInfo(
+                            existingTask.TaskID, tTaskName, tTaskNotes,
+                            tReminderBeginDate, tReminderEndDate, tRingToneName,
+                            tFrequency, tFrequencyUnit);
+                    }
 
                     Navigation.PopAsync();
                 }
@@ -167,7 +211,7 @@ namespace ScheduleApp
 				};
 			};
 
-			ScrollView scrollView = new ScrollView {
+            ScrollView scrollView = new ScrollView {
 				VerticalOptions = LayoutOptions.FillAndExpand,
 				Content = new StackLayout {
 					VerticalOptions = LayoutOptions.CenterAndExpand,
@@ -190,10 +234,12 @@ namespace ScheduleApp
 						frequencyUnitPicker,
 						reminderEndDateLabel,
 						reminderEndDatePicker,
-						SaveButton
+						SaveButton,
+                        deleteButton
 					}
 				}
 			};
+            
 			this.Content = scrollView;
 		}
 	};

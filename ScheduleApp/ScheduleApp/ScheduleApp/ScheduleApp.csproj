@@ -51,7 +51,7 @@
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Tasks.cs" />
     <Compile Include="Views\pageAppConfig.cs" />
-    <Compile Include="Views\pageAddTask.cs" />
+    <Compile Include="Views\pageTask.cs" />
     <Compile Include="Views\pageMain.cs" />
     <Compile Include="Views\pageViewTask.cs" />
   </ItemGroup>
