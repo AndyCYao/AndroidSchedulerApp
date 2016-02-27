@@ -33,13 +33,7 @@ namespace ScheduleApp
             //http://motzcod.es/post/87917979362/pull-to-refresh-for-xamarinforms-ios
             //- Swipe left to delete, 
             //-DONE  Click to enter and pass the ID to the Edit 
-
-            //List<AppTask> TasksList = MainScheduler.GetTasks(false);
-
-
-            //Method 1
-            //listView.ItemTemplate = new DataTemplate(typeof(AppTask));
-            //listView.ItemsSource = TasksList;
+            
             System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList = new System.Collections.ObjectModel.ObservableCollection<AppTask>(MainScheduler.GetTasks(false));
 
 
@@ -105,10 +99,11 @@ namespace ScheduleApp
 
         protected override void OnAppearing()
         {
+            // This callback gets trigger everytime the user comes to this screen. 
             base.OnAppearing();
 
             AppConfig appConfig = Core.GetCore().GetConfig();
-
+            //DisplayAlert("Test TEst", "Hello World","ok");
             Style = appConfig.GeneratePageStyle();
             AddTask.Style = appConfig.GenerateButtonStyle(); 
             ConfigButton.Style = appConfig.GenerateButtonStyle();
