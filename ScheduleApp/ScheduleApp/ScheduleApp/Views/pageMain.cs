@@ -13,6 +13,43 @@ namespace ScheduleApp
 	// The root page of your application
 	public class Main: ContentPage
 	{
+        //Mar 1st 2016
+        //to be fleshed out in the refresh list view object. 
+        //Read through this git https://github.com/mhalkovitch/Xamarim/blob/dc595559c24c649135ccdc21b210f94aa2559634/Chapter%205%20-%20Lists/ListViewExample/ListViewExample/ListViewExample/HomePage.cs
+        //basically, the context action needs a viewCell 
+        //1.) the refreshListViewSource will now need to update the ListItem
+        //2.) the ListView calls the ListItems as the source
+        //3.) the ListItemCells fleshes out the ListItems with the actual
+        // context action details, like more / details etc. 
+        public class ListItem
+        {
+            public string TaskName { get; set; }
+        }
+
+        class ListItemCell: ViewCell{
+            public ListItemCell()
+            {
+                var moreAction = new MenuItem { Text = "More" };
+                moreAction.SetBinding(MenuItem.CommandParameterProperty, new Binding("."));
+                moreAction.Clicked += (sender, e) =>
+                {
+                    var mi = ((MenuItem)sender);
+              
+                    //((ContentPage)((ListView)viewLayout.ParentView).ParentView).DisplayAlert("More Clicked", "On row: " + item.Title.ToString(), "OK");             
+                };
+                var deleteAction = new MenuItem { Text = "Delete", IsDestructive = true };
+                deleteAction.SetBinding(MenuItem.CommandParameterProperty, new Binding("."));
+                deleteAction.Clicked += (sender, e) =>
+                {
+                    var mi = ((MenuItem)sender);
+                    
+                    //((ContentPage)((ListView)viewLayout.ParentView).ParentView).DisplayAlert("Delete Clicked", "On row: " + item.Title.ToString(), "OK");
+                };
+                ContextActions.Add(moreAction);
+                ContextActions.Add(deleteAction);
+            }
+        }
+
 		ListView listView; //This is to list all the current tasks in our XML memory.
         Button ConfigButton, AddTask;
         System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList;
@@ -35,27 +72,17 @@ namespace ScheduleApp
             //-DONE  Click to enter and pass the ID to the Edit
 
             listView = new ListView ();
+
             RefreshListViewSource();
-            //https://github.com/monkeyx/phoenix-imperator/blob/815bb3e0ae53a1937e1476cd8b353cd757aa4f6c/PhoenixImperator/Pages/Entities/EntityListPage.cs
-            /*
-            listView.IsPullToRefreshEnabled = true;
-            listView.RefreshCommand = new Command(() => {
-                //come back to this once we work out the delete 
-                //http://blog.cloush.com/?p=50
-                //DisplayAlert("Is Refreshing", "iS Refreshing TExt", "Ok");
-                listView.IsRefreshing = false;
-            });
-            */
             
-
-            //listView.ItemsSource = from x in oTasksList select x.TaskName;
-
+        
             //On click of the item it pushs to a task page.
             listView.ItemSelected += (sender, e) => {
                 foreach(var Tasks in oTasksList)
                 {
                    if (Tasks.TaskName == listView.SelectedItem.ToString()){
                         //DisplayAlert("Check Check", Tasks.TaskID.ToString(), "Ok");
+                        //Feb 27th 2016 - > Give user an option to delete, or view the ViewTask page.
                         Navigation.PushAsync(new pageTask(Core.GetCore().GetScheduler().FindTaskById(Tasks.TaskID)));
                     }
                 } 
@@ -108,6 +135,8 @@ namespace ScheduleApp
             Core MainCore = Core.GetCore();
             Scheduler MainScheduler = MainCore.GetScheduler();
             System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList = new System.Collections.ObjectModel.ObservableCollection<AppTask>(MainScheduler.GetTasks(false));
+            //
+
             listView.ItemsSource = from x in oTasksList select x.TaskName;
 
         }
