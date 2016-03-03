@@ -48,7 +48,7 @@ namespace ScheduleApp
         {
             if (fTaskName.Length > 0)
             {
-                m_task_name = fTaskName.Substring(0, 40);
+                m_task_name = fTaskName.Substring(0, Math.Min(40, fTaskName.Length));
             }
             else
             {
