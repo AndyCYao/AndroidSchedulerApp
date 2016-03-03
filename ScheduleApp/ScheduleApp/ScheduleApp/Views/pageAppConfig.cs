@@ -29,7 +29,7 @@ namespace ScheduleApp
 
             RingTonePickerBtn.Clicked += (sender, args) =>
             {
-                DependencyService.Get<iRingTones>().GetRingTones1();
+                DependencyService.Get<iRingTones>().GetRingTonePicker();
             };
 
             var fontLabel = new Label { Text = "Font" };
@@ -179,7 +179,7 @@ namespace ScheduleApp
                 }
                 else
                 {
-                    //themeStruct.defaultNotificationSound = ringTonePicker.Items[ringTonePicker.SelectedIndex];
+                    //DefaultNotificationSound = ringTonePicker.Items[ringTonePicker.SelectedIndex];
                     themeStruct.backgroundColour = config.nameToColour[backgroundColourPicker.Items[backgroundColourPicker.SelectedIndex]];
                     themeStruct.font = fontPicker.Items[fontPicker.SelectedIndex];
                     themeStruct.fontColour = config.nameToColour[fontColourPicker.Items[fontColourPicker.SelectedIndex]];

@@ -109,7 +109,9 @@ namespace ScheduleApp
             //On click of the item it pushs to a task page.
             /*
             listView.ItemSelected += (sender, e) => {
-                foreach(var Tasks in oTasksList)
+                System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList = new System.Collections.ObjectModel.ObservableCollection<AppTask>(MainScheduler.GetTasks(false));
+
+                foreach (var Tasks in oTasksList)
                 {
                    if (Tasks.TaskName == listView.SelectedItem.ToString()){
                         //DisplayAlert("Check Check", Tasks.TaskID.ToString(), "Ok");

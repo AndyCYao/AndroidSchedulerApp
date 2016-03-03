@@ -10,8 +10,7 @@ namespace ScheduleApp
 {
     public interface iRingTones
     {
-        //List<Tuple<String, String>> GetRingTones();
-        void GetRingTones1();
+        void GetRingTonePicker(AppTask task = null);
     }
 
 }

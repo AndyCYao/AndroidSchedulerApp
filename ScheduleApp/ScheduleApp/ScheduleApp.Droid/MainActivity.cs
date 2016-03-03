@@ -74,7 +74,7 @@ namespace ScheduleApp.Droid
                     {
                         var task = list[i];
                         var notification = new LocalNotification();
-                        notification.Notify(task.TaskName, "Get it done!", Core.GetCore().GetConfig().Theme.defaultNotificationSound, i);
+                        notification.Notify(task.TaskName, "Get it done!", task.RingTone, i);
                     }
                 });
             });
@@ -94,21 +94,24 @@ namespace ScheduleApp.Droid
             base.OnActivityResult(requestCode, resultCode, intent);
             if (resultCode == Result.Ok)
             {
-                    switch (requestCode)
-                {
-                    case 0:
-                        //do stuff in the app config to set the default code.
-                        Android.Net.Uri ring = (Android.Net.Uri)intent.GetParcelableExtra(RingtoneManager.ExtraRingtonePickedUri);
+                Core core = Core.GetCore();
+                AppConfig config = core.GetConfig();
+                Android.Net.Uri ring = (Android.Net.Uri)intent.GetParcelableExtra(RingtoneManager.ExtraRingtonePickedUri);
 
-                        Core core = Core.GetCore();
-                        AppConfig config = core.GetConfig();
-                        ThemeStruct theme = config.Theme;
-                        theme.defaultNotificationSound = ring.ToString();
-                        config.Theme = theme;
+                switch (requestCode)
+                {
+                    case -1:
+                        config.DefaultNotificationSound = ring.ToString();
                         break;
                         
-
                     default:
+                        AppTask task = core.GetScheduler().FindTaskById(requestCode);
+
+                        if (task != null)
+                        {
+                            task.RingTone = ring.ToString();
+                        }
+
                         break;
                 }
             }

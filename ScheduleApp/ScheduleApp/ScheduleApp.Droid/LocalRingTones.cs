@@ -29,11 +29,22 @@ namespace ScheduleApp.Droid
         //need an empty parameterless constructor so dependency service can create new instances. 
         public LocalRingTones() { }
 
-        public void GetRingTones1()
+        public void GetRingTonePicker(AppTask task = null)
         {
             Core core = Core.GetCore();
             AppConfig config = core.GetConfig();
-            Android.Net.Uri rURI = Android.Net.Uri.Parse(config.Theme.defaultNotificationSound);
+            string notificationSound;
+
+            if (task != null && task.RingTone != "")
+            {
+                notificationSound = task.RingTone;
+            }
+            else
+            {
+                notificationSound = config.DefaultNotificationSound;
+            }
+
+            Android.Net.Uri rURI = Android.Net.Uri.Parse(notificationSound);
 
             Intent intent = new Intent(RingtoneManager.ActionRingtonePicker);
             intent.PutExtra(RingtoneManager.ExtraRingtoneTitle, "Notification Ringtone");
@@ -56,7 +67,7 @@ namespace ScheduleApp.Droid
 
             intent.PutExtra(RingtoneManager.ExtraRingtoneExistingUri, rURI);
 
-            ((Activity)Forms.Context).StartActivityForResult(intent, 0);
+            ((Activity)Forms.Context).StartActivityForResult(intent, (task != null) ? task.TaskID : -1);
             
         }
 

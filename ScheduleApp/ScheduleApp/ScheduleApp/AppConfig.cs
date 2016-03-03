@@ -9,8 +9,6 @@ namespace ScheduleApp
 {
     public struct ThemeStruct
     {
-        public string defaultNotificationSound;
-        
         public Xamarin.Forms.NamedSize fontSize;
         public string font;
         public Xamarin.Forms.Color fontColour;
@@ -20,6 +18,7 @@ namespace ScheduleApp
     public class AppConfig
     {
         private ThemeStruct m_theme;
+        private string m_defaultNotificationSound;
         private uint m_maxTasksPerPage;
         private bool m_showClosedTasks;
 
@@ -81,7 +80,7 @@ namespace ScheduleApp
             m_theme.font = "Helvetica";
             m_theme.fontColour = Xamarin.Forms.Color.White;
             m_theme.fontSize = Xamarin.Forms.NamedSize.Default;
-            m_theme.defaultNotificationSound = "XGonGiveItToYa.mp3";
+            m_defaultNotificationSound = "";
         }
 
         public async void Write(string path)
@@ -96,13 +95,13 @@ namespace ScheduleApp
 
             writer.WriteElementString("MaxTasksPerPage", MaxTasksPerPage.ToString());
             writer.WriteElementString("ShowClosedTasks", ShowClosedTasks.ToString());
+            writer.WriteElementString("DefaultNotificationSound", DefaultNotificationSound.ToString());
 
             writer.WriteStartElement("Theme");
-            writer.WriteElementString("DefaultNotificationSound", Theme.defaultNotificationSound.ToString());
-            writer.WriteElementString("Font", Theme.font.ToString());
-            writer.WriteElementString("FontSize", sizeToName[Theme.fontSize]);
-            writer.WriteElementString("FontColour", colourToName[Theme.fontColour]);
-            writer.WriteElementString("BackgroundColour", colourToName[Theme.backgroundColour]);
+                writer.WriteElementString("Font", Theme.font.ToString());
+                writer.WriteElementString("FontSize", sizeToName[Theme.fontSize]);
+                writer.WriteElementString("FontColour", colourToName[Theme.fontColour]);
+                writer.WriteElementString("BackgroundColour", colourToName[Theme.backgroundColour]);
             writer.WriteEndElement();
 
             writer.WriteEndElement();
@@ -123,14 +122,14 @@ namespace ScheduleApp
                 reader.ReadStartElement("Config");
                     MaxTasksPerPage = (uint)reader.ReadElementContentAsInt();
                     ShowClosedTasks = Boolean.Parse(reader.ReadElementContentAsString());
+                    m_defaultNotificationSound = reader.ReadElementContentAsString();
 
                     reader.ReadStartElement("Theme");
-                        m_theme.defaultNotificationSound = reader.ReadElementContentAsString();
                         m_theme.font = reader.ReadElementContentAsString();
                         m_theme.fontSize = nameToSize[reader.ReadElementContentAsString()];
                         m_theme.fontColour = nameToColour[reader.ReadElementContentAsString()];
                         m_theme.backgroundColour = nameToColour[reader.ReadElementContentAsString()];
-                reader.ReadEndElement();
+                    reader.ReadEndElement();
 
                 reader.ReadEndElement();
             }
@@ -150,6 +149,12 @@ namespace ScheduleApp
         {
             get { return m_maxTasksPerPage; }
             set { m_maxTasksPerPage = value; }
+        }
+
+        public string DefaultNotificationSound
+        {
+            get { return m_defaultNotificationSound; }
+            set { m_defaultNotificationSound = value; }
         }
 
         public bool ShowClosedTasks

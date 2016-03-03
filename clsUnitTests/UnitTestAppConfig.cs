@@ -17,7 +17,7 @@ namespace clsUnitTests
             Assert.AreEqual(config.Theme.font, "Helvetica");
             Assert.AreEqual(config.Theme.fontSize, Xamarin.Forms.NamedSize.Default);
             Assert.AreEqual(config.Theme.fontColour, Color.White);
-            Assert.AreEqual(config.Theme.defaultNotificationSound, "XGonGiveItToYa.mp3");
+            Assert.AreEqual(config.DefaultNotificationSound, "");
         }
 
         [TestMethod]
@@ -26,6 +26,7 @@ namespace clsUnitTests
             AppConfig config = new AppConfig();
             config.ShowClosedTasks = true;
             config.MaxTasksPerPage = 50;
+            config.DefaultNotificationSound = "ScarboroughFair.wav";
 
             ThemeStruct theme = config.Theme;
 
@@ -33,7 +34,6 @@ namespace clsUnitTests
             theme.font = "Courier";
             theme.fontSize = Xamarin.Forms.NamedSize.Large;
             theme.fontColour = Color.Red;
-            theme.defaultNotificationSound = "ScarboroughFair.wav";
             //string path = Directory.GetCurrentDirectory() + "\\AppConfigSerialization.xml";
             config.Theme = theme;
             string path = "AppConfigSerialization.xml";
@@ -47,7 +47,7 @@ namespace clsUnitTests
             Assert.AreEqual(compare.Theme.font, config.Theme.font);
             Assert.AreEqual(compare.Theme.fontSize, config.Theme.fontSize);
             Assert.AreEqual(compare.Theme.fontColour, config.Theme.fontColour);
-            Assert.AreEqual(compare.Theme.defaultNotificationSound, config.Theme.defaultNotificationSound);
+            Assert.AreEqual(compare.DefaultNotificationSound, config.DefaultNotificationSound);
         }
     }
 }

@@ -63,7 +63,7 @@ namespace ScheduleApp
 
             RingTonePickerBtn.Clicked += (sender, args) =>
             {
-                DependencyService.Get<iRingTones>().GetRingTones1();
+                DependencyService.Get<iRingTones>().GetRingTonePicker(existingTask);
             };
 
             var frequencyLabel = new Label { Text = "Select Frequency", Style = config.GenerateLabelStyle () };
@@ -108,7 +108,7 @@ namespace ScheduleApp
 
                 for (int i = 0; i < ringTonePicker.Items.Count; i++)
                 {
-                    if (config.Theme.defaultNotificationSound == ringTonePicker.Items[i])
+                    if (config.DefaultNotificationSound == ringTonePicker.Items[i])
                     {
                         ringTonePicker.SelectedIndex = i;
                         break;
