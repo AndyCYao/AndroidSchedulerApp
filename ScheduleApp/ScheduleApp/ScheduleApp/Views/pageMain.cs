@@ -21,10 +21,13 @@ namespace ScheduleApp
         //2.) the ListView calls the ListItems as the source
         //3.) the ListItemCells fleshes out the ListItems with the actual
         // context action details, like more / details etc. 
+
+            /*
         public class ListItem
         {
-            public string TaskName { get; set; }
+            public string Task_Name { get; set; }
         }
+        */
 
         class ListItemCell: ViewCell{
             public ListItemCell()
@@ -34,7 +37,7 @@ namespace ScheduleApp
                 moreAction.Clicked += (sender, e) =>
                 {
                     var mi = ((MenuItem)sender);
-              
+                    var item = (AppTask)mi.CommandParameter;
                     //((ContentPage)((ListView)viewLayout.ParentView).ParentView).DisplayAlert("More Clicked", "On row: " + item.Title.ToString(), "OK");             
                 };
                 var deleteAction = new MenuItem { Text = "Delete", IsDestructive = true };
@@ -42,17 +45,43 @@ namespace ScheduleApp
                 deleteAction.Clicked += (sender, e) =>
                 {
                     var mi = ((MenuItem)sender);
-                    
+                    var item = (AppTask)mi.CommandParameter;
                     //((ContentPage)((ListView)viewLayout.ParentView).ParentView).DisplayAlert("Delete Clicked", "On row: " + item.Title.ToString(), "OK");
                 };
                 ContextActions.Add(moreAction);
                 ContextActions.Add(deleteAction);
+                Label titleLabel = new Label { Text = "Task Name" };
+                titleLabel.SetBinding(Label.TextProperty, "TaskName");
+
+                StackLayout viewLayoutItem = new StackLayout()
+                {
+                    HorizontalOptions = LayoutOptions.StartAndExpand,
+                    Orientation = StackOrientation.Vertical,
+                    Children = { titleLabel }
+
+                };
+
+                View = viewLayoutItem;
+
             }
         }
 
-		ListView listView; //This is to list all the current tasks in our XML memory.
+        public void RefreshListViewSource()
+        {
+            Core MainCore = Core.GetCore();
+            Scheduler MainScheduler = MainCore.GetScheduler();
+            //System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList = new System.Collections.ObjectModel.ObservableCollection<AppTask>(MainScheduler.GetTasks(false));
+            //listView.ItemsSource = from x in oTasksList select x.TaskName;
+
+            var TasksLists = MainScheduler.GetTasks(false);
+            listView.ItemTemplate = new DataTemplate(typeof(ListItemCell)); //This line is causing the code to crash. 
+            listView.ItemsSource = TasksLists;
+        }
+
+        ListView listView; //This is to list all the current tasks in our XML memory.
         Button ConfigButton, AddTask;
-        System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList;
+        //System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList;
+        AppTask TasksLists;
 
         public Main(){
 			Title = "Scheduler App 2016";
@@ -72,11 +101,13 @@ namespace ScheduleApp
             //-DONE  Click to enter and pass the ID to the Edit
 
             listView = new ListView ();
+      
 
-            RefreshListViewSource();
-            
-        
+            //RefreshListViewSource(); // since appears in OnAppearing dont need this anymore. 
+
+
             //On click of the item it pushs to a task page.
+            /*
             listView.ItemSelected += (sender, e) => {
                 foreach(var Tasks in oTasksList)
                 {
@@ -87,6 +118,7 @@ namespace ScheduleApp
                     }
                 } 
             };
+            */
 
 
             AddTask = new Button {
@@ -130,16 +162,7 @@ namespace ScheduleApp
             ConfigButton.Style = appConfig.GenerateButtonStyle();
         }
 
-        public void RefreshListViewSource()
-        {
-            Core MainCore = Core.GetCore();
-            Scheduler MainScheduler = MainCore.GetScheduler();
-            System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList = new System.Collections.ObjectModel.ObservableCollection<AppTask>(MainScheduler.GetTasks(false));
-            //
 
-            listView.ItemsSource = from x in oTasksList select x.TaskName;
-
-        }
     };
 }
 
