@@ -107,10 +107,21 @@ namespace ScheduleApp
 
 
             //On click of the item it pushs to a task page.
-            /*
+          
             listView.ItemSelected += (sender, e) => {
-                System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList = new System.Collections.ObjectModel.ObservableCollection<AppTask>(MainScheduler.GetTasks(false));
 
+                //System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList = new System.Collections.ObjectModel.ObservableCollection<AppTask>(MainScheduler.GetTasks(false));
+
+                AppTask x = (AppTask)e.SelectedItem;
+                if (x is AppTask)
+                {
+                    Navigation.PushAsync(new pageTask(Core.GetCore().GetScheduler().FindTaskById(x.TaskID)));
+                    ((ListView)sender).SelectedItem = null;
+                }
+
+
+                /*
+>>>>>>> Stashed changes
                 foreach (var Tasks in oTasksList)
                 {
                    if (Tasks.TaskName == listView.SelectedItem.ToString()){
@@ -119,8 +130,9 @@ namespace ScheduleApp
                         Navigation.PushAsync(new pageTask(Core.GetCore().GetScheduler().FindTaskById(Tasks.TaskID)));
                     }
                 } 
+                */
             };
-            */
+        
 
 
             AddTask = new Button {
