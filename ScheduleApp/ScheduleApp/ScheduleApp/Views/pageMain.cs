@@ -13,21 +13,7 @@ namespace ScheduleApp
 	// The root page of your application
 	public class Main: ContentPage
 	{
-        //Mar 1st 2016
-        //to be fleshed out in the refresh list view object. 
         //Read through this git https://github.com/mhalkovitch/Xamarim/blob/dc595559c24c649135ccdc21b210f94aa2559634/Chapter%205%20-%20Lists/ListViewExample/ListViewExample/ListViewExample/HomePage.cs
-        //basically, the context action needs a viewCell 
-        //1.) the refreshListViewSource will now need to update the ListItem
-        //2.) the ListView calls the ListItems as the source
-        //3.) the ListItemCells fleshes out the ListItems with the actual
-        // context action details, like more / details etc. 
-
-            /*
-        public class ListItem
-        {
-            public string Task_Name { get; set; }
-        }
-        */
 
         class ListItemCell: ViewCell{
             public ListItemCell()
@@ -42,14 +28,31 @@ namespace ScheduleApp
                 };
                 var deleteAction = new MenuItem { Text = "Delete", IsDestructive = true };
                 deleteAction.SetBinding(MenuItem.CommandParameterProperty, new Binding("."));
-                deleteAction.Clicked += (sender, e) =>
+                deleteAction.Clicked += async (sender, e) =>
                 {
+
                     var mi = ((MenuItem)sender);
                     var item = (AppTask)mi.CommandParameter;
+
                     //((ContentPage)((ListView)viewLayout.ParentView).ParentView).DisplayAlert("Delete Clicked", "On row: " + item.Title.ToString(), "OK");
+                    //bool willDelete =  await ((ContentPage)((ListView)((StackLayout)mi.ParentView).ParentView).ParentView).DisplayAlert("Delete Confirmation", "Are you sure you want to remove this task?", "Yes", "No");
+                    bool willDelete = await App.Current.MainPage.DisplayAlert("Delete Confirmation", "Are you sure you want to remove this task?", "Yes", "No");
+
+                    if (willDelete)
+                    {
+                        Core.GetCore().GetScheduler().RemoveTask(item.TaskID);
+                        //App.Current.MainPage.RefreshListViewSource();
+                        //var pMain = App.Current.MainPage;
+                        //await App.Current.MainPage.Navigation.PushAsync(pMain);
+                        //OnAppearing();
+                       
+                    }
                 };
+
                 ContextActions.Add(moreAction);
                 ContextActions.Add(deleteAction);
+
+          
                 Label titleLabel = new Label { Text = "Task Name" };
                 titleLabel.SetBinding(Label.TextProperty, "TaskName");
 
@@ -62,7 +65,7 @@ namespace ScheduleApp
                 };
 
                 View = viewLayoutItem;
-
+      
             }
         }
 
@@ -70,42 +73,26 @@ namespace ScheduleApp
         {
             Core MainCore = Core.GetCore();
             Scheduler MainScheduler = MainCore.GetScheduler();
-            //System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList = new System.Collections.ObjectModel.ObservableCollection<AppTask>(MainScheduler.GetTasks(false));
+            System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList = new System.Collections.ObjectModel.ObservableCollection<AppTask>(MainScheduler.GetTasks(false));
             //listView.ItemsSource = from x in oTasksList select x.TaskName;
 
-            var TasksLists = MainScheduler.GetTasks(false);
-            listView.ItemTemplate = new DataTemplate(typeof(ListItemCell)); //This line is causing the code to crash. 
-            listView.ItemsSource = TasksLists;
+            //var TasksLists = MainScheduler.GetTasks(false);
+            listView.ItemTemplate = new DataTemplate(typeof(ListItemCell)); 
+            listView.ItemsSource = oTasksList;
+            
         }
 
         ListView listView; //This is to list all the current tasks in our XML memory.
         Button ConfigButton, AddTask;
-        //System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList;
-        AppTask TasksLists;
 
         public Main(){
 			Title = "Scheduler App 2016";
-            
-			//Sept 21. 15 the List view needs to be populated with existings tasks. 
-			//users will have the option to view the tasks, and do actions to them when they click the 
-			//specific task. 
+           
 			Core MainCore = Core.GetCore();
 			Scheduler MainScheduler = MainCore.GetScheduler();
 
-            //Feb 18 2016 - below is doc. for listview itemsource
-            //Goal this week is to 
-            //- add a refresh pull down function.
-            //  best to read this first
-            //http://motzcod.es/post/87917979362/pull-to-refresh-for-xamarinforms-ios
-            //- Swipe left to delete, 
-            //-DONE  Click to enter and pass the ID to the Edit
-
             listView = new ListView ();
       
-
-            //RefreshListViewSource(); // since appears in OnAppearing dont need this anymore. 
-
-
             //On click of the item it pushs to a task page.
           
             listView.ItemSelected += (sender, e) => {
@@ -119,18 +106,8 @@ namespace ScheduleApp
                     ((ListView)sender).SelectedItem = null;
                 }
 
-
-                /*
->>>>>>> Stashed changes
-                foreach (var Tasks in oTasksList)
-                {
-                   if (Tasks.TaskName == listView.SelectedItem.ToString()){
-                        //DisplayAlert("Check Check", Tasks.TaskID.ToString(), "Ok");
-                        //Feb 27th 2016 - > Give user an option to delete, or view the ViewTask page.
-                        Navigation.PushAsync(new pageTask(Core.GetCore().GetScheduler().FindTaskById(Tasks.TaskID)));
-                    }
-                } 
-                */
+         
+             
             };
         
 
