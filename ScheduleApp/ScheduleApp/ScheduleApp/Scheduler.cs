@@ -77,7 +77,7 @@ namespace ScheduleApp
                 tasks.Add(taskToAdd);
             }
 
-            Write(tasksPath);
+            System.Threading.Tasks.Task.Run(() => Write(tasksPath)).Wait();
         }
 
 
@@ -97,7 +97,7 @@ namespace ScheduleApp
                         found = true;
                         tasks.RemoveAt(i);
 
-                        Write(tasksPath);
+                        System.Threading.Tasks.Task.Run(() => Write(tasksPath)).Wait();
                     }
                 }
 
@@ -177,7 +177,7 @@ namespace ScheduleApp
             updateTask.Frequency = frequency;
             updateTask.FrequencyUnit = frequencyUnit;
 
-            Write(tasksPath);
+            System.Threading.Tasks.Task.Run(() => Write(tasksPath)).Wait();
         }
 
         public async void Write(string path)
@@ -224,7 +224,7 @@ namespace ScheduleApp
                 }
                 else
                 {
-                    Write(path);
+                    System.Threading.Tasks.Task.Run(() => Write(path)).Wait();
                 }
             }
             catch(Exception e)
