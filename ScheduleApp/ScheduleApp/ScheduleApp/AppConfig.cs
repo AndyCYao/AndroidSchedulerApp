@@ -80,7 +80,7 @@ namespace ScheduleApp
             m_theme.font = "Helvetica";
             m_theme.fontColour = Xamarin.Forms.Color.White;
             m_theme.fontSize = Xamarin.Forms.NamedSize.Default;
-            m_defaultNotificationSound = "";
+            m_defaultNotificationSound = DependencyService.Get<iRingTones>().GetDefaultRingTone();
         }
 
         public async void Write(string path)

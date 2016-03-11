@@ -11,6 +11,9 @@ namespace ScheduleApp
     public interface iRingTones
     {
         void GetRingTonePicker(AppTask task = null);
+        string GetDefaultRingTone();
+        void SetSelectedRingTone(string uri);
+        string GetSelectedRingTone();
     }
 
 }

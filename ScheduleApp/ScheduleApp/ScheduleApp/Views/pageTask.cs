@@ -12,7 +12,7 @@ namespace ScheduleApp
 {
 	public class pageTask:ContentPage
 	{
-		protected override void OnAppearing()
+        protected override void OnAppearing()
 		{
 			base.OnAppearing();
 
@@ -23,19 +23,17 @@ namespace ScheduleApp
 		{
 			AppConfig config = Core.GetCore ().GetConfig ();
             
-            Title = "Add Task With ScrollView";
+            Title = "Add Task";
 			var nameLabel = new Label { Text = "Task Name", Style = config.GenerateLabelStyle () };
 
-			var nameEntry = new Entry { Placeholder = "New Task Name" };
+            Entry nameEntry = new Entry { Placeholder = "New Task Name" };
 			nameEntry.Style = config.GenerateEntryStyle ();
-			nameEntry.SetBinding (Entry.TextProperty, "Task Name");
-
+			
 			var noteLabel = new Label { Text = "Task Note", Style = config.GenerateLabelStyle () };
-			var noteEntry = new Entry { Placeholder = "New Task Notes" };
+            Entry noteEntry = new Entry { Placeholder = "New Task Notes" };
 			noteEntry.Style = config.GenerateEntryStyle ();
-			noteEntry.SetBinding (Entry.TextProperty, "Task Note");
-
-			var doneLabel = new Label { Text = "Done", Style = config.GenerateLabelStyle () };
+            
+            var doneLabel = new Label { Text = "Done", Style = config.GenerateLabelStyle () };
 			var donePicker = new Picker{ Style = config.GeneratePickerStyle () };
 			donePicker.Items.Add ("False");
             donePicker.Items.Add("True");
@@ -54,14 +52,12 @@ namespace ScheduleApp
 				Style = config.GeneratePickerStyle ()
 			};
 
-			var ringToneLabel = new Label { Text = "Select Ringtone", Style = config.GenerateLabelStyle () };
-			var ringTonePicker = new Picker{ Style = config.GeneratePickerStyle () };
-            Button RingTonePickerBtn = new Button
+			Button ringTonePickerBtn = new Button
             {
                 Text = "Select RingTone",
             };
 
-            RingTonePickerBtn.Clicked += (sender, args) =>
+            ringTonePickerBtn.Clicked += (sender, args) =>
             {
                 DependencyService.Get<iRingTones>().GetRingTonePicker(existingTask);
             };
@@ -105,21 +101,10 @@ namespace ScheduleApp
             {
                 frequencyPicker.SelectedIndex = 5;
                 frequencyUnitPicker.SelectedIndex = 2;
-
-                for (int i = 0; i < ringTonePicker.Items.Count; i++)
-                {
-                    if (config.DefaultNotificationSound == ringTonePicker.Items[i])
-                    {
-                        ringTonePicker.SelectedIndex = i;
-                        break;
-                    }
-                }
             }
             else
             {
-                nameEntry.Placeholder = existingTask.TaskName;
                 nameEntry.Text = existingTask.TaskName;
-                noteEntry.Placeholder = existingTask.TaskNotes;
                 noteEntry.Text = existingTask.TaskNotes;
 
                 if (existingTask.Done)
@@ -133,16 +118,7 @@ namespace ScheduleApp
 
                 reminderBeginDatePicker.Date = existingTask.ReminderBegin;
                 reminderEndDatePicker.Date = existingTask.ReminderEnd;
-
-                for (int i = 0; i < ringTonePicker.Items.Count; i++)
-                {
-                    if (existingTask.RingTone == ringTonePicker.Items[i])
-                    {
-                        ringTonePicker.SelectedIndex = i;
-                        break;
-                    }
-                }
-
+                
                 for (int i = 0; i < frequencyPicker.Items.Count; i++)
                 {
                     if (existingTask.Frequency.ToString() == frequencyPicker.Items[i])
@@ -175,9 +151,9 @@ namespace ScheduleApp
                 DateTime tReminderBeginDate;
                 DateTime tReminderEndDate;
 				bool tDone;
-				string tRingToneName;
 				int tFrequency;
 				string tFrequencyUnit;
+                string tNotificationSound;
 
 				if (nameEntry.Text != null && noteEntry.Text != null){ 
 					tTaskName = nameEntry.Text.ToString ();
@@ -185,22 +161,21 @@ namespace ScheduleApp
                     tReminderBeginDate = reminderBeginDatePicker.Date;
 					tReminderEndDate = reminderEndDatePicker.Date;
 					tDone = Convert.ToBoolean (donePicker.Items [donePicker.SelectedIndex]);
-                    tRingToneName = "ThisDoesntExist.mp3";
-                    //tRingToneName = RingTonePickerBtn.
-                    tFrequency = Convert.ToInt32(frequencyPicker.Items [frequencyPicker.SelectedIndex]);
-					tFrequencyUnit = frequencyUnitPicker.Items [frequencyUnitPicker.SelectedIndex];
+                    tFrequency = Convert.ToInt32(frequencyPicker.Items[frequencyPicker.SelectedIndex]);
+					tFrequencyUnit = frequencyUnitPicker.Items[frequencyUnitPicker.SelectedIndex];
+                    tNotificationSound = DependencyService.Get<iRingTones>().GetSelectedRingTone();
 
                     if (existingTask == null)
                     {
                         Core.GetCore().GetScheduler().AddTaskWithInfo(
                         tTaskName, tTaskNotes, tReminderBeginDate,
-                        tReminderEndDate, tRingToneName, tFrequency, tFrequencyUnit);
+                        tReminderEndDate, tNotificationSound, tFrequency, tFrequencyUnit);
                     }
                     else
                     {
                         Core.GetCore().GetScheduler().UpdateTaskWithInfo(
                             existingTask.TaskID, tTaskName, tTaskNotes,
-                            tReminderBeginDate, tReminderEndDate, tRingToneName,
+                            tReminderBeginDate, tReminderEndDate, tNotificationSound,
                             tFrequency, tFrequencyUnit);
                     }
 
@@ -223,9 +198,7 @@ namespace ScheduleApp
 						noteEntry,
 						doneLabel,
 						donePicker,
-						ringToneLabel,
-                        // ringTonePicker,
-                        RingTonePickerBtn,
+						ringTonePickerBtn,
                         reminderBeginDateLabel,
                         reminderBeginDatePicker,
                         frequencyLabel,

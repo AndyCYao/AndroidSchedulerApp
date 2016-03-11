@@ -16,19 +16,26 @@ namespace ScheduleApp
 		{
             Core core = Core.GetCore();
             AppConfig config = core.GetConfig();
-            
+            bool ringtonePickerOpened = false;
+
             Title = "Application Configuration";
 
             var defaultNotificationLabel = new Label { Text = "Default Notification Sound" };
             var defaultNotificationLabelDesc = new Label { Text = "Represents the default ring tone to assign for new tasks." };
             
-            Button RingTonePickerBtn = new Button
+            Button ringTonePickerBtn = new Button
             {
                 Text = "Select RingTone",
             };
 
-            RingTonePickerBtn.Clicked += (sender, args) =>
+            ringTonePickerBtn.Clicked += (sender, args) =>
             {
+                if (!ringtonePickerOpened)
+                {
+                    DependencyService.Get<iRingTones>().SetSelectedRingTone(config.DefaultNotificationSound);
+                    ringtonePickerOpened = true;
+                }
+
                 DependencyService.Get<iRingTones>().GetRingTonePicker();
             };
 
@@ -179,7 +186,7 @@ namespace ScheduleApp
                 }
                 else
                 {
-                    //DefaultNotificationSound = ringTonePicker.Items[ringTonePicker.SelectedIndex];
+                    config.DefaultNotificationSound = DependencyService.Get<iRingTones>().GetSelectedRingTone();
                     themeStruct.backgroundColour = config.nameToColour[backgroundColourPicker.Items[backgroundColourPicker.SelectedIndex]];
                     themeStruct.font = fontPicker.Items[fontPicker.SelectedIndex];
                     themeStruct.fontColour = config.nameToColour[fontColourPicker.Items[fontColourPicker.SelectedIndex]];
@@ -200,8 +207,7 @@ namespace ScheduleApp
                     Padding = new Thickness(20),
                     Children = {
                         defaultNotificationLabel,
-                        //ringTonePicker,
-                        RingTonePickerBtn,
+                        ringTonePickerBtn,
                         fontLabel,
                         fontPicker,
                         fontSizeLabel,

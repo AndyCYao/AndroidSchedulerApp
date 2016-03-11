@@ -26,9 +26,7 @@ namespace ScheduleApp.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
-
             WireUpTaskNotification();
-
             HandleReceivedMessages();
         }
 
@@ -89,39 +87,18 @@ namespace ScheduleApp.Droid
             });
         }
 
-        protected override void OnActivityResult(int requestCode, Result resultCode, Intent intent)
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
-            base.OnActivityResult(requestCode, resultCode, intent);
+            base.OnActivityResult(requestCode, resultCode, data);
             if (resultCode == Result.Ok)
             {
                 Core core = Core.GetCore();
                 AppConfig config = core.GetConfig();
-                Android.Net.Uri ring = (Android.Net.Uri)intent.GetParcelableExtra(RingtoneManager.ExtraRingtonePickedUri);
-
-                switch (requestCode)
-                {
-                    case -1:
-                        config.DefaultNotificationSound = ring.ToString();
-                        break;
-                        
-                    default:
-                        AppTask task = core.GetScheduler().FindTaskById(requestCode);
-
-                        if (task != null)
-                        {
-                            task.RingTone = ring.ToString();
-                        }
-
-                        break;
-                }
+                Android.Net.Uri ring = (Android.Net.Uri)data.GetParcelableExtra(RingtoneManager.ExtraRingtonePickedUri);
+                
+                DependencyService.Get<iRingTones>().SetSelectedRingTone(ring.ToString());
             }
-
         }
-
-
-
-
-
     }
 }
 

@@ -9,12 +9,10 @@ using PCLStorage;
 //main page that will greet the user.
 namespace ScheduleApp
 {
-
 	// The root page of your application
 	public class Main: ContentPage
 	{
         //Read through this git https://github.com/mhalkovitch/Xamarim/blob/dc595559c24c649135ccdc21b210f94aa2559634/Chapter%205%20-%20Lists/ListViewExample/ListViewExample/ListViewExample/HomePage.cs
-
         class ListItemCell: ViewCell{
             public ListItemCell()
             {
@@ -39,15 +37,13 @@ namespace ScheduleApp
                     {
 
                         Core.GetCore().GetScheduler().RemoveTask(item.TaskID);
-                       ((Main)((Xamarin.Forms.NavigationPage)App.Current.MainPage).CurrentPage).OnAppearing();
-                       
+                        ((Main)((Xamarin.Forms.NavigationPage)App.Current.MainPage).CurrentPage).OnAppearing();
                     }   
                 };
 
                 ContextActions.Add(moreAction);
                 ContextActions.Add(deleteAction);
-
-          
+                          
                 Label titleLabel = new Label { Text = "Task Name" };
                 titleLabel.SetBinding(Label.TextProperty, "TaskName");
 
@@ -60,7 +56,6 @@ namespace ScheduleApp
                 };
 
                 View = viewLayoutItem;
-      
             }
         }
 
@@ -68,10 +63,10 @@ namespace ScheduleApp
         {
             Core MainCore = Core.GetCore();
             Scheduler MainScheduler = MainCore.GetScheduler();
+
             System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList = new System.Collections.ObjectModel.ObservableCollection<AppTask>(MainScheduler.GetTasks(false));
             listView.ItemTemplate = new DataTemplate(typeof(ListItemCell)); 
             listView.ItemsSource = oTasksList;
-            
         }
 
         ListView listView; //This is to list all the current tasks in our XML memory.
@@ -79,13 +74,10 @@ namespace ScheduleApp
 
         public Main(){
 			Title = "Scheduler App 2016";
-           
-			Core MainCore = Core.GetCore();
+            Core MainCore = Core.GetCore();
 			Scheduler MainScheduler = MainCore.GetScheduler();
 
             listView = new ListView ();
-      
-          
             listView.ItemSelected += (sender, e) => {
 
                 AppTask x = (AppTask)e.SelectedItem;
@@ -93,14 +85,9 @@ namespace ScheduleApp
                 {
                     Navigation.PushAsync(new pageTask(Core.GetCore().GetScheduler().FindTaskById(x.TaskID)));
                     ((ListView)sender).SelectedItem = null;
-                }
-
-         
-             
+                }     
             };
         
-
-
             AddTask = new Button {
                 Text = "Add Task",
                 Style = MainCore.GetConfig().GenerateButtonStyle()
@@ -116,11 +103,9 @@ namespace ScheduleApp
                 this.Navigation.PushAsync(pAppSettings);
             };
 
-				
 			Content = new StackLayout {
 				VerticalOptions = LayoutOptions.Center,
 				Children = {
-       
                     listView,
   					AddTask,
                     ConfigButton
@@ -140,8 +125,5 @@ namespace ScheduleApp
             AddTask.Style = appConfig.GenerateButtonStyle(); 
             ConfigButton.Style = appConfig.GenerateButtonStyle();
         }
-
-
     };
 }
-

@@ -26,8 +26,13 @@ namespace ScheduleApp.Droid
 {
     public class LocalRingTones : iRingTones
     {
+        private string m_selectedRingTone;
+
         //need an empty parameterless constructor so dependency service can create new instances. 
-        public LocalRingTones() { }
+        public LocalRingTones()
+        {
+            m_selectedRingTone = RingtoneManager.GetDefaultUri(RingtoneType.Ringtone).ToString();
+        }
 
         public void GetRingTonePicker(AppTask task = null)
         {
@@ -41,7 +46,7 @@ namespace ScheduleApp.Droid
             }
             else
             {
-                notificationSound = config.DefaultNotificationSound;
+                notificationSound = m_selectedRingTone;
             }
 
             Android.Net.Uri rURI = Android.Net.Uri.Parse(notificationSound);
@@ -66,14 +71,25 @@ namespace ScheduleApp.Droid
             //}
 
             intent.PutExtra(RingtoneManager.ExtraRingtoneExistingUri, rURI);
-
-            ((Activity)Forms.Context).StartActivityForResult(intent, (task != null) ? task.TaskID : -1);
+            intent.PutExtra("ScheduleApp.Droid.ID", (task != null) ? (int)task.TaskID : (int)-1);
             
+            ((Activity)Forms.Context).StartActivityForResult(intent, 1);
         }
 
-       
+        public string GetDefaultRingTone()
+        {
+            return RingtoneManager.GetDefaultUri(RingtoneType.Ringtone).ToString();
+        }
+
+        public void SetSelectedRingTone(string uri)
+        {
+            m_selectedRingTone = uri;
+        }
+
+        public string GetSelectedRingTone()
+        {
+            return m_selectedRingTone;
+        }
     }
-
-
 }
 
