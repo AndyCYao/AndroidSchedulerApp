@@ -24,7 +24,6 @@ namespace ScheduleApp
                 {
                     var mi = ((MenuItem)sender);
                     var item = (AppTask)mi.CommandParameter;
-                    //((ContentPage)((ListView)viewLayout.ParentView).ParentView).DisplayAlert("More Clicked", "On row: " + item.Title.ToString(), "OK");             
                 };
                 var deleteAction = new MenuItem { Text = "Delete", IsDestructive = true };
                 deleteAction.SetBinding(MenuItem.CommandParameterProperty, new Binding("."));
@@ -34,19 +33,15 @@ namespace ScheduleApp
                     var mi = ((MenuItem)sender);
                     var item = (AppTask)mi.CommandParameter;
 
-                    //((ContentPage)((ListView)viewLayout.ParentView).ParentView).DisplayAlert("Delete Clicked", "On row: " + item.Title.ToString(), "OK");
-                    //bool willDelete =  await ((ContentPage)((ListView)((StackLayout)mi.ParentView).ParentView).ParentView).DisplayAlert("Delete Confirmation", "Are you sure you want to remove this task?", "Yes", "No");
                     bool willDelete = await App.Current.MainPage.DisplayAlert("Delete Confirmation", "Are you sure you want to remove this task?", "Yes", "No");
 
                     if (willDelete)
                     {
+
                         Core.GetCore().GetScheduler().RemoveTask(item.TaskID);
-                        //App.Current.MainPage.RefreshListViewSource();
-                        //var pMain = App.Current.MainPage;
-                        //await App.Current.MainPage.Navigation.PushAsync(pMain);
-                        //OnAppearing();
+                       ((Main)((Xamarin.Forms.NavigationPage)App.Current.MainPage).CurrentPage).OnAppearing();
                        
-                    }
+                    }   
                 };
 
                 ContextActions.Add(moreAction);
@@ -74,9 +69,6 @@ namespace ScheduleApp
             Core MainCore = Core.GetCore();
             Scheduler MainScheduler = MainCore.GetScheduler();
             System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList = new System.Collections.ObjectModel.ObservableCollection<AppTask>(MainScheduler.GetTasks(false));
-            //listView.ItemsSource = from x in oTasksList select x.TaskName;
-
-            //var TasksLists = MainScheduler.GetTasks(false);
             listView.ItemTemplate = new DataTemplate(typeof(ListItemCell)); 
             listView.ItemsSource = oTasksList;
             
@@ -93,11 +85,8 @@ namespace ScheduleApp
 
             listView = new ListView ();
       
-            //On click of the item it pushs to a task page.
           
             listView.ItemSelected += (sender, e) => {
-
-                //System.Collections.ObjectModel.ObservableCollection<AppTask> oTasksList = new System.Collections.ObjectModel.ObservableCollection<AppTask>(MainScheduler.GetTasks(false));
 
                 AppTask x = (AppTask)e.SelectedItem;
                 if (x is AppTask)
@@ -123,8 +112,7 @@ namespace ScheduleApp
 			ConfigButton = new Button { Text = "Configuration", Style = MainCore.GetConfig().GenerateButtonStyle() };
             ConfigButton.Clicked += (sender, e) => {
                 var pAppSettings = new pageAppConfig();
-                //				var todoItem = (TodoItem)BindingContext;
-                //				this.Navigation.PopAsync();
+               
                 this.Navigation.PushAsync(pAppSettings);
             };
 
@@ -132,7 +120,7 @@ namespace ScheduleApp
 			Content = new StackLayout {
 				VerticalOptions = LayoutOptions.Center,
 				Children = {
-                    //pathLabel,
+       
                     listView,
   					AddTask,
                     ConfigButton
@@ -146,7 +134,7 @@ namespace ScheduleApp
             base.OnAppearing();
 
             AppConfig appConfig = Core.GetCore().GetConfig();
-            //DisplayAlert("Test TEst", "Hello World","ok");
+
             RefreshListViewSource();
             Style = appConfig.GeneratePageStyle();
             AddTask.Style = appConfig.GenerateButtonStyle(); 
