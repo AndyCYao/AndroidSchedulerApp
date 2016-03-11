@@ -58,12 +58,7 @@ namespace ScheduleApp
 
         public void AddTask(AppTask taskToAdd)
         {
-            //if (taskToAdd.TaskID <= 0)
-            //{
-            //    //throw new ArgumentOutOfRangeException("taskToAdd.TaskID", "Task ID cannot be lower than or equal to 0.");
-
-            //}
-            //else 
+           
             if (taskToAdd.TaskName == null)
             {
                 throw new ArgumentNullException("taskToAdd.TaskName");
